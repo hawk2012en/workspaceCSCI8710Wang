@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="prj.command1"
+            name="My Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="handler.MyHandler"
+            commandId="prj.command1">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=window">
+         <menu
+               id="my.menu0"
+               label="My Menu">
+            <command
+                  commandId="prj.command1"
+                  label="Show Hello World"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="view.MyView"
+            id="view.MyView"
+            name="Simple ViewPart">
+      </view>
+   </extension>
+
+</plugin>
