@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_-U07sMs-EemlqPrdVp7JDQ">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_-U07sMs-EemlqPrdVp7JDQ">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_N8_t8MtAEemlqPrdVp7JDQ" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="menu:MenuContribution" xmi:id="_tU1TgMtAEemlqPrdVp7JDQ" elementId="project0829-examplemenu-wang.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_EFm8oMtBEemlqPrdVp7JDQ" elementId="project0829-examplemenu-wang.menu.mymenu" label="My Menu">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_OSBtUMtBEemlqPrdVp7JDQ" elementId="project0829-examplemenu-wang.handledmenuitem.showhelloworld" label="Show Hello World"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_OSBtUMtBEemlqPrdVp7JDQ" elementId="project0829-examplemenu-wang.handledmenuitem.showhelloworld" label="Show Hello World" command="_VHvJcM3JEem4jZzGlB_kvA"/>
       </children>
     </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_P-SjYM3JEem4jZzGlB_kvA" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_VHvJcM3JEem4jZzGlB_kvA" elementId="project0829-examplemenu-wang.command.showhelloworld" commandName="Show Hello World"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_m3ehoM3JEem4jZzGlB_kvA" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_wzVGwM3JEem4jZzGlB_kvA" elementId="project0829-examplemenu-wang.handler.0" contributionURI="bundleclass://project0829-examplemenu-wang/handler.ShowHelloWorldHandler" command="_VHvJcM3JEem4jZzGlB_kvA"/>
   </fragments>
 </fragment:ModelFragments>
