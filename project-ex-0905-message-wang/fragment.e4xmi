@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_DJELINA_Eemvlfnch2RvaQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_FX-5wNA_Eemvlfnch2RvaQ" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="menu:MenuContribution" xmi:id="_K3GN0NA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_R8kbsNA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.menu.helloplugin" label="Hello Plugin">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_ZEPpANA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.handledmenuitem.showhello" label="Show Hello" command="_oltLwNA_Eemvlfnch2RvaQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_d87PMNA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.handledmenuitem.showhighestnumber" label="Show Highest Number" command="_wI6egNA_Eemvlfnch2RvaQ"/>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_kOHgcNA_Eemvlfnch2RvaQ" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_oltLwNA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.command.showhello" commandName="Show Hello"/>
+    <elements xsi:type="commands:Command" xmi:id="_wI6egNA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.command.showhighestnumber" commandName="Show Highest Number"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_2IW4cNA_Eemvlfnch2RvaQ" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_66iOANA_Eemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.handler.0" contributionURI="bundleclass://project-ex-0905-message-wang/handler.ShowHelloHandler" command="_oltLwNA_Eemvlfnch2RvaQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_ye0wgNBAEemvlfnch2RvaQ" elementId="project-ex-0905-message-wang.handler.1" contributionURI="bundleclass://project-ex-0905-message-wang/handler.ShowHighestNumberHandler" command="_wI6egNA_Eemvlfnch2RvaQ"/>
+  </fragments>
+</fragment:ModelFragments>

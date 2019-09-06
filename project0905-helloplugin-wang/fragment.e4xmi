@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_RHb8wNA6Eemvlfnch2RvaQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ZPtrcNA6Eemvlfnch2RvaQ" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="menu:MenuContribution" xmi:id="_pSB4gNA6Eemvlfnch2RvaQ" elementId="project0905-helloplugin-wang.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_0BgS8NA6Eemvlfnch2RvaQ" elementId="project0905-helloplugin-wang.menu.mymenuhelloplugin" label="My Menu Hello Plugin">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_BOn0gNA7Eemvlfnch2RvaQ" elementId="project0905-helloplugin-wang.handledmenuitem.showhelloworld" label="Show Hello World" command="_g1UVcNA7Eemvlfnch2RvaQ"/>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_X6vnINA7Eemvlfnch2RvaQ" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_g1UVcNA7Eemvlfnch2RvaQ" elementId="project0905-helloplugin-wang.command.showhelloworld" commandName="Show Hello World"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_oIHNoNA7Eemvlfnch2RvaQ" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_sRcagNA7Eemvlfnch2RvaQ" elementId="project0905-helloplugin-wang.handler.0" contributionURI="bundleclass://project0905-helloplugin-wang/handler.ShowHelloWorldHandler" command="_g1UVcNA7Eemvlfnch2RvaQ"/>
+  </fragments>
+</fragment:ModelFragments>
