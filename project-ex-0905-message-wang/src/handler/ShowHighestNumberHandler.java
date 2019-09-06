@@ -9,16 +9,15 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import util.UtilFile;
 
-
 public class ShowHighestNumberHandler {
 	@Execute
 	public void execute(Shell shell) {
 		String basePath = System.getProperty("user.dir");
 		System.out.println(basePath);
-		List<String> contents = UtilFile.readFile("numbers.csv");
+		List<String> contents = UtilFile.readFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/numbers.csv");
 		Collections.sort(contents, Collections.reverseOrder()); 
 		try {
-			UtilFile.saveFile("numbers.txt", contents);
+			UtilFile.saveFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/numbers.txt", contents);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
