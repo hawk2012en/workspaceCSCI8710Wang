@@ -6,6 +6,7 @@ import java.util.List;
 import simpleVisitorPattern.part.Body;
 import simpleVisitorPattern.part.Engine;
 import simpleVisitorPattern.part.Wheel;
+import simpleVisitorPattern.part.Break;
 import util.UtilFile;
 
 public class MyFileReadVisitor extends CartPartVisitor {
@@ -42,5 +43,14 @@ public class MyFileReadVisitor extends CartPartVisitor {
       part.setName(tokens[0].trim());
       part.setModelNumberBody(tokens[1].trim());
       part.setModelYearBody(tokens[2].trim());
+   }
+   
+   @Override
+   public void visit(Break part) {
+      final int LINE_NUM_BREAK = 3;
+      String[] tokens = contents.get(LINE_NUM_BREAK).split(",");
+      part.setName(tokens[0].trim());
+      part.setModelNumberBreak(tokens[1].trim());
+      part.setModelYearBreak(tokens[2].trim());
    }
 }
