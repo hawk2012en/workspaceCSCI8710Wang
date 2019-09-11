@@ -72,13 +72,4 @@ public class UtilFile {
 		}
 		return contents;
 	}
-
-	public static void saveFile(String filePath, List<String> contents) throws IOException {
-		FileWriter fileWriter = new FileWriter(filePath);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
-		for (String str : contents) {
-			printWriter.print(str + System.lineSeparator());
-		}
-		printWriter.close();
-	}
 }
