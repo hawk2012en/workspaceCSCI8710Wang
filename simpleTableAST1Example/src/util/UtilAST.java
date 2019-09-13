@@ -21,7 +21,7 @@ public class UtilAST {
    static String fileContents = null;
 
    public static ASTParser parse() {
-      ASTParser parser = ASTParser.newParser(AST.JLS8);
+      ASTParser parser = ASTParser.newParser(AST.JLS10);
       configParser(parser);
       return parser;
    }
