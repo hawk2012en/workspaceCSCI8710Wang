@@ -110,8 +110,8 @@ public class Viewer {
    }
 
    private void createProgElemColumns(final Composite parent, final TableViewer viewer) {
-      String[] titles = { "Package name", "Class name", "Method Name", "isReturnVoid", "Parameter size" };
-      int[] bounds = { 100, 100, 100, 100, 100 };
+      String[] titles = { "Package name", "Class name", "Method Name", "isReturnVoid", "Parameter size", "Start Position" };
+      int[] bounds = { 100, 100, 100, 100, 100, 100 };
 
       TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
       col.setLabelProvider(new ColumnLabelProvider() {
@@ -163,6 +163,15 @@ public class Viewer {
          public String getText(Object element) {
             ProgramElement p = (ProgramElement) element;
             return String.valueOf(p.getParameterSize());
+         }
+      });
+      
+      col = createTableViewerColumn(titles[5], bounds[5], 5);
+      col.setLabelProvider(new ColumnLabelProvider() {
+         @Override
+         public String getText(Object element) {
+            ProgramElement p = (ProgramElement) element;
+            return String.valueOf(p.getStartPos());
          }
       });
    }

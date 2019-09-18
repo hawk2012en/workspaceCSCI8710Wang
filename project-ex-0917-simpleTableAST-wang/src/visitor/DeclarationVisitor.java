@@ -53,7 +53,8 @@ public class DeclarationVisitor extends ASTVisitor {
          }
       }
       int parmSize = methodDecl.parameters().size();
-      ModelProvider.INSTANCE.addProgramElements(pkgName, className, methodName, isRetVoid, parmSize);
+      int startPos = methodDecl.getStartPosition();
+      ModelProvider.INSTANCE.addProgramElements(pkgName, className, methodName, isRetVoid, parmSize, startPos);
       return super.visit(methodDecl);
    }
 }
