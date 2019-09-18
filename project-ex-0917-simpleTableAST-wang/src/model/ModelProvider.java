@@ -6,7 +6,7 @@ import java.util.List;
 public enum ModelProvider {
    INSTANCE;
 
-   private List<ProgramElement> progElements = new ArrayList<ProgramElement>();;
+   private List<ProgramElement> progElements = new ArrayList<ProgramElement>();
 
    private ModelProvider() {
    }

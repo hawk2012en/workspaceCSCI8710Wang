@@ -1,6 +1,9 @@
 package view;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -35,6 +38,7 @@ import org.osgi.framework.FrameworkUtil;
 import analysis.ProjectAnalyzer;
 import model.ModelProvider;
 import model.ProgramElement;
+import util.UtilFile;
 
 public class Viewer {
    private TableViewer viewer;
@@ -60,6 +64,7 @@ public class Viewer {
       Menu contextMenu = new Menu(viewer.getTable());
       viewer.getTable().setMenu(contextMenu);
       createMenuItem(contextMenu);
+      createMenuItem2(contextMenu);
    }
 
    private void createMenuItem(Menu contextMenu) {
@@ -78,6 +83,30 @@ public class Viewer {
          }
       });
    }
+   
+   private void createMenuItem2(Menu contextMenu) {
+	      final MenuItem menuItem = new MenuItem(contextMenu, SWT.PUSH);
+	      menuItem.setText("Export");
+	      menuItem.addSelectionListener(new SelectionAdapter() {
+	         public void widgetSelected(SelectionEvent e) {
+	        	List<ProgramElement> progElements = ModelProvider.INSTANCE.getProgramElements();
+	            List<String> contents = new ArrayList<String>();
+	            String tableHead = "Package Name" + ", Class Name" + ", Method Name" + 
+	    				", isReturnVoid" + ", Parameter size" + ", Start Position";
+	            contents.add(tableHead);
+	            for (ProgramElement progElement : progElements) {
+	                //System.out.println(progElement);
+	                contents.add(progElement.toString());
+	            }
+	            try {
+	    			UtilFile.saveFile("D:\\junwang\\BAK_E\\mywork\\homework\\CSCI8710\\workspaceCSCI8710\\workspaceCSCI8710Wang\\project-ex-0917-simpleTableAST-wang\\output.csv", contents);
+	    		} catch (IOException e2) {
+	    			// TODO Auto-generated catch block
+	    			e2.printStackTrace();
+	    		}
+	         }
+	      });
+	   }
 
    private void createViewer(Composite parent) {
       viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
