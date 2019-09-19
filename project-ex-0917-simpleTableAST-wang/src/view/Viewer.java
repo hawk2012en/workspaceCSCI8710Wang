@@ -99,7 +99,7 @@ public class Viewer {
 	                contents.add(progElement.toString());
 	            }
 	            try {
-	    			UtilFile.saveFile("D:\\junwang\\BAK_E\\mywork\\homework\\CSCI8710\\workspaceCSCI8710\\workspaceCSCI8710Wang\\project-ex-0917-simpleTableAST-wang\\output.csv", contents);
+	    			UtilFile.saveFile(contents);
 	    		} catch (IOException e2) {
 	    			// TODO Auto-generated catch block
 	    			e2.printStackTrace();

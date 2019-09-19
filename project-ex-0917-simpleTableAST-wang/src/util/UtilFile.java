@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JFileChooser;
 
 public class UtilFile {
 
@@ -32,12 +33,19 @@ public class UtilFile {
       return tableContents;
    }
 
-   public static List<String> readFile(String filePath) {
+   public static List<String> readFile() {
       List<String> contents = new ArrayList<String>();
-      File file = new File(filePath);
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+      int result = fileChooser.showOpenDialog(null);      
+      File selectedFile = null;
+      if (result == JFileChooser.APPROVE_OPTION) {
+          selectedFile = fileChooser.getSelectedFile();
+          System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+      }      
       Scanner scanner = null;
       try {
-         scanner = new Scanner(file);
+         scanner = new Scanner(selectedFile);
          while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             contents.add(line);
@@ -51,8 +59,17 @@ public class UtilFile {
       return contents;
    }
 
-   public static void saveFile(String filePath, List<String> contents) throws IOException {
-      FileWriter fileWriter = new FileWriter(filePath);
+   public static void saveFile(List<String> contents) throws IOException {
+	   JFileChooser fileChooser = new JFileChooser();
+	   fileChooser.setDialogTitle("Specify a file to save");  
+	   fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+	   int userSelection = fileChooser.showSaveDialog(null);
+	   File fileToSave = null;
+	   if (userSelection == JFileChooser.APPROVE_OPTION) {
+	       fileToSave = fileChooser.getSelectedFile();
+	       System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+	   }
+      FileWriter fileWriter = new FileWriter(fileToSave.getAbsolutePath());
       PrintWriter printWriter = new PrintWriter(fileWriter);
       for (String str : contents) {
          printWriter.print(str + System.lineSeparator());
