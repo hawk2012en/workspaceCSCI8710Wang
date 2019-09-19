@@ -14,10 +14,10 @@ public class ShowHighestNumberHandler {
 	public void execute(Shell shell) {
 		String basePath = System.getProperty("user.dir");
 		System.out.println(basePath);
-		List<String> contents = UtilFile.readFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/numbers.csv");
+		List<String> contents = UtilFile.readFile();
 		Collections.sort(contents, Collections.reverseOrder()); 
 		try {
-			UtilFile.saveFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/numbers.txt", contents);
+			UtilFile.saveFile(contents);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
