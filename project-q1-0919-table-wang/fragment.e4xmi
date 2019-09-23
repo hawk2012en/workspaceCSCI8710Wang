@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_SrVp4Ns6Eemnv5eVn8giPQ">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_SrVp4Ns6Eemnv5eVn8giPQ">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_URsjsNs6Eemnv5eVn8giPQ" featurename="descriptors" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="basic:PartDescriptor" xmi:id="_dD71YNs6Eemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.partdescriptor.simpletableviewq10919wang" label="Simple Table View Q1 0919 Wang" iconURI="platform:/plugin/project-q1-0919-table-wang/icons/sample.png" contributionURI="bundleclass://project-q1-0919-table-wang/view.Viewer"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_aNfvkNtBEemnv5eVn8giPQ" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
-    <elements xsi:type="menu:MenuContribution" xmi:id="_d_3N8NtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main,menu">
+    <elements xsi:type="menu:MenuContribution" xmi:id="_d_3N8NtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_rqi1QNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.menu.mainmenuwang" label="Main Menu Wang">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_xZmCwNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.export" label="Export"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_6uNowNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.packageclassmethodcounter" label="Package/Class/Method Counter"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_xZmCwNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.export" label="Export" command="_0RTTcN4lEemzffeMMSCiAg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_6uNowNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.packageclassmethodcounter" label="Package/Class/Method Counter" command="_9VXqEN4nEemzffeMMSCiAg"/>
       </children>
     </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_r1Q7QN4lEemzffeMMSCiAg" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_0RTTcN4lEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.command.showexport" commandName="Show Export"/>
+    <elements xsi:type="commands:Command" xmi:id="_9VXqEN4nEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.command.showpackageclassmethodcounter" commandName="Show PackageClassMethod Counter"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DU4AUN4mEemzffeMMSCiAg" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_GoEPYN4mEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handler.0" contributionURI="bundleclass://project-q1-0919-table-wang/handler.ShowExportHandler" command="_0RTTcN4lEemzffeMMSCiAg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_F7ekQN4oEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handler.1" contributionURI="bundleclass://project-q1-0919-table-wang/handler.ShowPackageClassMethodCounter" command="_9VXqEN4nEemzffeMMSCiAg"/>
   </fragments>
 </fragment:ModelFragments>

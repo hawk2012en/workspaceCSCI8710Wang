@@ -9,6 +9,7 @@ package visitor;
 
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.Type;
@@ -44,7 +45,7 @@ public class DeclarationVisitor extends ASTVisitor {
    @Override
    public boolean visit(MethodDeclaration methodDecl) {
       methodName = methodDecl.getName().getIdentifier();
-      //isPublic = methodDecl.getModifiers();
+      int methodModifers = methodDecl.getModifiers();      
       Type returnType = methodDecl.getReturnType2();
       boolean isRetVoid = false;
       if (returnType.isPrimitiveType()) {
@@ -53,7 +54,8 @@ public class DeclarationVisitor extends ASTVisitor {
             isRetVoid = true;
          }
       }
-      boolean isPublic = true;
+      boolean isPublic = (methodModifers & Modifier.PUBLIC) != 0;   
+//      System.out.println(methodDecl.getName() + ": " + isPublic);
       ModelProvider.INSTANCE.addProgramElements(pkgName, className, methodName, isRetVoid, isPublic);
       return super.visit(methodDecl);
    }

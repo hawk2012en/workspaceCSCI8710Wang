@@ -63,8 +63,7 @@ public class Viewer {
    private void createContextMenu(Composite parent) {
       Menu contextMenu = new Menu(viewer.getTable());
       viewer.getTable().setMenu(contextMenu);
-      createMenuItem(contextMenu);
-      createMenuItem2(contextMenu);
+      createMenuItem(contextMenu);      
    }
 
    private void createMenuItem(Menu contextMenu) {
@@ -83,30 +82,6 @@ public class Viewer {
          }
       });
    }
-   
-   private void createMenuItem2(Menu contextMenu) {
-	      final MenuItem menuItem = new MenuItem(contextMenu, SWT.PUSH);
-	      menuItem.setText("Export");
-	      menuItem.addSelectionListener(new SelectionAdapter() {
-	         public void widgetSelected(SelectionEvent e) {
-	        	List<ProgramElement> progElements = ModelProvider.INSTANCE.getProgramElements();
-	            List<String> contents = new ArrayList<String>();
-	            String tableHead = "Package Name" + ", Class Name" + ", Method Name" + 
-	    				", isReturnVoid" + ", Parameter size" + ", Start Position";
-	            contents.add(tableHead);
-	            for (ProgramElement progElement : progElements) {
-	                //System.out.println(progElement);
-	                contents.add(progElement.toString());
-	            }
-	            try {
-	    			UtilFile.saveFile(contents);
-	    		} catch (IOException e2) {
-	    			// TODO Auto-generated catch block
-	    			e2.printStackTrace();
-	    		}
-	         }
-	      });
-	   }
 
    private void createViewer(Composite parent) {
       viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
@@ -139,7 +114,7 @@ public class Viewer {
    }
 
    private void createProgElemColumns(final Composite parent, final TableViewer viewer) {
-      String[] titles = { "Package name", "Class name", "Method Name", "isReturnVoid", "isPublicModifier"};
+      String[] titles = { "Package name", "Class name", "Method Name", "is Return Void", "is Public Modifier"};
       int[] bounds = { 100, 100, 100, 100, 100 };
 
       TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);

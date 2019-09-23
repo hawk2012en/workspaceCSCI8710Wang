@@ -52,10 +52,10 @@ public class ProgramElement {
 	}
 
 	public boolean isPublicModifier() {
-		return isReturnVoid;
+		return isPublicModifier;
 	}
 
-	public void setisPublicModifier(boolean isPublicModifier) {
+	public void setPublicModifier(boolean isPublicModifier) {
 		this.isPublicModifier = isPublicModifier;
 	}
 
