@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
-public class UtilFile {
+public class UtilFile extends JFrame{
 
    public static List<List<String>> convertTableContents(List<String> contents) {
       List<List<String>> tableContents = new ArrayList<List<String>>();
@@ -32,48 +33,61 @@ public class UtilFile {
       }
       return tableContents;
    }
+   
+	public static List<String> readFile(String filePath) {
+		List<String> contents = new ArrayList<String>();
+		File file = new File(filePath);
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				contents.add(line);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+		return contents;
+	}
 
-   public static List<String> readFile() {
-      List<String> contents = new ArrayList<String>();
+	public static void saveFile(String filePath, List<String> contents) throws IOException {
+		FileWriter fileWriter = new FileWriter(filePath);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		for (String str : contents) {
+			printWriter.print(str + System.lineSeparator());
+		}
+		printWriter.close();
+	}
+
+   public String getInputPathString() {      
       JFileChooser fileChooser = new JFileChooser();
       fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-      int result = fileChooser.showOpenDialog(null);      
+      int result = fileChooser.showOpenDialog(this);      
       File selectedFile = null;
+      String filePath = "";
       if (result == JFileChooser.APPROVE_OPTION) {
           selectedFile = fileChooser.getSelectedFile();
-          System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-      }      
-      Scanner scanner = null;
-      try {
-         scanner = new Scanner(selectedFile);
-         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            contents.add(line);
-         }
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
-      } finally {
-         if (scanner != null)
-            scanner.close();
-      }
-      return contents;
+          filePath = selectedFile.getAbsolutePath();
+          System.out.println("Selected file: " + filePath);
+      }    
+      return filePath;
    }
 
-   public static void saveFile(List<String> contents) throws IOException {
+   public String getOutputPathString() {
 	   JFileChooser fileChooser = new JFileChooser();
 	   fileChooser.setDialogTitle("Specify a file to save");  
 	   fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-	   int userSelection = fileChooser.showSaveDialog(null);
+	   int userSelection = fileChooser.showSaveDialog(this);
 	   File fileToSave = null;
+	   String filePath = "";
 	   if (userSelection == JFileChooser.APPROVE_OPTION) {
 	       fileToSave = fileChooser.getSelectedFile();
-	       System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+	       filePath = fileToSave.getAbsolutePath();
+	       System.out.println("Save as file: " + filePath);
 	   }
-      FileWriter fileWriter = new FileWriter(fileToSave.getAbsolutePath());
-      PrintWriter printWriter = new PrintWriter(fileWriter);
-      for (String str : contents) {
-         printWriter.print(str + System.lineSeparator());
-      }
-      printWriter.close();
-   }
+	   return filePath;      
+   }   
 }
