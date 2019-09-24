@@ -21,7 +21,7 @@ public class UtilFile {
          }
 
          List<String> listElements = new ArrayList<String>();
-         String[] splitedLine = line.split(":");
+         String[] splitedLine = line.split(",");
 
          for (int j = 0; j < splitedLine.length; j++) {
             String iElem = splitedLine[j].trim();
