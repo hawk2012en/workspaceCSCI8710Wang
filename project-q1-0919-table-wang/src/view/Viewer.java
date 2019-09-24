@@ -84,7 +84,8 @@ public class Viewer {
 		menuItem.setText("Refresh");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				viewer.setInput(ModelProvider.INSTANCE.getProgramElements());
+//				viewer.setInput(ModelProvider.INSTANCE.getProgramElements());
+				viewer.refresh();
 			}
 		});
 	}
