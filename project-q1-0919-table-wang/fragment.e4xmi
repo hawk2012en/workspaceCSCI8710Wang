@@ -8,15 +8,18 @@
       <children xsi:type="menu:Menu" xmi:id="_rqi1QNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.menu.mainmenuwang" label="Main Menu Wang">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_xZmCwNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.export" label="Export" command="_0RTTcN4lEemzffeMMSCiAg"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_6uNowNtBEemnv5eVn8giPQ" elementId="project-q1-0919-table-wang.handledmenuitem.packageclassmethodcounter" label="Package/Class/Method Counter" command="_9VXqEN4nEemzffeMMSCiAg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_6NmucN5UEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handledmenuitem.inport" label="Import" command="_-mmH8N5UEemzffeMMSCiAg"/>
       </children>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_r1Q7QN4lEemzffeMMSCiAg" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_0RTTcN4lEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.command.showexport" commandName="Show Export"/>
     <elements xsi:type="commands:Command" xmi:id="_9VXqEN4nEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.command.showpackageclassmethodcounter" commandName="Show PackageClassMethod Counter"/>
+    <elements xsi:type="commands:Command" xmi:id="_-mmH8N5UEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.command.showimport" commandName="Show Import"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DU4AUN4mEemzffeMMSCiAg" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Handler" xmi:id="_GoEPYN4mEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handler.0" contributionURI="bundleclass://project-q1-0919-table-wang/handler.ShowExportHandler" command="_0RTTcN4lEemzffeMMSCiAg"/>
     <elements xsi:type="commands:Handler" xmi:id="_F7ekQN4oEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handler.1" contributionURI="bundleclass://project-q1-0919-table-wang/handler.ShowPackageClassMethodCounter" command="_9VXqEN4nEemzffeMMSCiAg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_Fi3WgN5VEemzffeMMSCiAg" elementId="project-q1-0919-table-wang.handler.2" contributionURI="bundleclass://project-q1-0919-table-wang/handler.ShowImportHandler" command="_-mmH8N5UEemzffeMMSCiAg"/>
   </fragments>
 </fragment:ModelFragments>
