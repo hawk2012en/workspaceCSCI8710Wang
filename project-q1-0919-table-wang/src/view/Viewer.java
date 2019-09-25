@@ -36,6 +36,7 @@ import model.ModelProvider;
 import model.ProgramElement;
 
 public class Viewer {
+	public final static String ID = "project-q1-0919-table-wang.partdescriptor.simpletableviewq10919wang";
 	private TableViewer viewer;
 	private static final Image CHECKED = getImage("checked.gif");
 	private static final Image UNCHECKED = getImage("unchecked.gif");
@@ -59,7 +60,6 @@ public class Viewer {
 		Menu contextMenu = new Menu(viewer.getTable());
 		viewer.getTable().setMenu(contextMenu);
 		createMenuItem(contextMenu);
-		createMenuItem2(contextMenu);
 	}
 
 	private void createMenuItem(Menu contextMenu) {
@@ -75,17 +75,6 @@ public class Viewer {
 					e2.printStackTrace();
 				}
 				viewer.setInput(ModelProvider.INSTANCE.getProgramElements());
-			}
-		});
-	}
-
-	private void createMenuItem2(Menu contextMenu) {
-		final MenuItem menuItem = new MenuItem(contextMenu, SWT.PUSH);
-		menuItem.setText("Refresh");
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-//				viewer.setInput(ModelProvider.INSTANCE.getProgramElements());
-				viewer.refresh();
 			}
 		});
 	}
@@ -216,4 +205,8 @@ public class Viewer {
 	@Focus
 	public void setFocus() {
 	}
+	
+	public void refresh() {
+	      viewer.refresh();
+	   }
 }
