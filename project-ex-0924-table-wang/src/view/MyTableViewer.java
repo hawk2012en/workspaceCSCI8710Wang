@@ -113,7 +113,7 @@ public class MyTableViewer {
       filter = new PersonFilter();
       viewer.addFilter(filter);
       personSorter = new PersonSorter();
-      viewer.setComparator(personSorter);
+      //viewer.setComparator(personSorter);
    }
 
    private void createColumns(final Composite parent, final TableViewer viewer) {
