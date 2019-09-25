@@ -16,7 +16,7 @@ public class ShowImportHandler {
 		String basePath = System.getProperty("user.dir");
 		System.out.println(basePath);
 		ModelProvider.INSTANCE.clearProgramElements();
-		List<String> contents = UtilFile.readFile("D:\\input.csv");
+		List<String> contents = UtilFile.readFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/input.csv");
 		List<List<String>> tableContents = UtilFile.convertTableContents(contents);
 		int lineCount = 0;
 		for (List<String> iList : tableContents) {

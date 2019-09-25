@@ -16,7 +16,7 @@ import util.UtilFile;
 public class ShowExportHandler {
 	@Execute
 	public void execute(Shell shell) {
-//		String basePath = System.getProperty("user.dir");
+//		String basePath = System.getProperty("user.home");
 //		System.out.println(basePath);
     	List<ProgramElement> progElements = ModelProvider.INSTANCE.getProgramElements();
         List<String> contents = new ArrayList<String>();
@@ -28,7 +28,7 @@ public class ShowExportHandler {
             contents.add(progElement.toString());
         }
         try {
-			UtilFile.saveFile("D:\\output.csv", contents);
+			UtilFile.saveFile("/Users/junwang/Documents/UNO/CSCI8710/ClassExercises/output.csv", contents);
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
