@@ -42,9 +42,15 @@ public class PersonSorter extends ViewerComparator {
          rc = p1.getLastName().compareTo(p2.getLastName());
          break;
       case 2:
+          rc = p1.getPhoneNumber().compareTo(p2.getPhoneNumber());
+          break;
+      case 3:
+          rc = p1.getEmail().compareTo(p2.getEmail());
+          break;
+      case 4:
          rc = p1.getGender().compareTo(p2.getGender());
          break;
-      case 3:
+      case 5:
          if (p1.isMarried() == p2.isMarried()) {
             rc = 0;
          } else

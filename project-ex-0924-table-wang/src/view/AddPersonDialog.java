@@ -6,10 +6,8 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -20,9 +18,10 @@ import model.Person;
 public class AddPersonDialog extends TitleAreaDialog {
    private Text   text1;
    private Text   text2;
+   private Text   text3;
+   private Text   text4;
    private Person person;
-   private Button button1;
-   private Combo  combo1;
+ 
 
    public Person getPerson() {
       return person;
@@ -52,15 +51,11 @@ public class AddPersonDialog extends TitleAreaDialog {
       label2.setText("Last Name");
       text2 = new Text(parent, SWT.BORDER);
       Label label3 = new Label(parent, SWT.NONE);
-      label3.setText("Gender");
-      GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_END);
-      gd.horizontalSpan = 2;
-      combo1 = new Combo(parent, SWT.READ_ONLY);
-      combo1.add("male");
-      combo1.add("female");
-      button1 = new Button(parent, SWT.CHECK);
-      button1.setText("Is married?");
-      button1.setLayoutData(gd);
+      label3.setText("Phone Number");
+      text3 = new Text(parent, SWT.BORDER);
+      Label label4 = new Label(parent, SWT.NONE);
+      label4.setText("Email");
+      text4 = new Text(parent, SWT.BORDER);
       return parent;
    }
 
@@ -73,8 +68,8 @@ public class AddPersonDialog extends TitleAreaDialog {
       button.setFont(JFaceResources.getDialogFont());
       button.addSelectionListener(new SelectionAdapter() {
          public void widgetSelected(SelectionEvent e) {
-            if (text1.getText().length() != 0 && text2.getText().length() != 0 && combo1.getItem(combo1.getSelectionIndex()).length() != 0) {
-               person = new Person(text1.getText(), text2.getText(), combo1.getItem(combo1.getSelectionIndex()), button1.getSelection());
+            if (text1.getText().length() != 0 && text2.getText().length() != 0 && text3.getText().length() != 0 && text4.getText().length() != 0) {
+               person = new Person(text1.getText(), text2.getText(), text3.getText(), text4.getText());
                close();
             } else {
                setErrorMessage("Please enter all data");

@@ -6,18 +6,16 @@ import java.util.List;
 import util.UtilFile;
 
 public enum PersonModelProvider {
-   INSTANCE;
-   //INSTANCE(getFilePath()); // Call a constructor with a parameter. 
+//   INSTANCE;
+   INSTANCE(getFilePath()); // Call a constructor with a parameter. 
 
    private List<Person> persons;
 
    private PersonModelProvider() {
       persons = new ArrayList<Person>();
-      persons.add(new Person("Rainer", "Zufall", "male", true));
-      persons.add(new Person("Reiner", "Babbel", "male", true));
-      persons.add(new Person("Marie", "Dortmund", "female", false));
-      persons.add(new Person("Holger", "Adams", "male", true));
-      persons.add(new Person("Juliane", "Adams", "female", true));
+      persons.add(new Person("Emma", "Smith", "402-111-1111", "emmasmith@email.com"));
+      persons.add(new Person("Olivia", "Johnson", "402-111-2222", "oliviajohnson@email.com"));
+      persons.add(new Person("Liam", "Williams", "402-111-3333", "liamwilliams@email.com"));      
    }
    
 // Load the data sets from a file dynamically. 
@@ -27,12 +25,12 @@ public enum PersonModelProvider {
 
 		persons = new ArrayList<Person>();
 		for (List<String> iList : tableContents) {                        			
-			persons.add(new Person(iList.get(0), iList.get(1), iList.get(2), Boolean.parseBoolean(iList.get(3))));
+			persons.add(new Person(iList.get(0), iList.get(1), iList.get(2), iList.get(3)));
 		}
 	}
 
 	private static String getFilePath() {
-		return "/Users/junwang/Documents/UNO/CSCI8710/workspaceCSCI8710/workspaceCSCI8710Wang/simpleTable3InsertDeleteExample/input.csv";
+		return "D:\\input_init.csv";
 	}
 
    public List<Person> getPersons() {

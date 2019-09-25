@@ -28,14 +28,14 @@ import org.eclipse.swt.widgets.Text;
 
 import model.PersonModelProvider;
 import model.editing.FirstNameEditingSupport;
-import model.editing.GenderEditingSupport;
+import model.editing.PhoneNumberEditingSupport;
 import model.editing.LastNameEditingSupport;
-import model.editing.MarriedEditingSupport;
+import model.editing.EmailEditingSupport;
 import model.filter.PersonFilter;
 import model.labelprovider.FirstNameLabelProvider;
-import model.labelprovider.GenderLabelProvider;
+import model.labelprovider.PhoneNumberLabelProvider;
 import model.labelprovider.LastNameLabelProvider;
-import model.labelprovider.MarriedLabelProvider;
+import model.labelprovider.EmailLabelProvider;
 import model.sorter.PersonSorter;
 
 public class MyTableViewer {
@@ -117,8 +117,8 @@ public class MyTableViewer {
    }
 
    private void createColumns(final Composite parent, final TableViewer viewer) {
-      String[] titles = { "First name", "Last name", "Gender", "Married" };
-      int[] bounds = { 100, 100, 100, 100 };
+      String[] titles = { "First name", "Last name", "Phone Number", "Email" };
+      int[] bounds = { 100, 100, 100, 200 };
 
       TableViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
       col.setLabelProvider(new FirstNameLabelProvider(searchText));
@@ -129,12 +129,12 @@ public class MyTableViewer {
       col.setEditingSupport(new LastNameEditingSupport(viewer));
 
       col = createTableViewerColumn(titles[2], bounds[2], 2);
-      col.setLabelProvider(new GenderLabelProvider());
-      col.setEditingSupport(new GenderEditingSupport(viewer));
+      col.setLabelProvider(new PhoneNumberLabelProvider(searchText));
+      col.setEditingSupport(new PhoneNumberEditingSupport(viewer));
 
       col = createTableViewerColumn(titles[3], bounds[3], 3);
-      col.setLabelProvider(new MarriedLabelProvider());
-      col.setEditingSupport(new MarriedEditingSupport(viewer));
+      col.setLabelProvider(new EmailLabelProvider(searchText));
+      col.setEditingSupport(new EmailEditingSupport(viewer));
    }
 
    private TableViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {
