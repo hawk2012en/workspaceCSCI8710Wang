@@ -16,6 +16,10 @@ public enum ModelProvider {
    public void addProgramElements(String pkgName, String className, String methodName, boolean isRetVoid, int parmSize) {
       progElements.add(new ProgramElement(pkgName, className, methodName, isRetVoid, parmSize));
    }
+   
+   public void addProgramElements(ProgramElement programElement) {
+	      progElements.add(programElement);
+	   }
 
    public List<ProgramElement> getProgramElements() {
       return progElements;
