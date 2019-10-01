@@ -15,7 +15,7 @@ public enum PersonModelProvider {
       persons = new ArrayList<Person>();
       persons.add(new Person("Emma", "Smith", "402-111-1111", "emmasmith@email.com"));
       persons.add(new Person("Olivia", "Johnson", "402-111-2222", "oliviajohnson@email.com"));
-      persons.add(new Person("Liam", "Williams", "402-111-3333", "liamwilliams@email.com"));      
+      persons.add(new Person("Liam", "Williams", "402-111-3333", "liamwilliams@email.com"));       
    }
    
 // Load the data sets from a file dynamically. 

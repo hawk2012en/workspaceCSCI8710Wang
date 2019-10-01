@@ -8,10 +8,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
-public class UtilFile extends JFrame{
+public class UtilFile{
 
    public static List<List<String>> convertTableContents(List<String> contents) {
       List<List<String>> tableContents = new ArrayList<List<String>>();
@@ -62,32 +60,5 @@ public class UtilFile extends JFrame{
 		printWriter.close();
 	}
 
-   public String getInputPathString() {      
-      JFileChooser fileChooser = new JFileChooser();
-      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-      int result = fileChooser.showOpenDialog(this);      
-      File selectedFile = null;
-      String filePath = "";
-      if (result == JFileChooser.APPROVE_OPTION) {
-          selectedFile = fileChooser.getSelectedFile();
-          filePath = selectedFile.getAbsolutePath();
-          System.out.println("Selected file: " + filePath);
-      }    
-      return filePath;
-   }
-
-   public String getOutputPathString() {
-	   JFileChooser fileChooser = new JFileChooser();
-	   fileChooser.setDialogTitle("Specify a file to save");  
-	   fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-	   int userSelection = fileChooser.showSaveDialog(this);
-	   File fileToSave = null;
-	   String filePath = "";
-	   if (userSelection == JFileChooser.APPROVE_OPTION) {
-	       fileToSave = fileChooser.getSelectedFile();
-	       filePath = fileToSave.getAbsolutePath();
-	       System.out.println("Save as file: " + filePath);
-	   }
-	   return filePath;      
-   }   
+   
 }

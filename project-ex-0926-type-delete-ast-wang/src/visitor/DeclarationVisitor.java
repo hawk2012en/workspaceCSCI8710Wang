@@ -44,7 +44,7 @@ public class DeclarationVisitor extends ASTVisitor {
    public boolean visit(MethodDeclaration methodDecl) {
       methodName = methodDecl.getName().getIdentifier();
       int parmSize = methodDecl.parameters().size();
-      Type returnType = methodDecl.getReturnType2();
+      Type returnType = methodDecl.getReturnType2();      
       boolean isRetVoid = false;
       if (returnType.isPrimitiveType()) {
          PrimitiveType pt = (PrimitiveType) returnType;
