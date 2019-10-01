@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -19,15 +21,17 @@ public class ShowHighestNumberHandler {
 
 		String filePath = getInputPathString(shell);
 		List<String> contents = UtilFile.readFile(filePath);
-		List<Integer> contents_integer = new ArrayList<Integer>();
-		for (String str : contents) {
+		List<Integer> contents_integer = new ArrayList<Integer>();		
+/*		for (String str : contents) {
 			contents_integer.add(Integer.parseInt(str));
-		}
+		}*/
+		contents_integer = contents.stream().map(Integer::parseInt).collect(Collectors.toList());
 		Collections.sort(contents_integer, Collections.reverseOrder());
 		contents.clear();
-		for (Integer number : contents_integer) {
+/*		for (Integer number : contents_integer) {
 			contents.add(number.toString());
-		}
+		}*/
+		contents = contents_integer.stream().map(Object::toString).collect(Collectors.toList());
 		filePath = getOutputPathString(shell);
 		try {
 			UtilFile.saveFile(filePath, contents);
