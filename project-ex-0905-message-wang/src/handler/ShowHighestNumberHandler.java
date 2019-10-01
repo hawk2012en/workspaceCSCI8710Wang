@@ -1,6 +1,7 @@
 
 package handler;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -18,7 +19,15 @@ public class ShowHighestNumberHandler {
 
 		String filePath = getInputPathString(shell);
 		List<String> contents = UtilFile.readFile(filePath);
-		Collections.sort(contents, Collections.reverseOrder());
+		List<Integer> contents_integer = new ArrayList<Integer>();
+		for (String str : contents) {
+			contents_integer.add(Integer.parseInt(str));
+		}
+		Collections.sort(contents_integer, Collections.reverseOrder());
+		contents.clear();
+		for (Integer number : contents_integer) {
+			contents.add(number.toString());
+		}
 		filePath = getOutputPathString(shell);
 		try {
 			UtilFile.saveFile(filePath, contents);
