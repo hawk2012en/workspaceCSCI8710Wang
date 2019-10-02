@@ -32,16 +32,16 @@ public enum ModelProvider {
 
       // group 3
       Person p3 = new Person("Customer Group 3", p2);
-      Person p3a = new Person("Customer 3-a", p2);
-      Person p3b = new Person("Customer 3-b", p2);
+      Person p3a = new Person("Customer 3-a", p3);
+      Person p3b = new Person("Customer 3-b", p3);
       p3.add(p3a);
       p3.add(p3b);
       p2.add(p3); // p2 links to p3
 
       // group 4
-      Person p4 = new Person("Customer Group 4", p2);
-      Person p4a = new Person("Customer 4-a", p2);
-      Person p4b = new Person("Customer 4-b", p2);
+      Person p4 = new Person("Customer Group 4", p3);
+      Person p4a = new Person("Customer 4-a", p4);
+      Person p4b = new Person("Customer 4-b", p4);
       p4.add(p4a);
       p4.add(p4b);
       p3.add(p4); // p3 links to p4
