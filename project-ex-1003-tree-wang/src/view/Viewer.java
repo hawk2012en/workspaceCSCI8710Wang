@@ -30,6 +30,7 @@ import model.ProgramElement;
 import view.provider.MethodLabelProvider;
 import view.provider.ProgElemContentProvider;
 import view.provider.ProgElemLabelProvider;
+import view.provider.StartPosLabelProvider;
 
 public class Viewer {
    public static final String ID = "simpletreeviewerastexample.partdescriptor.simpleasttreeview";
@@ -44,8 +45,8 @@ public class Viewer {
    }
 
    private void createProgElemColumns() {
-      String[] titles = { "Program Element", "Method Parameter" };
-      int[] bounds = { 300, 100 };
+      String[] titles = { "Program Element", "Method Parameter", "Location" };
+      int[] bounds = { 300, 100, 100 };
 
       viewer.setContentProvider(new ProgElemContentProvider());
       viewer.getTree().setHeaderVisible(true);
@@ -57,6 +58,10 @@ public class Viewer {
       // the second
       col = createTableViewerColumn(titles[1], bounds[1], 1);
       col.setLabelProvider(new DelegatingStyledCellLabelProvider(new MethodLabelProvider()));
+      
+      // the third
+      col = createTableViewerColumn(titles[2], bounds[2], 2);
+      col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartPosLabelProvider()));
    }
 
    private TreeViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {

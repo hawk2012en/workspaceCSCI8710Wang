@@ -56,6 +56,7 @@ public class DeclarationVisitor extends ASTVisitor {
       this.methodElem.setParameters(methodDecl.parameters());
       this.methodElem.setClassName(className);
       this.methodElem.setPkgName(pkgName);
+      this.methodElem.setStartPos(methodDecl.getStartPosition());
       this.classElem.add(methodElem);
 
       return super.visit(methodDecl);

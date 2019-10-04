@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SimpleTreeViewerASTExample
-Bundle-SymbolicName: project-ex-1003-simpleTreeAST-wang;singleton:=true
+Bundle-SymbolicName: project-ex-1003-tree-wang;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: javax.inject;bundle-version="0.0.0",
  org.eclipse.core.runtime;bundle-version="0.0.0",
