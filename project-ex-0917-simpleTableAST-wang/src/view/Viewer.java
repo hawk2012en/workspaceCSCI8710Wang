@@ -26,9 +26,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -44,6 +46,7 @@ public class Viewer {
    private TableViewer viewer;
    private static final Image CHECKED = getImage("checked.gif");
    private static final Image UNCHECKED = getImage("unchecked.gif");
+   Shell shell;
 
    /**
     * Create contents of the view part.
@@ -58,6 +61,7 @@ public class Viewer {
       searchText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
       createViewer(parent);
       createContextMenu(parent);
+      shell = new Shell();
    }
 
    private void createContextMenu(Composite parent) {
@@ -97,9 +101,11 @@ public class Viewer {
 	            for (ProgramElement progElement : progElements) {
 	                //System.out.println(progElement);
 	                contents.add(progElement.toString());
-	            }
+	            }	    		
+	    		String filePath = getOutputPathString(shell);
 	            try {
-	    			UtilFile.saveFile("D:\\output.csv", contents);
+	    			//UtilFile.saveFile("D:\\output.csv", contents);
+	    			UtilFile.saveFile(filePath, contents);
 	    		} catch (IOException e2) {
 	    			// TODO Auto-generated catch block
 	    			e2.printStackTrace();
@@ -225,6 +231,15 @@ public class Viewer {
       ImageDescriptor image = ImageDescriptor.createFromURL(url);
       return image.createImage();
    }
+   
+   private String getOutputPathString(Shell shell) {
+		FileDialog fd = new FileDialog(shell, SWT.SAVE);
+		fd.setOverwrite(true);
+		fd.setText("Save file:");
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
 
    @PreDestroy
    public void dispose() {
