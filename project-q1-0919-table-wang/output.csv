@@ -1,0 +1,7 @@
+Package Name, Class Name, Method Name, is Return Void, is Public Modifier
+pkg1, ClassA, m1, Yes, No
+pkg1, ClassA, m2, Yes, No
+pkg1, ClassA, m3, Yes, No
+pkg2, ClassB, foo, Yes, Yes
+pkg2, ClassB, bar, Yes, Yes
+pkg2, ClassB, baz, Yes, Yes

@@ -1,0 +1,6 @@
+org.pkg1,NewClassA,newM11,true,false
+org.pkg1,NewClassA,newM12,true,false
+org.pkg1,NewClassA,newM13,true,false
+org.pkg2,NewClassB,newfoo1,true,true
+org.pkg2,NewClassB,newbar1,true,true
+org.pkg2,NewClassB,newbaz1,true,true

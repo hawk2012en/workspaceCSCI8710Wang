@@ -51,7 +51,7 @@ public class ShowHighestNumberHandler {
 		MessageDialog.openInformation(shell, "Title", output);
 	}
 
-	public String getInputPathString(Shell shell) {
+	private String getInputPathString(Shell shell) {
 		FileDialog fd = new FileDialog(shell, SWT.OPEN);
 		fd.setText("Open .csv files");
 		String[] filterExt = { "*.csv" };
@@ -63,7 +63,7 @@ public class ShowHighestNumberHandler {
 		return filePath;
 	}
 
-	public String getOutputPathString(Shell shell) {
+	private String getOutputPathString(Shell shell) {
 		FileDialog fd = new FileDialog(shell, SWT.SAVE);
 		fd.setOverwrite(true);
 		fd.setText("Save file:");
