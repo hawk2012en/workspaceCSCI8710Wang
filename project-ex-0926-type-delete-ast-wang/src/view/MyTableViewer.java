@@ -92,7 +92,7 @@ public class MyTableViewer {
          @Override
          public void selectionChanged(SelectionChangedEvent event) {
             IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-            Object firstElement = selection.getFirstElement();
+            Object firstElement = selection.getFirstElement();           
             selectionService.setSelection(selection.size() == 1 ? //
             firstElement : selection.toArray());
          }

@@ -20,8 +20,8 @@ public class UtilConsole {
          if (name.equals(existing[i].getName()))
             return (MessageConsole) existing[i];
       //no console found, so create a new one
-      MessageConsole myConsole = new MessageConsole(name, null);
-      conMan.addConsoles(new IConsole[] { myConsole });
+      MessageConsole myConsole = new MessageConsole(name, null);    
+      conMan.addConsoles(new IConsole[] { myConsole });      
       return myConsole;
    }
 
