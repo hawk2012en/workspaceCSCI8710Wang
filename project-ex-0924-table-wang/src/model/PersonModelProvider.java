@@ -3,11 +3,16 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+
 import util.UtilFile;
 
 public enum PersonModelProvider {
 //   INSTANCE;
-   INSTANCE(getFilePath()); // Call a constructor with a parameter. 
+//   INSTANCE(getFilePath()); // Call a constructor with a parameter. 
+	INSTANCE(getInputPathString()); // Call a constructor with a parameter.
 
    private List<Person> persons;
 
@@ -29,11 +34,24 @@ public enum PersonModelProvider {
 		}
 	}
 
-	private static String getFilePath() {
+	private static String getFilePath() {		
 		return "D:\\input_init.csv";
 	}
 
    public List<Person> getPersons() {
       return persons;
    }
+   
+	private static String getInputPathString() {		
+	    final Shell shell = new Shell();
+		FileDialog fd = new FileDialog(shell, SWT.OPEN);
+		fd.setText("Open .csv files");
+		String[] filterExt = { "*.csv" };
+		String[] filterNames = { "csv files" };
+		fd.setFilterExtensions(filterExt);
+		fd.setFilterNames(filterNames);
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
 }
