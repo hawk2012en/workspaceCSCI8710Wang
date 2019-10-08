@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -20,13 +19,13 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
 import model.ModelProvider;
 import model.Person;
+import util.MsgUtil;
 import view.provider.ViewPersonContentProvider;
 import view.provider.ViewPersonLabelProvider;
 
@@ -34,8 +33,7 @@ import view.provider.ViewPersonLabelProvider;
  * @since J2SE-1.8
  */
 public class Viewer {
-	private TreeViewer viewer;
-	Shell shell;
+	private TreeViewer viewer;	
 
 	@PostConstruct
 	public void postConstruct(Composite parent) {
@@ -76,9 +74,8 @@ public class Viewer {
 				viewer.setExpandedState(selectedNode, !viewer.getExpandedState(selectedNode));
 				if (selectedNode instanceof Person) {
 					Person selectedPerson = (Person) selectedNode;
-					// System.out.println(selectedPerson.getName());
-					MessageDialog.openInformation(shell, "Info",
-							"# of Child Nodes is: " + String.valueOf(getNumChildren(selectedPerson)));
+					// System.out.println(selectedPerson.getName());					
+					MsgUtil.openInfo("Info", "# of Child Nodes is: " + String.valueOf(getNumChildren(selectedPerson)));
 				}
 			}
 		});
