@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import util.UtilFile;
 
@@ -19,7 +17,8 @@ public class ShowHighestNumberHandler {
 		String basePath = System.getProperty("user.dir");
 		System.out.println(basePath);
 
-		String filePath = getInputPathString(shell);
+		//String filePath = getInputPathString(shell);
+		String filePath = UtilFile.getInputPathString();
 		List<String> contents = UtilFile.readFile(filePath);
 		List<Integer> contents_integer = new ArrayList<Integer>();		
 /*		for (String str : contents) {
@@ -32,7 +31,8 @@ public class ShowHighestNumberHandler {
 			contents.add(number.toString());
 		}*/
 		contents = contents_integer.stream().map(Object::toString).collect(Collectors.toList());
-		filePath = getOutputPathString(shell);
+		//filePath = getOutputPathString(shell);
+		filePath = UtilFile.getOutputPathString();
 		try {
 			UtilFile.saveFile(filePath, contents);
 		} catch (IOException e) {
@@ -50,26 +50,4 @@ public class ShowHighestNumberHandler {
 
 		MessageDialog.openInformation(shell, "Title", output);
 	}
-
-	private String getInputPathString(Shell shell) {
-		FileDialog fd = new FileDialog(shell, SWT.OPEN);
-		fd.setText("Open .csv files");
-		String[] filterExt = { "*.csv" };
-		String[] filterNames = { "csv files" };
-		fd.setFilterExtensions(filterExt);
-		fd.setFilterNames(filterNames);
-		String filePath = "";
-		filePath = fd.open();
-		return filePath;
-	}
-
-	private String getOutputPathString(Shell shell) {
-		FileDialog fd = new FileDialog(shell, SWT.SAVE);
-		fd.setOverwrite(true);
-		fd.setText("Save file:");
-		String filePath = "";
-		filePath = fd.open();
-		return filePath;
-	}
-
 }

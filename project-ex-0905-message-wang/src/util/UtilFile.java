@@ -8,8 +8,17 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 
 public class UtilFile{
+	@Inject
+	@Named(IServiceConstants.ACTIVE_SHELL)
+	static Shell shell = new Shell();
 
    public static List<List<String>> convertTableContents(List<String> contents) {
       List<List<String>> tableContents = new ArrayList<List<String>>();
@@ -60,5 +69,24 @@ public class UtilFile{
 		printWriter.close();
 	}
 
-   
+	public static String getInputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.OPEN);
+		fd.setText("Open .csv files");
+		String[] filterExt = { "*.csv" };
+		String[] filterNames = { "csv files" };
+		fd.setFilterExtensions(filterExt);
+		fd.setFilterNames(filterNames);
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
+
+	public static String getOutputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.SAVE);
+		fd.setOverwrite(true);
+		fd.setText("Save file:");
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
 }
