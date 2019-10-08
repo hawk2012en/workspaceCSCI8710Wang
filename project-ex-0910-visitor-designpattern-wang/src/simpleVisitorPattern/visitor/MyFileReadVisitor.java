@@ -14,7 +14,7 @@ public class MyFileReadVisitor extends CartPartVisitor {
    private String filePath = System.getProperty("user.dir");
    private List<String> contents;
 
-   public MyFileReadVisitor() {
+   public MyFileReadVisitor() {	         
       contents = UtilFile.readFile(filePath + File.separator + "inputdata.txt");
    }
 

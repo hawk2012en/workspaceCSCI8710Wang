@@ -8,52 +8,39 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 
-// *****************************************************
-// Add JUnit library:
-//   Select Your Eclipse Project >> Java Build Path >>
-//   Libraries Tab >> Add Libraries.. >> Select JUnit.
-// Run this program:
-//   Run As >> JUnit Test
-//*****************************************************
-import org.junit.Test;
+public class UtilFile{
+	@Inject
+	@Named(IServiceConstants.ACTIVE_SHELL)
+	static Shell shell = new Shell();
 
-public class UtilFile {
+   public static List<List<String>> convertTableContents(List<String> contents) {
+      List<List<String>> tableContents = new ArrayList<List<String>>();
 
-	@Test
-	public void testReadFileConvertTableContents() {
-		List<String> contents = UtilFile.readFile("inputdata.txt");
-		List<List<String>> tableContents = UtilFile.convertTableContents(contents);
+      for (int i = 0; i < contents.size(); i++) {
+         String line = contents.get(i);
+         if (line == null || line.isEmpty()) {
+            continue;
+         }
 
-		for (List<String> iList : tableContents) {
-			System.out.println("[DBG] Show the elements:");
-			for (String iElem : iList) {
-				System.out.println("[DBG]   Elem -> " + iElem);
-			}
-		}
-	}
+         List<String> listElements = new ArrayList<String>();
+         String[] splitedLine = line.split(":");
 
-	public static List<List<String>> convertTableContents(List<String> contents) {
-		List<List<String>> tableContents = new ArrayList<List<String>>();
-
-		for (int i = 0; i < contents.size(); i++) {
-			String line = contents.get(i);
-			if (line == null || line.isEmpty()) {
-				continue;
-			}
-
-			List<String> listElements = new ArrayList<String>();
-			String[] splitedLine = line.split(",");
-
-			for (int j = 0; j < splitedLine.length; j++) {
-				String iElem = splitedLine[j].trim();
-				listElements.add(iElem);
-			}
-			tableContents.add(listElements);
-		}
-		return tableContents;
-	}
-
+         for (int j = 0; j < splitedLine.length; j++) {
+            String iElem = splitedLine[j].trim();
+            listElements.add(iElem);
+         }
+         tableContents.add(listElements);
+      }
+      return tableContents;
+   }
+   
 	public static List<String> readFile(String filePath) {
 		List<String> contents = new ArrayList<String>();
 		File file = new File(filePath);
@@ -80,5 +67,26 @@ public class UtilFile {
 			printWriter.print(str + System.lineSeparator());
 		}
 		printWriter.close();
+	}
+
+	public static String getInputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.OPEN);
+		fd.setText("Open .csv files");
+		String[] filterExt = { "*.csv" };
+		String[] filterNames = { "csv files" };
+		fd.setFilterExtensions(filterExt);
+		fd.setFilterNames(filterNames);
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
+
+	public static String getOutputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.SAVE);
+		fd.setOverwrite(true);
+		fd.setText("Save file:");
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
 	}
 }

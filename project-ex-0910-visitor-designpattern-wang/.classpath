@@ -3,5 +3,49 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/UNO/CSCI8710/Downloads/eclipse/plugins/javax.inject_1.0.0.v20091030.jar" sourcepath="C:/UNO/CSCI8710/Downloads/eclipse/plugins/javax.inject.source_1.0.0.v20091030.jar">
+		<accessrules>
+			<accessrule kind="accessible" pattern="javax/inject/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/UNO/CSCI8710/Downloads/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.111.0.v20190605-1801.jar" sourcepath="C:/UNO/CSCI8710/Downloads/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.111.0.v20190605-1801.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/UNO/CSCI8710/Downloads/eclipse/plugins/org.eclipse.platform.doc.isv_4.12.0.v20190605-0405.jar!/reference/api"/>
+		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/accessibility/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/awt/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/browser/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/custom/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/dnd/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/events/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/graphics/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/layout/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/opengl/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/printing/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/program/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/widgets/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/image/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/swt/ole/win32/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/gdip/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/ole/win32/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/win32/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/swt/internal/opengl/win32/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/UNO/CSCI8710/Downloads/eclipse/plugins/org.eclipse.e4.ui.services_1.3.500.v20190513-2118.jar" sourcepath="C:/UNO/CSCI8710/Downloads/eclipse/plugins/org.eclipse.e4.ui.services.source_1.3.500.v20190513-2118.jar">
+		<accessrules>
+			<accessrule kind="discouraged" pattern="org/eclipse/e4/ui/internal/services/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/e4/ui/services/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/e4/ui/services/events/*"/>
+			<accessrule kind="accessible" pattern="org/eclipse/e4/ui/services/help/*"/>
+			<accessrule kind="discouraged" pattern="org/eclipse/e4/ui/services/internal/events/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
