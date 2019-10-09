@@ -2,31 +2,21 @@
 package handler;
 
 import java.util.List;
-
-import javax.inject.Inject;
-
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
-
 import model.ModelProvider;
+import util.MsgUtil;
 import util.UtilFile;
 import view.Viewer;
 
-public class ShowImportHandler {
-	@Inject
-	private EPartService epartService;
-	
+public class ShowImportHandler {			
 	@Execute
-	public void execute(Shell shell) {
+	public void execute(EPartService epartService) {
 		String basePath = System.getProperty("user.dir");
 		System.out.println(basePath);
 		ModelProvider.INSTANCE.clearProgramElements();
-		String filePath = getInputPathString(shell);				
+		String filePath = UtilFile.getInputPathString();				
 		//List<String> contents = UtilFile.readFile("D:\\input.csv");
 		List<String> contents = UtilFile.readFile(filePath);
 		List<List<String>> tableContents = UtilFile.convertTableContents(contents);
@@ -50,19 +40,8 @@ public class ShowImportHandler {
 			Viewer v = (Viewer) findPartObj;
 			v.refresh();
 		}
-		
-		MessageDialog.openInformation(shell, "Import", "Info: Imported " + lineCount + " lines.");
+				
+		MsgUtil.openInfo("Import", "Info: Imported " + lineCount + " lines.");
 	}	
 	
-	private String getInputPathString(Shell shell) {
-		FileDialog fd = new FileDialog(shell, SWT.OPEN);
-		fd.setText("Open .csv files");
-		String[] filterExt = { "*.csv" };
-		String[] filterNames = { "csv files" };
-		fd.setFilterExtensions(filterExt);
-		fd.setFilterNames(filterNames);
-		String filePath = "";
-		filePath = fd.open();
-		return filePath;
-	}
 }

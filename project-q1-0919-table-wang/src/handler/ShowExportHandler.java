@@ -4,20 +4,15 @@ package handler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
-
 import model.ModelProvider;
 import model.ProgramElement;
+import util.MsgUtil;
 import util.UtilFile;
 
 public class ShowExportHandler {
 	@Execute
-	public void execute(Shell shell) {
+	public void execute() {
 //		String basePath = System.getProperty("user.home");
 //		System.out.println(basePath);
     	List<ProgramElement> progElements = ModelProvider.INSTANCE.getProgramElements();
@@ -29,7 +24,7 @@ public class ShowExportHandler {
             //System.out.println(progElement);
             contents.add(progElement.toString());
         }
-        String filePath = getOutputPathString(shell);
+        String filePath = UtilFile.getOutputPathString();
         try {
 			//UtilFile.saveFile("D:\\output.csv", contents);
 			UtilFile.saveFile(filePath, contents);
@@ -38,17 +33,8 @@ public class ShowExportHandler {
 			e2.printStackTrace();
 		}
 		int linesExported = contents.size() - 1;
-		
-		MessageDialog.openInformation(shell, "Export", "Info: Exported " + linesExported + " lines.");
-	}
-	
-	private String getOutputPathString(Shell shell) {
-		FileDialog fd = new FileDialog(shell, SWT.SAVE);
-		fd.setOverwrite(true);
-		fd.setText("Save file:");
-		String filePath = "";
-		filePath = fd.open();
-		return filePath;
+				
+		MsgUtil.openInfo("Export", "Info: Exported " + linesExported + " lines.");
 	}
 		
 }

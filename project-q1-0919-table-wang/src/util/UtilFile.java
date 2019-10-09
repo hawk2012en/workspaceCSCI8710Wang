@@ -8,8 +8,17 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 
-public class UtilFile {
+public class UtilFile{
+	@Inject
+	@Named(IServiceConstants.ACTIVE_SHELL)
+	static Shell shell = new Shell();
 
    public static List<List<String>> convertTableContents(List<String> contents) {
       List<List<String>> tableContents = new ArrayList<List<String>>();
@@ -31,32 +40,53 @@ public class UtilFile {
       }
       return tableContents;
    }
+   
+	public static List<String> readFile(String filePath) {
+		List<String> contents = new ArrayList<String>();
+		File file = new File(filePath);
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(file);
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				contents.add(line);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if (scanner != null)
+				scanner.close();
+		}
+		return contents;
+	}
 
-   public static List<String> readFile(String filePath) {
-      List<String> contents = new ArrayList<String>();
-      File file = new File(filePath);
-      Scanner scanner = null;
-      try {
-         scanner = new Scanner(file);
-         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            contents.add(line);
-         }
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
-      } finally {
-         if (scanner != null)
-            scanner.close();
-      }
-      return contents;
-   }
+	public static void saveFile(String filePath, List<String> contents) throws IOException {
+		FileWriter fileWriter = new FileWriter(filePath);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+		for (String str : contents) {
+			printWriter.print(str + System.lineSeparator());
+		}
+		printWriter.close();
+	}
 
-   public static void saveFile(String filePath, List<String> contents) throws IOException {
-      FileWriter fileWriter = new FileWriter(filePath);
-      PrintWriter printWriter = new PrintWriter(fileWriter);
-      for (String str : contents) {
-         printWriter.print(str + System.lineSeparator());
-      }
-      printWriter.close();
-   }
+	public static String getInputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.OPEN);
+		fd.setText("Open .csv files");
+		String[] filterExt = { "*.csv" };
+		String[] filterNames = { "csv files" };
+		fd.setFilterExtensions(filterExt);
+		fd.setFilterNames(filterNames);
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
+
+	public static String getOutputPathString() {
+		FileDialog fd = new FileDialog(shell, SWT.SAVE);
+		fd.setOverwrite(true);
+		fd.setText("Save file:");
+		String filePath = "";
+		filePath = fd.open();
+		return filePath;
+	}
 }
