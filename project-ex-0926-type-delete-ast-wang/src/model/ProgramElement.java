@@ -72,6 +72,7 @@ public class ProgramElement {
 
 	@Override
 	public String toString() {
-		return pkgName + "." + className + "." + methodName;
+		String isVoid = isReturnVoid ? "Yes" : "No";		
+		return pkgName + ", " + className + ", " + methodName + ", " + isVoid + ", " + parameterSize;
 	}
 }
