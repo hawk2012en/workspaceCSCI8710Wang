@@ -2,37 +2,26 @@
 package handler;
 
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import model.Person;
 import model.PersonModelProvider;
+import util.MsgUtil;
 import util.UtilFile;
-//import util.MsgUtil;
+
 //import view.AddPersonDialog;
 import view.MyTableViewer;
 
-public class AddPersonHandler {
-	@Inject
-	private EPartService epartService;
-	@Inject
-	@Named(IServiceConstants.ACTIVE_SHELL)	
-	Shell shell;
-	
+public class AddPersonHandler {	
 	@Execute
-	public void execute() {
+	public void execute(EPartService epartService) {
 		// MsgUtil.openWarning("Hint", "Class Exercise!!");
-		PersonModelProvider personInstance = PersonModelProvider.INSTANCE;
-		String filePath = getInputPathString(shell);
+		PersonModelProvider personInstance = PersonModelProvider.INSTANCE;		
+		String filePath = UtilFile.getInputPathString();
 		List<String> contents = UtilFile.readFile(filePath);
 		//List<String> contents = UtilFile.readFile("D:\\input_add.csv");
 		List<List<String>> tableContents = UtilFile.convertTableContents(contents);
@@ -51,7 +40,7 @@ public class AddPersonHandler {
 			v.refresh();
 		}
 		
-		MessageDialog.openInformation(shell, "Add", "Info: Added " + lineCount + " more records.");
+		MsgUtil.openInfo("Add", "Info: Added " + lineCount + " more records.");
 
 	}
 	/*
@@ -68,15 +57,4 @@ public class AddPersonHandler {
 	 * 
 	 * }
 	 */
-	private String getInputPathString(Shell shell) {
-		FileDialog fd = new FileDialog(shell, SWT.OPEN);
-		fd.setText("Open .csv files");
-		String[] filterExt = { "*.csv" };
-		String[] filterNames = { "csv files" };
-		fd.setFilterExtensions(filterExt);
-		fd.setFilterNames(filterNames);
-		String filePath = "";
-		filePath = fd.open();
-		return filePath;
-	}
 }
