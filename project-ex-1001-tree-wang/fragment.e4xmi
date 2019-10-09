@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_8r5XULnSEeaRK8OaI-UrKw">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_8r5XULnSEeaRK8OaI-UrKw">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_9lRPULnSEeaRK8OaI-UrKw" featurename="descriptors" parentElementId="org.eclipse.e4.legacy.ide.application">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_BEr8gLnTEeaRK8OaI-UrKw" elementId="simpletreeviewerexample.partdescriptor.simpletreeview" label="Simple Tree Wang" iconURI="platform:/plugin/project-ex-1001-tree-wang/icons/sample.png" category="General" contributionURI="bundleclass://project-ex-1001-tree-wang/view.Viewer"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_BEr8gLnTEeaRK8OaI-UrKw" elementId="simpletreeviewerexample.partdescriptor.simpletreeview" label="Simple Tree Wang" iconURI="platform:/plugin/project-ex-1001-tree-wang/icons/sample.png" category="General" contributionURI="bundleclass://project-ex-1001-tree-wang/view.Viewer">
+      <menus xsi:type="menu:PopupMenu" xmi:id="_2WL3gOq2EemP56SVQCB3ig" elementId="project-ex-1001-tree-wang.popupmenu.mypopupmenu" label="My Popup Menu">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_85elYOq2EemP56SVQCB3ig" elementId="project-ex-1001-tree-wang.handledmenuitem.export" label="Export" command="_FiebgOq3EemP56SVQCB3ig"/>
+      </menus>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_AMvF4Oq3EemP56SVQCB3ig" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_FiebgOq3EemP56SVQCB3ig" elementId="project-ex-1001-tree-wang.command.export" commandName="Export"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_HeYukOq3EemP56SVQCB3ig" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_KHYxIOq3EemP56SVQCB3ig" elementId="project-ex-1001-tree-wang.handler.0" contributionURI="bundleclass://project-ex-1001-tree-wang/handler.ExportHandler" command="_FiebgOq3EemP56SVQCB3ig"/>
   </fragments>
 </fragment:ModelFragments>

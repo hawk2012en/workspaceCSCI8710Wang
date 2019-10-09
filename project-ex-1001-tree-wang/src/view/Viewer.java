@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -33,10 +34,12 @@ import view.provider.ViewPersonLabelProvider;
  * @since J2SE-1.8
  */
 public class Viewer {
-	private TreeViewer viewer;	
+	public final static String POPUPMENU = "project-ex-1001-tree-wang.popupmenu.mypopupmenu";
+	
+	private TreeViewer viewer;		
 
 	@PostConstruct
-	public void postConstruct(Composite parent) {
+	public void postConstruct(Composite parent, EMenuService menuService) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new ViewPersonContentProvider());
 		viewer.setLabelProvider(new DelegatingStyledCellLabelProvider(new ViewPersonLabelProvider()));
@@ -44,7 +47,9 @@ public class Viewer {
 		Person[] array = data.toArray(new Person[data.size()]);
 		viewer.setInput(array);
 		addListener();
-	}
+		 // register context menu on the table
+	    menuService.registerContextMenu(viewer.getControl(), POPUPMENU);
+	}	
 
 	private void addListener() {
 		Tree tree = (Tree) viewer.getControl();
