@@ -5,15 +5,18 @@
       <menus xsi:type="menu:PopupMenu" xmi:id="_W6KpYN8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.popupmenu.mypopupmenu" label="My Popup Menu">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_d_GrwN8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.handledmenuitem.add" label="Add" command="_rIcgkN8tEem2ndDi0vHkUA"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_gZfDgN8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.handledmenuitem.delete" label="Delete" command="_zaRz4N8tEem2ndDi0vHkUA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_oc950OpGEemX66_i9QPh4Q" elementId="project-ex-0924-table-wang.handledmenuitem.export" label="Export" command="_jSGXcOpGEemX66_i9QPh4Q"/>
       </menus>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_mk75IN8tEem2ndDi0vHkUA" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_rIcgkN8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.command.addpersoncommand" commandName="Add Person Command"/>
     <elements xsi:type="commands:Command" xmi:id="_zaRz4N8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.command.deletepersoncommand" commandName="Delete Person Command"/>
+    <elements xsi:type="commands:Command" xmi:id="_jSGXcOpGEemX66_i9QPh4Q" elementId="project-ex-0924-table-wang.command.exportpersoncommand" commandName="Export Person Command"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_6FB0oN8tEem2ndDi0vHkUA" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Handler" xmi:id="_921SUN8tEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.handler.0" contributionURI="bundleclass://project-ex-0924-table-wang/handler.AddPersonHandler" command="_rIcgkN8tEem2ndDi0vHkUA"/>
     <elements xsi:type="commands:Handler" xmi:id="_LK0Q4N8uEem2ndDi0vHkUA" elementId="project-ex-0924-table-wang.handler.1" contributionURI="bundleclass://project-ex-0924-table-wang/handler.DelPersonHandler" command="_zaRz4N8tEem2ndDi0vHkUA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_swDfoOpGEemX66_i9QPh4Q" elementId="project-ex-0924-table-wang.handler.2" contributionURI="bundleclass://project-ex-0924-table-wang/handler.ExportPersonHandler" command="_jSGXcOpGEemX66_i9QPh4Q"/>
   </fragments>
 </fragment:ModelFragments>
