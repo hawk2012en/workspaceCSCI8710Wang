@@ -129,13 +129,13 @@ public class Viewer {
 		}
 		if (parent instanceof MethodElement) {
 			MethodElement method = (MethodElement) parent;
-//			System.out.println(tab + method + " (" + method.getParameterStr() + ") "
+//			System.out.println(tab + method + ":" + method.getParent() + " (" + method.getParameterStr() + ") "
 //					+ String.valueOf(method.getStartPos()));
 			contents.add(tab + method + " (" + method.getParameterStr() + ") "
 					+ String.valueOf(method.getStartPos()));
 		} 
 		else {
-//			System.out.println(tab + parent);							
+//			System.out.println(tab + parent + ":" + parent.getParent());							
 			contents.add(tab + parent);
 		}
 		if (parent.hasChildren()) {			

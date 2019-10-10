@@ -12,15 +12,15 @@ import model.Person;
 import util.MsgUtil;
 import util.UtilFile;
 
-public class ExportHandler {
-	private String tab;
+public class ExportHandler {	
+	private int level;
 	private List<String> contents = new ArrayList<String>();
 	
 	@Execute
 	public void execute() {
 		List<Person> persons = ModelProvider.INSTANCE.getPersons();		
 		for(Person person : persons) {
-			tab = "";
+			level = 0;			
 			printPerson(person);
 		}
 		
@@ -38,13 +38,18 @@ public class ExportHandler {
 	}
 		
 	private void printPerson(Person parent) {
-		//System.out.println(tab + parent.getName());
-		contents.add(tab + parent.getName());
-		if(parent.hasChildren()) {
+		String tab = "";
+		for(int i = 0; i < level; i++) {
 			tab += "\t";
+		}
+		//System.out.println(tab + parent + ":" + parent.getParent());
+		contents.add(tab + parent);
+		if(parent.hasChildren()) {
+			level++;
 			for(Person child : parent.list()) {
 				printPerson(child);
 			}
+			level--;
 		}
 	}
 }
