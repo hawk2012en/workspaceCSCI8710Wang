@@ -43,7 +43,12 @@ public class ExportHandler {
 			tab += "\t";
 		}
 		//System.out.println(tab + parent + ":" + parent.getParent());
-		contents.add(tab + parent);
+		if(parent.list().length != 0) {
+			contents.add(tab + parent + "(" + parent.list().length +")");
+		}
+		else {
+			contents.add(tab + parent);
+		}
 		if(parent.hasChildren()) {
 			level++;
 			for(Person child : parent.list()) {

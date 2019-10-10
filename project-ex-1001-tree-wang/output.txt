@@ -1,12 +1,12 @@
-Customer Group 1
+Customer Group 1(2)
 	Customer 1-a
 	Customer 1-b
-Customer Group 2
+Customer Group 2(3)
 	Customer 2-a
 	Customer 2-b
-	Customer Group 3
+	Customer Group 3(3)
 		Customer 3-a
 		Customer 3-b
-		Customer Group 4
+		Customer Group 4(2)
 			Customer 4-a
 			Customer 4-b

@@ -1,20 +1,20 @@
-org.pkg1
-	C
+org.pkg1(3)
+	C(2)
 		mc1 (String strc1) 40
 		mc2 (String strc2, int ict2) 68
-	A
+	A(2)
 		ma1 (String str1) 40
 		ma2 (String str2, int i1) 67
-	B
+	B(2)
 		mb1 (String str1) 40
 		mb2 (String str2, int b2) 67
-org.pkg2
-	F
+org.pkg2(3)
+	F(2)
 		mf1 (Void) 40
 		mf2 (Void) 56
-	E
+	E(2)
 		me1 (Void) 40
 		me2 (Void) 56
-	D
+	D(2)
 		md1 (Void) 40
 		md2 (Void) 56

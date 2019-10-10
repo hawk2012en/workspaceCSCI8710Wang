@@ -135,8 +135,8 @@ public class Viewer {
 					+ String.valueOf(method.getStartPos()));
 		} 
 		else {
-//			System.out.println(tab + parent + ":" + parent.getParent());							
-			contents.add(tab + parent);
+//			System.out.println(tab + parent + ":" + parent.getParent());			
+			contents.add(tab + parent + "(" + parent.list().length +")");			
 		}
 		if (parent.hasChildren()) {			
 			level++;
