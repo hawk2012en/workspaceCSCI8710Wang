@@ -24,6 +24,12 @@ public class PersonFilter extends ViewerFilter {
       if (p.getLastName().matches(searchString)) {
          return true;
       }
+      if (p.getEmail().matches(searchString)) {
+          return true;
+       }
+      if (p.getPhoneNumber().matches(searchString)) {
+          return true;
+       }
 
       return false;
    }
