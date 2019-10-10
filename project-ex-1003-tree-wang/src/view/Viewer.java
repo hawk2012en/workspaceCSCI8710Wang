@@ -39,8 +39,8 @@ import view.provider.StartPosLabelProvider;
 
 public class Viewer {
 	public static final String ID = "simpletreeviewerastexample.partdescriptor.simpleasttreeview";
-	private TreeViewer viewer;
-	private String tab;
+	private TreeViewer viewer;	
+	private int level;
 	private List<String> contents = new ArrayList<String>();
 
 	@PostConstruct
@@ -104,8 +104,8 @@ public class Viewer {
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				List<ProgramElement> progElements = ProgElementModelProvider.INSTANCE.getProgElements();
-				for (ProgramElement progElement : progElements) {
-					tab = "";
+				for (ProgramElement progElement : progElements) {					
+					level = 0;
 					printProgElement(progElement);
 				}
 				String filePath = UtilFile.getOutputPathString();
@@ -123,21 +123,27 @@ public class Viewer {
 	}
 
 	private void printProgElement(ProgramElement parent) {
+		String tab = "";
+		for(int i = 0; i < level; i++) {
+			tab += "\t";
+		}
 		if (parent instanceof MethodElement) {
 			MethodElement method = (MethodElement) parent;
-			System.out.println(tab + method.getMethodName() + " " + method.getParameterStr() + " "
+//			System.out.println(tab + method + " (" + method.getParameterStr() + ") "
+//					+ String.valueOf(method.getStartPos()));
+			contents.add(tab + method + " (" + method.getParameterStr() + ") "
 					+ String.valueOf(method.getStartPos()));
-			contents.add(tab + method.getMethodName() + " " + method.getParameterStr() + " "
-					+ String.valueOf(method.getStartPos()));
-		} else {
-			System.out.println(tab + parent.getName());
-			contents.add(tab + parent.getName());
+		} 
+		else {
+//			System.out.println(tab + parent);							
+			contents.add(tab + parent);
 		}
-		if (parent.hasChildren()) {
-			tab += "\t";
+		if (parent.hasChildren()) {			
+			level++;
 			for (ProgramElement child : parent.list()) {
 				printProgElement(child);
 			}
+			level--;
 		}
 	}
 
