@@ -86,47 +86,11 @@ public class Viewer {
 		Menu contextMenu = new Menu(viewer.getTree());
 		viewer.getTree().setMenu(contextMenu);
 		createMenuItem(contextMenu);
-		//createMenuItem2(contextMenu);
+		createMenuItem2(contextMenu);
 		createMenuItem3(contextMenu);
 		createMenuItem4(contextMenu);
 	}
 	
-	private void createMenuItem4(Menu parent) {
-		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
-		menuItem.setText("Analyze Program and Show Only Public Method Wang");
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				ProgElementModelProvider.INSTANCE.methodCount = 0;
-				ProgElementModelProvider.INSTANCE.classCount = 0;
-				ProjectAnalyzerPublicMethods analyzer = new ProjectAnalyzerPublicMethods();
-				ProgElementModelProvider.INSTANCE.clearProgramElements();
-				analyzer.analyze();
-
-				List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
-				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
-
-				viewer.getTree().deselectAll();
-				viewer.setInput(array);
-				MsgUtil.openInfo("Public Method Count", "Info: Found " + ProgElementModelProvider.INSTANCE.methodCount + " public methods in total.");				
-			}
-		});
-	}
-	
-	private void createMenuItem3(Menu parent) {
-		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
-		menuItem.setText("Clear Tree View Wang");
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				viewer.getTree().deselectAll();
-				ProgElementModelProvider.INSTANCE.clearProgramElements();
-				List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
-				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);				
-				viewer.setInput(array);
-				MsgUtil.openInfo("Class Count", "Info: Removed " + ProgElementModelProvider.INSTANCE.classCount + " classes in total.");				
-			}
-		});
-	}
-
 	private void createMenuItem(Menu parent) {
 		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
 		menuItem.setText("Analyze Program Wang");
@@ -137,12 +101,27 @@ public class Viewer {
 			}
 		});
 	}
+	
+	public void updateViewProgramAnalysis() {
+		ProjectAnalyzer analyzer = new ProjectAnalyzer();
+		ProgElementModelProvider.INSTANCE.methodCount = 0;
+		ProgElementModelProvider.INSTANCE.classCount = 0;
+		ProgElementModelProvider.INSTANCE.clearProgramElements();
+		analyzer.analyze();
 
+		List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
+		ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
+
+		viewer.getTree().deselectAll();
+		viewer.setInput(array);
+	}
+	
 	private void createMenuItem2(Menu contextMenu) {
 		final MenuItem menuItem = new MenuItem(contextMenu, SWT.PUSH);
 		menuItem.setText("Export");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				contents.clear();
 				List<ProgramElement> progElements = ProgElementModelProvider.INSTANCE.getProgElements();
 				for (ProgramElement progElement : progElements) {					
 					level = 0;
@@ -156,7 +135,7 @@ public class Viewer {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
-				int linesExported = contents.size() - 1;
+				int linesExported = contents.size();
 				MsgUtil.openInfo("Export", "Info: Exported " + linesExported + " lines.");
 			}
 		});
@@ -187,19 +166,41 @@ public class Viewer {
 		}
 	}
 
-	public void updateViewProgramAnalysis() {
-		ProjectAnalyzer analyzer = new ProjectAnalyzer();
-		ProgElementModelProvider.INSTANCE.methodCount = 0;
-		ProgElementModelProvider.INSTANCE.classCount = 0;
-		ProgElementModelProvider.INSTANCE.clearProgramElements();
-		analyzer.analyze();
-
-		List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
-		ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
-
-		viewer.getTree().deselectAll();
-		viewer.setInput(array);
+	private void createMenuItem3(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Clear Tree View Wang");
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				viewer.getTree().deselectAll();
+				ProgElementModelProvider.INSTANCE.clearProgramElements();
+				List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
+				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);				
+				viewer.setInput(array);
+				MsgUtil.openInfo("Class Count", "Info: Removed " + ProgElementModelProvider.INSTANCE.classCount + " classes in total.");				
+			}
+		});
 	}
+	
+	private void createMenuItem4(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Analyze Program and Show Only Public Method Wang");
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ProgElementModelProvider.INSTANCE.methodCount = 0;
+				ProgElementModelProvider.INSTANCE.classCount = 0;
+				ProjectAnalyzerPublicMethods analyzer = new ProjectAnalyzerPublicMethods();
+				ProgElementModelProvider.INSTANCE.clearProgramElements();
+				analyzer.analyze();
+
+				List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
+				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
+
+				viewer.getTree().deselectAll();
+				viewer.setInput(array);
+				MsgUtil.openInfo("Public Method Count", "Info: Analyzed " + ProgElementModelProvider.INSTANCE.methodCount + " public methods in total.");				
+			}
+		});
+	}	
 
 	private void addListener() {
 		Tree tree = (Tree) viewer.getControl();
@@ -230,7 +231,7 @@ public class Viewer {
 		};
 		tree.addListener(SWT.Expand, listener);
 	}
-
+	
 	@Focus
 	public void setFocus() {
 		viewer.getControl().setFocus();

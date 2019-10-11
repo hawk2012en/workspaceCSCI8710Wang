@@ -98,11 +98,24 @@ public class Viewer {
 		});
 	}
 
+	public void updateViewProgramAnalysis() {
+		ProjectAnalyzer analyzer = new ProjectAnalyzer();
+		ProgElementModelProvider.INSTANCE.clearProgramElements();
+		analyzer.analyze();
+
+		List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
+		ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
+
+		viewer.getTree().deselectAll();
+		viewer.setInput(array);
+	}
+
 	private void createMenuItem2(Menu contextMenu) {
 		final MenuItem menuItem = new MenuItem(contextMenu, SWT.PUSH);
 		menuItem.setText("Export");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				contents.clear();
 				List<ProgramElement> progElements = ProgElementModelProvider.INSTANCE.getProgElements();
 				for (ProgramElement progElement : progElements) {					
 					level = 0;
@@ -116,7 +129,7 @@ public class Viewer {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
-				int linesExported = contents.size() - 1;
+				int linesExported = contents.size();
 				MsgUtil.openInfo("Export", "Info: Exported " + linesExported + " lines.");
 			}
 		});
@@ -145,18 +158,6 @@ public class Viewer {
 			}
 			level--;
 		}
-	}
-
-	public void updateViewProgramAnalysis() {
-		ProjectAnalyzer analyzer = new ProjectAnalyzer();
-		ProgElementModelProvider.INSTANCE.clearProgramElements();
-		analyzer.analyze();
-
-		List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
-		ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
-
-		viewer.getTree().deselectAll();
-		viewer.setInput(array);
 	}
 
 	private void addListener() {

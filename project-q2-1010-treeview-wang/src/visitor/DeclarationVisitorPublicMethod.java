@@ -50,7 +50,7 @@ public class DeclarationVisitorPublicMethod extends ASTVisitor {
 
 	public void endVisit(TypeDeclaration typeDecl) {
 		if (this.classElem != null && !this.classElem.hasChildren()) {
-
+			this.pkgElem.remove(this.classElem);
 		}
 	}
 

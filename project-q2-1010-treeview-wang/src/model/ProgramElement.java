@@ -10,42 +10,46 @@ import java.util.List;
  * @since J2SE-1.8
  */
 public class ProgramElement {
-   List<ProgramElement> listChildren = new ArrayList<ProgramElement>();
-   ProgramElement parent = null;
-   String name = null;
+	List<ProgramElement> listChildren = new ArrayList<ProgramElement>();
+	ProgramElement parent = null;
+	String name = null;
 
-   public ProgramElement(String name) {
-      this.name = name;
-      parent = this;
-   }
+	public ProgramElement(String name) {
+		this.name = name;
+		parent = this;
+	}
 
-   public ProgramElement(String name, ProgramElement parent) {
-      this.name = name;
-      this.parent = parent;
-   }
+	public ProgramElement(String name, ProgramElement parent) {
+		this.name = name;
+		this.parent = parent;
+	}
 
-   public ProgramElement[] list() {
-      ProgramElement[] l = new ProgramElement[listChildren.size()];
-      return listChildren.toArray(l);
-   }
+	public ProgramElement[] list() {
+		ProgramElement[] l = new ProgramElement[listChildren.size()];
+		return listChildren.toArray(l);
+	}
 
-   public void add(ProgramElement p) {
-      listChildren.add(p);
-   }
+	public void add(ProgramElement p) {
+		listChildren.add(p);
+	}
 
-   public ProgramElement getParent() {
-      return this.parent;
-   }
+	public void remove(ProgramElement p) {
+		listChildren.remove(p);
+	}
 
-   public boolean hasChildren() {
-      return !this.listChildren.isEmpty();
-   }
+	public ProgramElement getParent() {
+		return this.parent;
+	}
 
-   public String getName() {
-      return this.name;
-   }
+	public boolean hasChildren() {
+		return !this.listChildren.isEmpty();
+	}
 
-   public String toString() {
-      return this.name;
-   }
+	public String getName() {
+		return this.name;
+	}
+
+	public String toString() {
+		return this.name;
+	}
 }

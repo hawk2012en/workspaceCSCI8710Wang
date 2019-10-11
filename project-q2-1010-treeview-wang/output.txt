@@ -4,7 +4,7 @@ org.pkg1(3)
 		mc2 (String strc2, int ict2) 68
 	A(2)
 		ma1 (String str1) 40
-		ma2 (String str2, int i1) 67
+		ma2 (String str2, int i1) 74
 	B(2)
 		mb1 (String str1) 40
 		mb2 (String str2, int b2) 67

@@ -32,7 +32,7 @@ public class ExportHandler {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		int linesExported = contents.size() - 1;
+		int linesExported = contents.size();
 		
 		MsgUtil.openInfo("Export", "Info: Exported " + linesExported + " lines.");
 	}

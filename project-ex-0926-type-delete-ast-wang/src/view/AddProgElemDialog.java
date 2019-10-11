@@ -99,7 +99,7 @@ public class AddProgElemDialog extends TitleAreaDialog {
          public void widgetSelected(SelectionEvent e) {
             String valPkg = pkgTxt.getText();
             String valClass = classTxt.getText();
-            String valMethod = methodTxt.getText();
+            String valMethod = methodTxt.getText(); 
 
             if (valPkg.trim().isEmpty() || valClass.trim().isEmpty() || valMethod.trim().isEmpty()) {
                return;
