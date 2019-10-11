@@ -96,6 +96,8 @@ public class Viewer {
 		menuItem.setText("Analyze Program and Show Only Public Method Wang");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				ProgElementModelProvider.INSTANCE.methodCount = 0;
+				ProgElementModelProvider.INSTANCE.classCount = 0;
 				ProjectAnalyzerPublicMethods analyzer = new ProjectAnalyzerPublicMethods();
 				ProgElementModelProvider.INSTANCE.clearProgramElements();
 				analyzer.analyze();
@@ -105,6 +107,7 @@ public class Viewer {
 
 				viewer.getTree().deselectAll();
 				viewer.setInput(array);
+				MsgUtil.openInfo("Public Method Count", "Info: Found " + ProgElementModelProvider.INSTANCE.methodCount + " public methods in total.");				
 			}
 		});
 	}
@@ -119,8 +122,7 @@ public class Viewer {
 				List<ProgramElement> data = ProgElementModelProvider.INSTANCE.getProgElements();
 				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);				
 				viewer.setInput(array);
-				MsgUtil.openInfo("Class Count", "Info: Removed " + ProgElementModelProvider.INSTANCE.classCount + " classes in total.");
-				ProgElementModelProvider.INSTANCE.classCount = 0;
+				MsgUtil.openInfo("Class Count", "Info: Removed " + ProgElementModelProvider.INSTANCE.classCount + " classes in total.");				
 			}
 		});
 	}
@@ -131,8 +133,7 @@ public class Viewer {
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateViewProgramAnalysis();
-				MsgUtil.openInfo("Method Count", "Info: Analyzed " + ProgElementModelProvider.INSTANCE.methodCount + " methods in total.");
-				ProgElementModelProvider.INSTANCE.methodCount = 0;
+				MsgUtil.openInfo("Method Count", "Info: Analyzed " + ProgElementModelProvider.INSTANCE.methodCount + " methods in total.");				
 			}
 		});
 	}
@@ -188,6 +189,8 @@ public class Viewer {
 
 	public void updateViewProgramAnalysis() {
 		ProjectAnalyzer analyzer = new ProjectAnalyzer();
+		ProgElementModelProvider.INSTANCE.methodCount = 0;
+		ProgElementModelProvider.INSTANCE.classCount = 0;
 		ProgElementModelProvider.INSTANCE.clearProgramElements();
 		analyzer.analyze();
 
