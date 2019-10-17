@@ -25,9 +25,11 @@ import analysis.ProjectAnalyzer;
 import model.editing.ReNameEditingSupport;
 import model.progelement.ProgramElement;
 import model.provider.ContentProviderProgElem;
+import model.provider.FieldDeclarationsLabelProvider;
 import model.provider.LabelProviderMethodParameter;
 import model.provider.LabelProviderProgElem;
 import model.provider.ModelProviderProgElem;
+import model.provider.NumFieldsLabelProvider;
 import model.provider.StartPosLabelProvider;
 
 public class Viewer {
@@ -58,8 +60,8 @@ public class Viewer {
 	private void createProgElemColumns() {
 		viewer.setContentProvider(new ContentProviderProgElem());
 		viewer.getTree().setHeaderVisible(true);
-		String[] titles = { "Program Element", "Method Parameter", "Location" };
-		int[] bounds = { 300, 100, 100 };
+		String[] titles = { "Program Element", "Method Parameter", "Location", "Number of Fields", "Field Declarations" };
+		int[] bounds = { 200, 300, 100, 150, 500 };
 		// First column
 		TreeViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new LabelProviderProgElem()));
@@ -70,6 +72,12 @@ public class Viewer {
 		// the third
 		col = createTableViewerColumn(titles[2], bounds[2], 2);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartPosLabelProvider()));
+		// the fourth
+		col = createTableViewerColumn(titles[3], bounds[3], 3);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
+		// the fifth
+		col = createTableViewerColumn(titles[4], bounds[4], 4);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
 	}
 
 	private TreeViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {

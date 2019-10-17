@@ -7,6 +7,8 @@
  */
 package visitor;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
@@ -17,55 +19,69 @@ import model.progelement.MethodElement;
 import model.progelement.ProgramElement;
 import model.progelement.TypeElement;
 import model.provider.ModelProviderProgElem;
+import org.eclipse.jdt.core.dom.FieldDeclaration;
 
 public class DeclarationVisitor extends ASTVisitor {
-   private String pkgName, className, methodName;
-   private ProgramElement pkgElem;
-   private TypeElement classElem;
-   private MethodElement methodElem;
+	private String pkgName, className, methodName;
+	private ProgramElement pkgElem;
+	private TypeElement classElem;
+	private MethodElement methodElem;
 
-   @Override
-   public boolean visit(PackageDeclaration pkgDecl) {
-      this.pkgName = pkgDecl.getName().getFullyQualifiedName();
-      this.pkgElem = new ProgramElement(pkgName);
-      ProgramElement prePkg = ModelProviderProgElem.INSTANCE.addProgramElement(this.pkgElem);
-      if (prePkg != null) {
-         this.pkgElem = prePkg;
-      }
-      return super.visit(pkgDecl);
-   }
+	@Override
+	public boolean visit(PackageDeclaration pkgDecl) {
+		this.pkgName = pkgDecl.getName().getFullyQualifiedName();
+		this.pkgElem = new ProgramElement(pkgName);
+		ProgramElement prePkg = ModelProviderProgElem.INSTANCE.addProgramElement(this.pkgElem);
+		if (prePkg != null) {
+			this.pkgElem = prePkg;
+		}
+		return super.visit(pkgDecl);
+	}
 
-   /**
-    * A type declaration is the union of a class declaration and an interface declaration.
-    */
-   @Override
-   public boolean visit(TypeDeclaration typeDecl) {
-      this.className = typeDecl.getName().getIdentifier();
-      this.classElem = new TypeElement(className, this.pkgElem);
-      this.classElem.setFields(typeDecl.getFields());
-      this.pkgElem.add(classElem);
-      return super.visit(typeDecl);
-   }
+	/**
+	 * A type declaration is the union of a class declaration and an interface
+	 * declaration.
+	 */
+	@Override
+	public boolean visit(TypeDeclaration typeDecl) {
+		this.className = typeDecl.getName().getIdentifier();
+		this.classElem = new TypeElement(className, this.pkgElem);
+		this.classElem.setFields(typeDecl.getFields());
+		System.out.println(this.classElem.getFieldsStr());
+		System.out.println(this.classElem.getNumFields());
+		List<?> fieldDecls = this.classElem.getFields();
+		for (Object object : fieldDecls) {
+			if (object instanceof FieldDeclaration) {
+				FieldDeclaration fieldDecl = (FieldDeclaration) object;
+				System.out.println(fieldDecl.getType());
+				System.out.println(fieldDecl.fragments());
+				System.out.println(fieldDecl.getStartPosition());				
+				//System.out.println(fieldDecl.getModifiers());				
+			}
+		}
+		this.pkgElem.add(classElem);
+		return super.visit(typeDecl);
+	}
 
-   @Override
-   public boolean visit(MethodDeclaration methodDecl) {
-      this.methodName = methodDecl.getName().getIdentifier();
-      this.methodElem = new MethodElement(methodName, this.classElem);
-      this.methodElem.setParameters(methodDecl.parameters());
+	@Override
+	public boolean visit(MethodDeclaration methodDecl) {
+		this.methodName = methodDecl.getName().getIdentifier();
+		this.methodElem = new MethodElement(methodName, this.classElem);
+		this.methodElem.setParameters(methodDecl.parameters());
 
-      String className = methodDecl.resolveBinding().getDeclaringClass().getName();
-      this.methodElem.setClassName(className);
+		String className = methodDecl.resolveBinding().getDeclaringClass().getName();
+		this.methodElem.setClassName(className);
 
-      String pkgName = methodDecl.resolveBinding().getDeclaringClass().getPackage().getName();
-      this.methodElem.setPkgName(pkgName);
-      
-      this.methodElem.setStartPos(methodDecl.getStartPosition());
-      
-      int methodModifers = methodDecl.getModifiers();
-      boolean isPublic = (methodModifers & Modifier.PUBLIC) != 0;
-      this.methodElem.setModifierPublic(isPublic);
+		String pkgName = methodDecl.resolveBinding().getDeclaringClass().getPackage().getName();
+		this.methodElem.setPkgName(pkgName);
 
-      this.classElem.add(methodElem);
-      return super.visit(methodDecl);
-   }
+		this.methodElem.setStartPos(methodDecl.getStartPosition());
+
+		int methodModifers = methodDecl.getModifiers();
+		boolean isPublic = (methodModifers & Modifier.PUBLIC) != 0;
+		this.methodElem.setModifierPublic(isPublic);
+
+		this.classElem.add(methodElem);
+		return super.visit(methodDecl);
+	}
 }
