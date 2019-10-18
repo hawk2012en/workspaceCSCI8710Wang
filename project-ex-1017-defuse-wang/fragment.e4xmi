@@ -11,8 +11,8 @@
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_cXqZULAVEeW3vtWFl0TcLg" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="menu:MenuContribution" xmi:id="_fUAOoLAVEeW3vtWFl0TcLg" elementId="simplebindingproject.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
-      <children xsi:type="menu:Menu" xmi:id="_kfMhILAVEeW3vtWFl0TcLg" elementId="id.mymenu" label="My Menu">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_m6cbkLAVEeW3vtWFl0TcLg" elementId="simplebindingproject.handledmenuitem.showbindings" label="Def-Use Analysis" command="_yq5nULAUEeW3vtWFl0TcLg"/>
+      <children xsi:type="menu:Menu" xmi:id="_kfMhILAVEeW3vtWFl0TcLg" elementId="id.mymenu" label="Main Menu Wang">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_m6cbkLAVEeW3vtWFl0TcLg" elementId="simplebindingproject.handledmenuitem.showbindings" label="Def Use Analysis Wang" command="_yq5nULAUEeW3vtWFl0TcLg"/>
       </children>
     </elements>
   </fragments>
