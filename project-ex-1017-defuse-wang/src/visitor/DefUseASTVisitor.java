@@ -59,6 +59,7 @@ public class DefUseASTVisitor extends ASTVisitor {
 			VariableDeclarationFragment f = (VariableDeclarationFragment) iter.next();
 
 			if (f.getName().getIdentifier().equals(VAR_NAME)) {
+				System.out.println("Variable Definition: " + f.getName());
 				IVariableBinding b = f.resolveBinding();
 				DefUseModel data = new DefUseModel(node, f, this.compilationUnit);
 				defUseMap.put(b, data);
@@ -67,26 +68,31 @@ public class DefUseASTVisitor extends ASTVisitor {
 		return super.visit(node);
 	}
 
-	public boolean visit(SimpleName node) {
+	public boolean visit(SimpleName node) {		
 		if (node.getParent() instanceof VariableDeclarationFragment) {
+			System.out.println("VariableDeclarationFragment: " + node.getFullyQualifiedName());
 			return true;
 		} else if (node.getParent() instanceof SingleVariableDeclaration) {
+			System.out.println("SingleVariableDeclaration: " + node.getFullyQualifiedName());
 			return true;
 		}
 		IBinding binding = node.resolveBinding();
 		// Some SimpleName doesn't have binding information, returns null
 		// But all SimpleName nodes will be binded
 		if (binding == null) {
+			System.out.println("Binding is Null: " + node.getFullyQualifiedName());
 			return true;
 		}
 		if (defUseMap.containsKey(binding)) {
 			defUseMap.get(binding).addUsedVars(node);
-		}
+			System.out.println("Variable Usage: " + node.getFullyQualifiedName());
+		}		
 		countNumOfRefToFieldOfJavaLangSystem(node);
 		return super.visit(node);
 	}
 
 	void countNumOfRefToFieldOfJavaLangSystem(SimpleName node) {
+		System.out.println("Simple Name: " + node.getFullyQualifiedName());
 		IBinding binding = node.resolveBinding();
 		if (binding instanceof IVariableBinding) {
 			IVariableBinding varBinding = (IVariableBinding) binding;
@@ -94,6 +100,7 @@ public class DefUseASTVisitor extends ASTVisitor {
 			if (varBinding.isField() && "java.lang.System".equals(declaringClass.getQualifiedName())) {
 				fAccessesToSystemFields++;
 				System.out.println(fAccessesToSystemFields);
+				System.out.println("varBinding.isField: " + node.getFullyQualifiedName());
 			}
 		}
 	}
