@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import model.progelement.FieldElement;
 import model.progelement.MethodElement;
 import model.progelement.ProgramElement;
 import model.progelement.TypeElement;
@@ -24,10 +25,11 @@ import model.provider.ModelProviderProgElem;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
 
 public class DeclarationVisitor extends ASTVisitor {
-	private String pkgName, className, methodName;
+	private String pkgName, className, methodName, fieldDef;
 	private ProgramElement pkgElem;
 	private TypeElement classElem;
 	private MethodElement methodElem;
+	private FieldElement fieldElem;
 	private CompilationUnit compilationUnit;
 
 	public DeclarationVisitor(CompilationUnit compilationUnit) {
@@ -92,6 +94,20 @@ public class DeclarationVisitor extends ASTVisitor {
 
 		this.classElem.add(methodElem);
 		return super.visit(methodDecl);
+	}
+	
+	@Override
+	public boolean visit(FieldDeclaration fieldDecl) {
+		this.fieldDef = fieldDecl.toString();
+		this.fieldElem = new FieldElement(fieldDef, this.classElem);
+		
+		this.fieldElem.setFragments(fieldDecl.fragments());		
+		this.fieldElem.setStartPos(fieldDecl.getStartPosition());		
+		this.fieldElem.setStartLine(getLineNum(compilationUnit, fieldDecl));
+		this.fieldElem.setType(fieldDecl.getType().toString());
+
+		this.classElem.add(fieldElem);
+		return super.visit(fieldDecl);
 	}
 
 	int getLineNum(CompilationUnit compilationUnit, ASTNode node) {

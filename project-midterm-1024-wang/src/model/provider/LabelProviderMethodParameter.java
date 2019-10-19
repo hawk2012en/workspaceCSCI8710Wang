@@ -1,7 +1,6 @@
 package model.provider;
 
 import org.eclipse.jface.viewers.StyledString;
-
 import model.progelement.MethodElement;
 
 public class LabelProviderMethodParameter extends LabelProviderProgElem {

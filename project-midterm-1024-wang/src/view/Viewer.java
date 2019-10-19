@@ -62,7 +62,7 @@ public class Viewer {
 		viewer.setContentProvider(new ContentProviderProgElem());
 		viewer.getTree().setHeaderVisible(true);
 		String[] titles = { "Program Element", "Method Parameter", "Location", "Start Line", "Number of Fields", "Field Declarations" };
-		int[] bounds = { 200, 300, 100, 150, 150, 500 };
+		int[] bounds = { 300, 300, 100, 150, 150, 500 };
 		// First column
 		TreeViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new LabelProviderProgElem()));
@@ -76,12 +76,12 @@ public class Viewer {
 		// the fourth
 		col = createTableViewerColumn(titles[3], bounds[3], 3);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartLineLabelProvider()));
-		// the fifth
-		col = createTableViewerColumn(titles[4], bounds[4], 4);
-		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
-		// the sixth
-		col = createTableViewerColumn(titles[5], bounds[5], 5);
-		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
+//		// the fifth
+//		col = createTableViewerColumn(titles[4], bounds[4], 4);
+//		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
+//		// the sixth
+//		col = createTableViewerColumn(titles[5], bounds[5], 5);
+//		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
 	}
 
 	private TreeViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {
