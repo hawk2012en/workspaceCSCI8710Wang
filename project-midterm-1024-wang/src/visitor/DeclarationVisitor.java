@@ -9,7 +9,9 @@ package visitor;
 
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
@@ -26,6 +28,11 @@ public class DeclarationVisitor extends ASTVisitor {
 	private ProgramElement pkgElem;
 	private TypeElement classElem;
 	private MethodElement methodElem;
+	private CompilationUnit compilationUnit;
+
+	public DeclarationVisitor(CompilationUnit compilationUnit) {
+		this.compilationUnit = compilationUnit;
+	}
 
 	@Override
 	public boolean visit(PackageDeclaration pkgDecl) {
@@ -55,8 +62,8 @@ public class DeclarationVisitor extends ASTVisitor {
 				FieldDeclaration fieldDecl = (FieldDeclaration) object;
 				System.out.println(fieldDecl.getType());
 				System.out.println(fieldDecl.fragments());
-				System.out.println(fieldDecl.getStartPosition());				
-				//System.out.println(fieldDecl.getModifiers());				
+				System.out.println(fieldDecl.getStartPosition());
+				// System.out.println(fieldDecl.getModifiers());
 			}
 		}
 		this.pkgElem.add(classElem);
@@ -76,6 +83,8 @@ public class DeclarationVisitor extends ASTVisitor {
 		this.methodElem.setPkgName(pkgName);
 
 		this.methodElem.setStartPos(methodDecl.getStartPosition());
+		
+		this.methodElem.setStartLine(getLineNum(compilationUnit, methodDecl));
 
 		int methodModifers = methodDecl.getModifiers();
 		boolean isPublic = (methodModifers & Modifier.PUBLIC) != 0;
@@ -83,5 +92,9 @@ public class DeclarationVisitor extends ASTVisitor {
 
 		this.classElem.add(methodElem);
 		return super.visit(methodDecl);
+	}
+
+	int getLineNum(CompilationUnit compilationUnit, ASTNode node) {
+		return compilationUnit.getLineNumber(node.getStartPosition());
 	}
 }

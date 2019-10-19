@@ -59,7 +59,7 @@ public class ProjectAnalyzer {
       // =============================================================
       for (ICompilationUnit iUnit : iCompilationUnits) {
          CompilationUnit compilationUnit = UtilAST.parse(iUnit);
-         DeclarationVisitor declVisitor = new DeclarationVisitor();
+         DeclarationVisitor declVisitor = new DeclarationVisitor(compilationUnit);
          compilationUnit.accept(declVisitor);
       }
    }

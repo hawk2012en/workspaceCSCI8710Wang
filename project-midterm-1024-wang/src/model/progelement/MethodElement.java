@@ -8,6 +8,7 @@ public class MethodElement extends ProgramElement {
 	private List<?> parameters;
 	private boolean isModifierPublic;
 	private int startPos;
+	private int startLine;
 
 	public MethodElement(String name, ProgramElement parent) {
 		super(name, parent);
@@ -76,4 +77,11 @@ public class MethodElement extends ProgramElement {
 		this.startPos = startPos;
 	}
 
+	public int getStartLine() {
+		return startLine;
+	}
+
+	public void setStartLine(int startLine) {
+		this.startLine = startLine;
+	}
 }

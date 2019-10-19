@@ -30,6 +30,7 @@ import model.provider.LabelProviderMethodParameter;
 import model.provider.LabelProviderProgElem;
 import model.provider.ModelProviderProgElem;
 import model.provider.NumFieldsLabelProvider;
+import model.provider.StartLineLabelProvider;
 import model.provider.StartPosLabelProvider;
 
 public class Viewer {
@@ -60,8 +61,8 @@ public class Viewer {
 	private void createProgElemColumns() {
 		viewer.setContentProvider(new ContentProviderProgElem());
 		viewer.getTree().setHeaderVisible(true);
-		String[] titles = { "Program Element", "Method Parameter", "Location", "Number of Fields", "Field Declarations" };
-		int[] bounds = { 200, 300, 100, 150, 500 };
+		String[] titles = { "Program Element", "Method Parameter", "Location", "Start Line", "Number of Fields", "Field Declarations" };
+		int[] bounds = { 200, 300, 100, 150, 150, 500 };
 		// First column
 		TreeViewerColumn col = createTableViewerColumn(titles[0], bounds[0], 0);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new LabelProviderProgElem()));
@@ -74,9 +75,12 @@ public class Viewer {
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartPosLabelProvider()));
 		// the fourth
 		col = createTableViewerColumn(titles[3], bounds[3], 3);
-		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartLineLabelProvider()));
 		// the fifth
 		col = createTableViewerColumn(titles[4], bounds[4], 4);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
+		// the sixth
+		col = createTableViewerColumn(titles[5], bounds[5], 5);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
 	}
 
