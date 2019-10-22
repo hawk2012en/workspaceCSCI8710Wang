@@ -7,6 +7,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import analysis.RenameClassAnalyzer;
 import analysis.RenameMethodAnalyzer;
 import analysis.RenamePackageAnalyzer;
+import model.progelement.FieldElement;
 import model.progelement.MethodElement;
 import model.progelement.ProgramElement;
 import model.progelement.TypeElement;
@@ -36,7 +37,11 @@ public class ReNameEditingSupport extends ProgElemEditingSupport {
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		if (element instanceof MethodElement) {
+		if (element instanceof FieldElement) {
+			FieldElement fieldElem = (FieldElement) element;
+			MsgUtil.openInfo("Warning", "Can not rename any field such as " + fieldElem.getName());
+			return;
+		} else if (element instanceof MethodElement) {
 			MethodElement methodElem = (MethodElement) element;
 			if (methodElem.isModifierPublic()) {
 				MsgUtil.openInfo("Warning", "Can not rename selected method " + methodElem.getMethodName()
@@ -71,8 +76,7 @@ public class ReNameEditingSupport extends ProgElemEditingSupport {
 			typeElem.setName(newName);
 			this.treeViewer.update(element, null);
 			this.myViewer.updateView();
-		}
-		else {
+		} else {
 			ProgramElement packageElem = (ProgramElement) element;
 			String newName = String.valueOf(value).trim();
 			if (packageElem.getName().equalsIgnoreCase(newName)) {
