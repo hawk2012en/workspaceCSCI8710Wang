@@ -106,7 +106,7 @@ public class DeclarationVisitor extends ASTVisitor {
 		this.fieldElem.setStartLine(getLineNum(compilationUnit, fieldDecl));
 		this.fieldElem.setType(fieldDecl.getType().toString());
 
-		this.classElem.add(fieldElem);
+		//this.classElem.add(fieldElem);
 		return super.visit(fieldDecl);
 	}
 
