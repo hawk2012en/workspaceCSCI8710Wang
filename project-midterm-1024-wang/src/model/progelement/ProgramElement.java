@@ -26,6 +26,10 @@ public class ProgramElement {
    public void add(ProgramElement p) {
       listChildren.add(p);
    }
+   
+   public void remove(ProgramElement p) {
+		listChildren.remove(p);
+	}
 
    public ProgramElement getParent() {
       return this.parent;

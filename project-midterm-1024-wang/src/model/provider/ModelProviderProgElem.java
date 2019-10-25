@@ -7,6 +7,8 @@ import model.progelement.ProgramElement;
 
 public enum ModelProviderProgElem {
 	INSTANCE;
+	public int methodCount;
+	public int classCount;
 
 	private List<ProgramElement> progElements = new ArrayList<ProgramElement>();
 

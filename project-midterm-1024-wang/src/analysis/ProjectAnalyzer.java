@@ -53,7 +53,7 @@ public class ProjectAnalyzer {
       }
    }
 
-   private void analyzeCompilationUnit(ICompilationUnit[] iCompilationUnits) throws JavaModelException {
+   protected void analyzeCompilationUnit(ICompilationUnit[] iCompilationUnits) throws JavaModelException {
       // =============================================================
       // 3rd step: ICompilationUnits
       // =============================================================

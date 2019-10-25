@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import model.provider.ModelProviderProgElem;
 import model.progelement.FieldElement;
 import model.progelement.MethodElement;
 import model.progelement.ProgramElement;
@@ -69,6 +70,7 @@ public class DeclarationVisitor extends ASTVisitor {
 			}
 		}
 		this.pkgElem.add(classElem);
+		ModelProviderProgElem.INSTANCE.classCount++;
 		return super.visit(typeDecl);
 	}
 
@@ -93,6 +95,7 @@ public class DeclarationVisitor extends ASTVisitor {
 		this.methodElem.setModifierPublic(isPublic);
 
 		this.classElem.add(methodElem);
+		ModelProviderProgElem.INSTANCE.methodCount++;
 		return super.visit(methodDecl);
 	}
 	

@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeColumn;
 
 import analysis.ProjectAnalyzer;
+import analysis.ProjectAnalyzerPublicMethods;
 import model.editing.ReNameEditingSupport;
 import model.progelement.ProgramElement;
 import model.provider.ContentProviderProgElem;
@@ -32,6 +33,7 @@ import model.provider.ModelProviderProgElem;
 import model.provider.NumFieldsLabelProvider;
 import model.provider.StartLineLabelProvider;
 import model.provider.StartPosLabelProvider;
+import util.MsgUtil;
 
 public class Viewer {
 	public static final String ID = "simpletreeviewerastexample.partdescriptor.simpleasttreeview";
@@ -41,7 +43,7 @@ public class Viewer {
 	public void postConstruct(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		createProgElemColumns();
-		createContextMenu(parent);
+		createPopupMenu(parent);
 
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
@@ -94,20 +96,29 @@ public class Viewer {
 		return viewerColumn;
 	}
 
-	private void createContextMenu(Composite parent) {
-		Menu popupMenu = new Menu(viewer.getTree());
-		viewer.getTree().setMenu(popupMenu);
-		// Update popup menu
-		final MenuItem menuItem = new MenuItem(popupMenu, SWT.PUSH);
-		menuItem.setText("Analyze Program");
+	private void createPopupMenu(Composite parent) {
+		Menu contextMenu = new Menu(viewer.getTree());
+		viewer.getTree().setMenu(contextMenu);
+		createMenuItem(contextMenu);
+		//createMenuItem2(contextMenu);
+		createMenuItem3(contextMenu);
+		createMenuItem4(contextMenu);
+	}
+	
+	private void createMenuItem(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Analyze Program Wang");
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				updateView();
+				MsgUtil.openInfo("Method Count", "Info: Analyzed " + ModelProviderProgElem.INSTANCE.methodCount + " methods in total.");			
 			}
 		});
-	}
+	}	
 
 	public void updateView() {
+		ModelProviderProgElem.INSTANCE.methodCount = 0;
+		ModelProviderProgElem.INSTANCE.classCount = 0;
 		viewer.getTree().deselectAll(); // resolved issue: stack overflow errors.
 		ProjectAnalyzer analyzer = new ProjectAnalyzer();
 		ModelProviderProgElem.INSTANCE.clearProgramElements();
@@ -122,6 +133,46 @@ public class Viewer {
 		viewer.setInput(array);
 	}
 
+	private void createMenuItem3(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Clear Tree View Wang");
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				viewer.getTree().deselectAll();
+				ModelProviderProgElem.INSTANCE.clearProgramElements();
+				List<ProgramElement> data = ModelProviderProgElem.INSTANCE.getProgElements();
+				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);				
+				viewer.setInput(array);
+				MsgUtil.openInfo("Class Count", "Info: Removed " + ModelProviderProgElem.INSTANCE.classCount + " classes in total.");				
+			}
+		});
+	}
+	
+	private void createMenuItem4(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Analyze Program and Show Only Public Method Wang");
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ModelProviderProgElem.INSTANCE.methodCount = 0;
+				ModelProviderProgElem.INSTANCE.classCount = 0;
+				ProjectAnalyzerPublicMethods analyzer = new ProjectAnalyzerPublicMethods();
+				ModelProviderProgElem.INSTANCE.clearProgramElements();
+				try {
+					analyzer.analyze();
+				} catch (CoreException e2) {
+					e2.printStackTrace();
+				}
+
+				List<ProgramElement> data = ModelProviderProgElem.INSTANCE.getProgElements();
+				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
+
+				viewer.getTree().deselectAll();
+				viewer.setInput(array);
+				MsgUtil.openInfo("Public Method Count", "Info: Analyzed " + ModelProviderProgElem.INSTANCE.methodCount + " public methods in total.");				
+			}
+		});
+	}	
+	
 	@Focus
 	public void setFocus() {
 		viewer.getControl().setFocus();
