@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
 import util.UtilAST;
-import visitor.DeclarationVisitor;
 import visitor.DeclarationVisitorPublicMethod;
 
 public class ProjectAnalyzerPublicMethods extends ProjectAnalyzer {

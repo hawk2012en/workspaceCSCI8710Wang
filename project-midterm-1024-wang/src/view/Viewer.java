@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TreeColumn;
 
 import analysis.ProjectAnalyzer;
+import analysis.ProjectAnalyzerPrivateMethods;
 import analysis.ProjectAnalyzerPublicMethods;
 import model.editing.ReNameEditingSupport;
 import model.progelement.ProgramElement;
@@ -100,7 +101,7 @@ public class Viewer {
 		Menu contextMenu = new Menu(viewer.getTree());
 		viewer.getTree().setMenu(contextMenu);
 		createMenuItem(contextMenu);
-		//createMenuItem2(contextMenu);
+		createMenuItem2(contextMenu);
 		createMenuItem3(contextMenu);
 		createMenuItem4(contextMenu);
 	}
@@ -133,6 +134,31 @@ public class Viewer {
 		viewer.setInput(array);
 	}
 
+	private void createMenuItem2(Menu parent) {
+		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
+		menuItem.setText("Analyze Program and Show Only Private Method Wang");
+		menuItem.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ModelProviderProgElem.INSTANCE.methodCount = 0;
+				ModelProviderProgElem.INSTANCE.classCount = 0;
+				ProjectAnalyzerPrivateMethods analyzer = new ProjectAnalyzerPrivateMethods();
+				ModelProviderProgElem.INSTANCE.clearProgramElements();
+				try {
+					analyzer.analyze();
+				} catch (CoreException e2) {
+					e2.printStackTrace();
+				}
+
+				List<ProgramElement> data = ModelProviderProgElem.INSTANCE.getProgElements();
+				ProgramElement[] array = data.toArray(new ProgramElement[data.size()]);
+
+				viewer.getTree().deselectAll();
+				viewer.setInput(array);
+				MsgUtil.openInfo("Private Method Count", "Info: Analyzed " + ModelProviderProgElem.INSTANCE.methodCount + " private methods in total.");				
+			}
+		});
+	}
+	
 	private void createMenuItem3(Menu parent) {
 		final MenuItem menuItem = new MenuItem(parent, SWT.PUSH);
 		menuItem.setText("Clear Tree View Wang");
