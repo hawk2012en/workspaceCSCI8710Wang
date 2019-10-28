@@ -35,7 +35,6 @@ import org.osgi.framework.FrameworkUtil;
 import analysis.ProjectAnalyzer;
 import model.ModelProvider;
 import model.ProgramElement;
-import util.UtilConsole;
 
 public class Viewer {
    private TableViewer viewer;
@@ -97,7 +96,6 @@ public class Viewer {
             IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
             Object firstElement = selection.getFirstElement();
             System.out.println("Do something with it: " + firstElement);
-            UtilConsole.print("Do something with it: " + firstElement);
          }
       });
 

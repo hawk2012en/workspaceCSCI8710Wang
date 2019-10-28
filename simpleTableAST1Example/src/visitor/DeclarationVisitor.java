@@ -27,7 +27,7 @@ public class DeclarationVisitor extends ASTVisitor {
 
    @Override
    public boolean visit(PackageDeclaration pkgDecl) {
-      pkgName = pkgDecl.getName().getFullyQualifiedName();      
+      pkgName = pkgDecl.getName().getFullyQualifiedName();
       return super.visit(pkgDecl);
    }
 

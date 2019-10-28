@@ -1,8 +1,5 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -23,12 +20,8 @@ public class UtilConsole {
          if (name.equals(existing[i].getName()))
             return (MessageConsole) existing[i];
       //no console found, so create a new one
-      MessageConsole myConsole = new MessageConsole(name, null);    
-      List<IConsole> newConsoleList = new ArrayList<>();
-      newConsoleList.add(myConsole);
-      IConsole[] newConsoleArray = new IConsole[newConsoleList.size()];
-      conMan.addConsoles(newConsoleList.toArray(newConsoleArray));
-      //conMan.addConsoles(new IConsole[] { myConsole });      
+      MessageConsole myConsole = new MessageConsole(name, null);
+      conMan.addConsoles(new IConsole[] { myConsole });
       return myConsole;
    }
 
