@@ -30,7 +30,7 @@ public class HandlerSearchMethodCaller {
             viewer.reset();
 
             try {
-               ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers();
+               ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers("");
                analyzer.analyze();
                List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
                viewer.display(calleeCallers);

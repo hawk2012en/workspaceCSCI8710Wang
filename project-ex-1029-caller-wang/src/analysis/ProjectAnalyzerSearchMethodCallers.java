@@ -28,9 +28,11 @@ public class ProjectAnalyzerSearchMethodCallers {
    private static final String JAVANATURE = "org.eclipse.jdt.core.javanature";
    IProject[] projects;
    private List<Map<IMethod, IMethod[]>> listCallers;
+   private String callee;
 
-   public ProjectAnalyzerSearchMethodCallers() {
+   public ProjectAnalyzerSearchMethodCallers(String callee) {
       listCallers = new ArrayList<>();
+      this.callee = callee;
    }
 
    public void analyze() throws CoreException {
@@ -67,7 +69,7 @@ public class ProjectAnalyzerSearchMethodCallers {
       ASTVisitorSearchMethodCallers visitor = null;
       for (ICompilationUnit iUnit : iCompilationUnits) {
          CompilationUnit compilationUnit = UtilAST.parse(iUnit);
-         visitor = new ASTVisitorSearchMethodCallers(packages);
+         visitor = new ASTVisitorSearchMethodCallers(packages, this.callee);
          compilationUnit.accept(visitor);
 
          Map<IMethod, IMethod[]> dataCallers = visitor.getDataCallers();

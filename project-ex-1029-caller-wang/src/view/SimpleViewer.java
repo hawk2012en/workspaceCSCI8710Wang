@@ -99,23 +99,16 @@ public class SimpleViewer {
 			public void handleEvent(Event e) {
 				if (e.keyCode == SWT.CR) {
 					reset();
+					String callee = searchText.getText();
 
 					// TODO: Update below by referring to HandlerSearchMethodCaller.java
 //					styledText.append((new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date()) + "\n"
 //							+ searchText.getText() + "\n");
 					try {
-						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers();
+						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(callee);
 						analyzer.analyze();
 						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
-						for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
-							for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
-								IMethod callee = entry.getKey();
-								IMethod[] callers = entry.getValue();
-								if (callee.getElementName().equals(searchText.getText())) {
-									display(callee, callers);
-								}
-							}
-						}
+						display(calleeCallers);
 					} catch (CoreException e2) {
 						e2.printStackTrace();
 					}
