@@ -143,7 +143,7 @@ public class SimpleTableViewer {
 
 	private void createSearchTextV2(Composite parent) {
 		Label searchLabel = new Label(parent, SWT.NONE);
-		searchLabel.setText("Search V2 (by Program Element Name): ");
+		searchLabel.setText("Search by Program Element Name: ");
 
 		Composite container = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, true);

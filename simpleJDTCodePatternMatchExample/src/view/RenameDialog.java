@@ -65,7 +65,8 @@ public class RenameDialog extends TitleAreaDialog {
    }
 
    protected Point getInitialSize() {
-      return new Point(500, 200);
+      //return new Point(500, 200);
+      return new Point(500, 250);
    }
 
    public String getNewMethodName() {

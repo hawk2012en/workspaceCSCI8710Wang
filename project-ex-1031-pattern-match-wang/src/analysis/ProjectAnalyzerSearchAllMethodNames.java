@@ -101,7 +101,8 @@ public class ProjectAnalyzerSearchAllMethodNames {
             if (element != null && element instanceof IMethod) {
                IMethod method = (IMethod) element;
                IType declaringType = method.getDeclaringType();
-               String filePath = method.getCompilationUnit().getPath().toFile().getAbsolutePath();
+               //String filePath = method.getCompilationUnit().getPath().toFile().getAbsolutePath();
+               String filePath = method.getCompilationUnit().getPath().toString();
 
                try {
                   String source = UtilFile.readEntireFile(RUNTIME_PRJ_PATH + filePath);
