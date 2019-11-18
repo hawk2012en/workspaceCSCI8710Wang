@@ -68,6 +68,7 @@ public class DeclarationVisitorPublicMethod extends ASTVisitor {
 		this.methodElem.setClassName(className);
 		this.methodElem.setPkgName(pkgName);
 		this.methodElem.setStartPos(methodDecl.getStartPosition());
+		this.methodElem.setModifierPublic(isPublic);
 		if (isPublic) {
 			this.classElem.add(methodElem);
 			ModelProviderProgElem.INSTANCE.methodCount++;

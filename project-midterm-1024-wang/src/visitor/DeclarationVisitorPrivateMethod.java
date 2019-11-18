@@ -62,12 +62,14 @@ public class DeclarationVisitorPrivateMethod extends ASTVisitor {
 
 		int methodModifers = methodDecl.getModifiers();
 		boolean isPrivate = (methodModifers & Modifier.PRIVATE) != 0;
+		boolean isPublic = (methodModifers & Modifier.PUBLIC) != 0;
 
 		this.methodElem = new MethodElement(methodName, this.classElem);
 		this.methodElem.setParameters(methodDecl.parameters());
 		this.methodElem.setClassName(className);
 		this.methodElem.setPkgName(pkgName);
 		this.methodElem.setStartPos(methodDecl.getStartPosition());
+		this.methodElem.setModifierPublic(isPublic);
 		if (isPrivate) {
 			this.classElem.add(methodElem);
 			ModelProviderProgElem.INSTANCE.methodCount++;
