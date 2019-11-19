@@ -75,10 +75,10 @@ public class SimpleTableViewer {
 					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
 					dialog.create();
 					if (dialog.open() == Window.OK) {
-						System.out.println("[DBG] PACKAGE NAME: " + progElem.getPkg());
-						System.out.println("[DBG] CLASS NAME: " + progElem.getClazz());
-						System.out.println("[DBG] METHOD NAME: " + progElem.getMethod());
-						System.out.println("[DBG] NEW METHOD NAME: " + dialog.getNewMethodName());
+//						System.out.println("[DBG] PACKAGE NAME: " + progElem.getPkg());
+//						System.out.println("[DBG] CLASS NAME: " + progElem.getClazz());
+//						System.out.println("[DBG] METHOD NAME: " + progElem.getMethod());
+//						System.out.println("[DBG] NEW METHOD NAME: " + dialog.getNewMethodName());
 					}
 					try {
 						RenameMethodAnalyzer renameAnalyzer = new RenameMethodAnalyzer(progElem,
@@ -88,7 +88,7 @@ public class SimpleTableViewer {
 						e2.printStackTrace();
 					}
 					if (progElem.isModifierPublic()) {
-						System.out.println("Public method: " + progElem.getMethod());
+//						System.out.println("Public method: " + progElem.getMethod());
 					} else {
 						progElem.setMethod(dialog.getNewMethodName());
 						viewer.refresh();
