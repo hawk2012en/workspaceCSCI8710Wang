@@ -29,12 +29,15 @@ public class DefUseASTVisitor extends ASTVisitor {
 	private int fAccessesToSystemFields;
 	private CompilationUnit compilationUnit;
 
-	private static final String CLASS_NAME = "ClassA";
-	private static final String METHOD_NAME = "ma1";
-	private static final String VAR_NAME = "indexA";
+	private String CLASS_NAME;
+	private String METHOD_NAME;
+	private String VAR_NAME;
 
-	public DefUseASTVisitor(CompilationUnit compilationUnit) {
+	public DefUseASTVisitor(CompilationUnit compilationUnit, String variableName, String methodName, String className) {
 		this.compilationUnit = compilationUnit;
+		this.VAR_NAME = variableName;
+		this.METHOD_NAME = methodName;
+		this.CLASS_NAME = className;
 	}
 
 	@Override

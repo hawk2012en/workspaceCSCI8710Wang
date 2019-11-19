@@ -29,9 +29,15 @@ public class ProjectAnalyzerDefUse {
    IProject[] projects;
 
    private List<Map<IVariableBinding, DefUseModel>> dataList = null;
+   private String variableName;
+   private String methodName;
+   private String className;
 
-   public ProjectAnalyzerDefUse() {
+   public ProjectAnalyzerDefUse(String variableName, String methodName, String className) {
       dataList = new ArrayList<Map<IVariableBinding, DefUseModel>>();
+      this.variableName = variableName;
+      this.methodName = methodName;
+      this.className = className;
    }
 
    public void analyze() throws CoreException {
@@ -67,7 +73,7 @@ public class ProjectAnalyzerDefUse {
       // =============================================================
       for (ICompilationUnit iUnit : iCompilationUnits) {
          CompilationUnit compilationUnit = UtilAST.parse(iUnit);
-         DefUseASTVisitor javaASTvisitor = new DefUseASTVisitor(compilationUnit);
+         DefUseASTVisitor javaASTvisitor = new DefUseASTVisitor(compilationUnit, variableName, methodName, className);
          compilationUnit.accept(javaASTvisitor);
 
          Map<IVariableBinding, DefUseModel> getdefUseMap = javaASTvisitor.getdefUseMap();

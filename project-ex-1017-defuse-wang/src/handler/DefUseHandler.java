@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
@@ -18,9 +22,11 @@ import org.eclipse.jdt.core.dom.IVariableBinding;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
+import org.eclipse.swt.widgets.Shell;
 
 import analysis.ProjectAnalyzerDefUse;
 import data.DefUseModel;
+import view.DefUseDialog;
 import view.SimpleViewer;
 
 /**
@@ -29,12 +35,24 @@ import view.SimpleViewer;
 public class DefUseHandler {
    final String viewId = "simplebindingproject.partdescriptor.simplebindingview";
 
+   @Inject
+   private EPartService service;
+   @Inject
+   @Named(IServiceConstants.ACTIVE_SHELL)
+   Shell shell;
+   
    @Execute
-   public void execute(EPartService service) {
+   public void execute() {
+	   DefUseDialog dialog = new DefUseDialog(shell);
+	   dialog.open();
+	   System.out.println("Variable Name: " + dialog.getVariableName());
+	   System.out.println("Method Name: " + dialog.getMethodName());
+	   System.out.println("Class Name: " + dialog.getClassName());
+	      
       MPart part = service.findPart(viewId);
 
       if (part != null && part.getObject() instanceof SimpleViewer) {
-         ProjectAnalyzerDefUse analyzer = new ProjectAnalyzerDefUse();
+         ProjectAnalyzerDefUse analyzer = new ProjectAnalyzerDefUse(dialog.getVariableName(), dialog.getMethodName(), dialog.getClassName());
          try {
             analyzer.analyze();
          } catch (CoreException e) {
