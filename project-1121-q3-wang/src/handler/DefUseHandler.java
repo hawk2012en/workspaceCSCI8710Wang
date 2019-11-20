@@ -75,8 +75,8 @@ public class DefUseHandler {
             VariableDeclarationStatement varDeclStmt = iVariableAnal.getVarDeclStmt();
             VariableDeclarationFragment varDecl = iVariableAnal.getVarDeclFrgt();
 
-            viewer.appendText("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
-            System.out.print("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
+            System.out.print("[" + (counter) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
+            viewer.appendText("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");            
             String method = "[METHOD] " + iBinding.getDeclaringMethod() + "\n";
             viewer.appendText(method);
             System.out.print(method);            

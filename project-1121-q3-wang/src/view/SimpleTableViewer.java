@@ -4,12 +4,19 @@
 package view;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -32,6 +39,7 @@ import org.eclipse.swt.widgets.Text;
 
 import analysis.ProjectAnalyzerSearch;
 import analysis.ProjectAnalyzerSearchAllMethodNames;
+import analysis.ProjectAnalyzerSearchMethodCallers;
 import analysis.RenameMethodAnalyzer;
 import model.LabelProviderProgElem;
 import model.ModelProvider;
@@ -44,10 +52,14 @@ import util.UtilFile;
  */
 public class SimpleTableViewer {
 	public static String VIEW_ID = "simplebindingproject.partdescriptor.simplecodepatternmatchview";
+	final String simpleviewId = "project-1121-q3-wang.partdescriptor.simpleviewdef-usecallee-caller";
 	private TableViewer viewer;
 	private Text searchText;
 	private Text searchTextQualifier;
 	private Text searchTextMethodName;
+	
+	@Inject
+	private EPartService service;
 
 	public SimpleTableViewer() {
 		UtilConfig.load();
@@ -64,6 +76,7 @@ public class SimpleTableViewer {
 		// * Use this popup menu interface to start.
 		Menu popupMenu = new Menu(viewer.getTable());
 		viewer.getTable().setMenu(popupMenu);
+		
 		final MenuItem menuItem = new MenuItem(popupMenu, SWT.PUSH);
 		menuItem.setText("Rename Selected Method");
 		menuItem.addSelectionListener(new SelectionAdapter() {
@@ -98,6 +111,32 @@ public class SimpleTableViewer {
 		});
 		//
 
+		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
+		menuItem2.setText("Search callers of Selected Method");
+		menuItem2.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				TableItem item = viewer.getTable().getSelection()[0];
+				Object data = item.getData();
+				if (data instanceof ProgElem) {
+					ProgElem progElem = (ProgElem) data;				
+					
+					MPart part = service.findPart(simpleviewId);
+					if (part != null && part.getObject() instanceof SimpleViewer) {
+						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
+								progElem.getMethod(), progElem.getClazz());
+						try {
+							analyzer.analyze();
+						} catch (CoreException e3) {
+							e3.printStackTrace();
+						}
+						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
+						SimpleViewer viewer = (SimpleViewer) part.getObject();
+						display(viewer, calleeCallers);
+					}
+				}
+			}
+		});
+		
 		viewer.getTable().addListener(SWT.MouseDoubleClick, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem[] selection = viewer.getTable().getSelection();
@@ -115,6 +154,28 @@ public class SimpleTableViewer {
 		});
 	}
 
+	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
+		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
+			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
+				IMethod callee = entry.getKey();
+				IMethod[] callers = entry.getValue();
+				display(viewer, callee, callers);
+			}
+		}
+	}
+
+	private void display(SimpleViewer viewer, IMethod callee, IMethod[] callers) {
+		viewer.reset();
+		for (IMethod iCaller : callers) {
+			String type = callee.getDeclaringType().getFullyQualifiedName();
+			String calleeName = type + "." + callee.getElementName();
+			viewer.appendText("'" + calleeName + //
+					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+			System.out.print("'" + calleeName + //
+					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+		}
+	}
+	
 	private void createSearchTextV1(Composite parent) {
 		Label searchLabel = new Label(parent, SWT.NONE);
 		searchLabel.setText("Search by Method Decl. Signature: ");

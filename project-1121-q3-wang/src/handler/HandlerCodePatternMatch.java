@@ -29,7 +29,7 @@ public class HandlerCodePatternMatch {
             Object data = ModelProvider.INSTANCE.getProgramElements();
             viewer.setInput(data);
             viewer.refresh();
-            System.out.println("[DBG] Done.");
+//            System.out.println("[DBG] Done.");
          }
       }
    }
