@@ -27,12 +27,13 @@ import org.eclipse.swt.widgets.Shell;
 import analysis.ProjectAnalyzerDefUse;
 import model.DefUseModel;
 import view.DefUseDialog;
+import view.SimpleViewer;
 
 /**
  * @since JavaSE-1.8
  */
 public class DefUseHandler {
-   final String viewId = "simplebindingproject.partdescriptor.simplebindingview";
+   final String viewId = "project-1121-q3-wang.partdescriptor.simpleviewdef-usecallee-caller";
 
    @Inject
    private EPartService service;
@@ -49,7 +50,8 @@ public class DefUseHandler {
 //	   System.out.println("Class Name: " + dialog.getClassName());
 	      
       MPart part = service.findPart(viewId);
-
+      
+      if (part != null && part.getObject() instanceof SimpleViewer) {
          ProjectAnalyzerDefUse analyzer = new ProjectAnalyzerDefUse(dialog.getVariableName(), dialog.getMethodName(), dialog.getClassName());
          try {
             analyzer.analyze();
@@ -57,12 +59,14 @@ public class DefUseHandler {
             e.printStackTrace();
          }
          List<Map<IVariableBinding, DefUseModel>> analysisDataList = analyzer.getAnalysisDataList();
-
-         displayDefUsedView(analysisDataList);
+         SimpleViewer viewer = (SimpleViewer) part.getObject();
+         displayDefUsedView(viewer, analysisDataList);
+      }
    }
 
-   private void displayDefUsedView(List<Map<IVariableBinding, DefUseModel>> analysisDataList) {      
-      int counter = 1;
+   private void displayDefUsedView(SimpleViewer viewer, List<Map<IVariableBinding, DefUseModel>> analysisDataList) {      
+	  viewer.reset();
+	  int counter = 1;
       for (Map<IVariableBinding, DefUseModel> iMap : analysisDataList) {
          for (Entry<IVariableBinding, DefUseModel> entry : iMap.entrySet()) {
             IVariableBinding iBinding = entry.getKey();
@@ -71,12 +75,16 @@ public class DefUseHandler {
             VariableDeclarationStatement varDeclStmt = iVariableAnal.getVarDeclStmt();
             VariableDeclarationFragment varDecl = iVariableAnal.getVarDeclFrgt();
 
+            viewer.appendText("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
             System.out.print("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
             String method = "[METHOD] " + iBinding.getDeclaringMethod() + "\n";
-            System.out.print(method);
+            viewer.appendText(method);
+            System.out.print(method);            
             String stmt = "\t[DECLARE STMT] " + strTrim(varDeclStmt) + "\t [" + getLineNum(cUnit, varDeclStmt) + "]\n";
+            viewer.appendText(stmt);
             System.out.print(stmt);
             String var = "\t[DECLARE VAR] " + varDecl.getName() + "\t [" + getLineNum(cUnit, varDecl) + "]\n";
+            viewer.appendText(var);
             System.out.print(var);
 
             List<SimpleName> usedVars = iVariableAnal.getUsedVars();
@@ -85,9 +93,11 @@ public class DefUseHandler {
                ASTNode parentNode = iSimpleName.getParent();
                if (parentNode != null && parentNode instanceof Assignment) {
                   String assign = "\t\t[ASSIGN VAR] " + strTrim(parentNode) + "\t [" + getLineNum(cUnit, iSimpleName) + "]\n";
+                  viewer.appendText(assign);
                   System.out.print(assign);
                } else {
                   String use = "\t\t[USE VAR] " + strTrim(parentNode) + "\t [" + getLineNum(cUnit, iSimpleName) + "]\n";
+                  viewer.appendText(use);
                   System.out.print(use);
                }
             }
