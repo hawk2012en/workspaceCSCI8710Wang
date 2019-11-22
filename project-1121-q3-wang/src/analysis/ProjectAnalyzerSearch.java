@@ -45,7 +45,7 @@ public class ProjectAnalyzerSearch {
 	SimpleTableViewer viewer;
 	String query;
 	IDocument doc;
-	private boolean isPrivate = false;
+	private boolean isPrivate;
 
 	public ProjectAnalyzerSearch(SimpleTableViewer v) {
 		this.viewer = v;
@@ -117,7 +117,7 @@ public class ProjectAnalyzerSearch {
 						String source = UtilFile.readEntireFile(RUNTIME_PRJ_PATH + filePath);
 						IDocument doc = new Document(source);
 						int offset = method.getSourceRange().getOffset();
-						int lineNumber = doc.getLineOfOffset(offset) + 1;
+						int lineNumber = doc.getLineOfOffset(offset) + 1;						
 						if (checkModifier(method)) {
 							System.out.println("Do not display private method " + method.getElementName() + 
 									" in package " + declaringType.getPackageFragment().getElementName() +
@@ -143,6 +143,7 @@ public class ProjectAnalyzerSearch {
 	}
 
 	private boolean checkModifier(IMethod method) {
+		isPrivate = false;
 		CompilationUnit cUnit = UtilAST.parse(method.getCompilationUnit());
 		cUnit.accept(new ASTVisitor() {
 			public boolean visit(MethodDeclaration node) {
