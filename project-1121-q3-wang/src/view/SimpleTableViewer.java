@@ -101,12 +101,12 @@ public class SimpleTableViewer {
 					} catch (CoreException e2) {
 						e2.printStackTrace();
 					}
-//					if (progElem.isModifierPublic()) {
-//						System.out.println("Public method: " + progElem.getMethod());
-//					} else {
+					if (progElem.isModifierPublic()) {
+						System.out.println("Public method: " + progElem.getMethod());
+					} else {
 					progElem.setMethod(dialog.getNewMethodName());
 					viewer.refresh();
-//					}
+					}
 				}
 			}
 		});
@@ -137,31 +137,31 @@ public class SimpleTableViewer {
 			}
 		});
 
-//		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
-//		menuItem2.setText("Search callers of Selected Method");
-//		menuItem2.addSelectionListener(new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//				TableItem item = viewer.getTable().getSelection()[0];
-//				Object data = item.getData();
-//				if (data instanceof ProgElem) {
-//					ProgElem progElem = (ProgElem) data;				
-//					
-//					MPart part = service.findPart(simpleviewId);
-//					if (part != null && part.getObject() instanceof SimpleViewer) {
-//						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
-//								progElem.getMethod(), progElem.getClazz());
-//						try {
-//							analyzer.analyze();
-//						} catch (CoreException e3) {
-//							e3.printStackTrace();
-//						}
-//						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
-//						SimpleViewer viewer = (SimpleViewer) part.getObject();
-//						display(viewer, calleeCallers);
-//					}
-//				}
-//			}
-//		});
+		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
+		menuItem2.setText("Search callers of Selected Method");
+		menuItem2.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				TableItem item = viewer.getTable().getSelection()[0];
+				Object data = item.getData();
+				if (data instanceof ProgElem) {
+					ProgElem progElem = (ProgElem) data;				
+					
+					MPart part = service.findPart(simpleviewId);
+					if (part != null && part.getObject() instanceof SimpleViewer) {
+						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
+								progElem.getMethod(), progElem.getClazz());
+						try {
+							analyzer.analyze();
+						} catch (CoreException e3) {
+							e3.printStackTrace();
+						}
+						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
+						SimpleViewer viewer = (SimpleViewer) part.getObject();
+						display(viewer, calleeCallers);
+					}
+				}
+			}
+		});
 
 		viewer.getTable().addListener(SWT.MouseDoubleClick, new Listener() {
 			public void handleEvent(Event event) {
@@ -180,27 +180,27 @@ public class SimpleTableViewer {
 		});
 	}
 
-//	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
-//		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
-//			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
-//				IMethod callee = entry.getKey();
-//				IMethod[] callers = entry.getValue();
-//				display(viewer, callee, callers);
-//			}
-//		}
-//	}
-//
-//	private void display(SimpleViewer viewer, IMethod callee, IMethod[] callers) {
-//		viewer.reset();
-//		for (IMethod iCaller : callers) {
-//			String type = callee.getDeclaringType().getFullyQualifiedName();
-//			String calleeName = type + "." + callee.getElementName();
-//			viewer.appendText("'" + calleeName + //
-//					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
-//			System.out.print("'" + calleeName + //
-//					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
-//		}
-//	}
+	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
+		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
+			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
+				IMethod callee = entry.getKey();
+				IMethod[] callers = entry.getValue();
+				display(viewer, callee, callers);
+			}
+		}
+	}
+
+	private void display(SimpleViewer viewer, IMethod callee, IMethod[] callers) {
+		viewer.reset();
+		for (IMethod iCaller : callers) {
+			String type = callee.getDeclaringType().getFullyQualifiedName();
+			String calleeName = type + "." + callee.getElementName();
+			viewer.appendText("'" + calleeName + //
+					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+			System.out.print("'" + calleeName + //
+					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+		}
+	}
 
 	private void createSearchTextV1(Composite parent) {
 		Label searchLabel = new Label(parent, SWT.NONE);

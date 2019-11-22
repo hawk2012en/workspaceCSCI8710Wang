@@ -91,11 +91,11 @@ public class RenameMethodAnalyzer {
 				}
 			};
 			cUnit.accept(iMethodFinder);
-//			if (curMethodElem.isModifierPublic()) {				
-//				MsgUtil.openInfo("Warning", "Can not rename selected method " + curMethodElem.getMethod() + " because it is a public method!");
-//			} else {				
+			if (curMethodElem.isModifierPublic()) {				
+				MsgUtil.openInfo("Warning", "Can not rename selected method " + curMethodElem.getMethod() + " because it is a public method!");
+			} else {				
 				UtilAST.rename(iMethod, this.newMethodName, IJavaRefactorings.RENAME_METHOD);
-//			}
+			}
 		}
 	}
 }

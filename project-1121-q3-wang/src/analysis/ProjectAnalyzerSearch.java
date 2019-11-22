@@ -9,7 +9,6 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
@@ -39,99 +38,119 @@ import view.SimpleTableViewer;
  * @since JavaSE-1.8
  */
 public class ProjectAnalyzerSearch {
-   final String JAVANATURE = "org.eclipse.jdt.core.javanature";
-   String RUNTIME_PRJ_PATH;
+	final String JAVANATURE = "org.eclipse.jdt.core.javanature";
+	String RUNTIME_PRJ_PATH;
 
-   IProject[] projects;
-   SimpleTableViewer viewer;
-   String query;
-   IDocument doc;
+	IProject[] projects;
+	SimpleTableViewer viewer;
+	String query;
+	IDocument doc;
+	private boolean isPrivate = false;
 
-   public ProjectAnalyzerSearch(SimpleTableViewer v) {
-      this.viewer = v;
-      this.viewer.reset();
-      this.query = v.getQuery();
-      RUNTIME_PRJ_PATH = System.getProperty("RUNTIME_PRJ_PATH");
-   }
+	public ProjectAnalyzerSearch(SimpleTableViewer v) {
+		this.viewer = v;
+		this.viewer.reset();
+		this.query = v.getQuery();
+		RUNTIME_PRJ_PATH = System.getProperty("RUNTIME_PRJ_PATH");
+	}
 
-   public ProjectAnalyzerSearch(String q) {
-      this.query = q;
-      RUNTIME_PRJ_PATH = System.getProperty("RUNTIME_PRJ_PATH");
-   }
+	public ProjectAnalyzerSearch(String q) {
+		this.query = q;
+		RUNTIME_PRJ_PATH = System.getProperty("RUNTIME_PRJ_PATH");
+	}
 
-   public void analyze() {
-      try {
-         projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-         for (IProject project : projects) {
-            if (!project.isOpen() || !project.isNatureEnabled(JAVANATURE)) {
-               continue;
-            }
-            analyzePackages(JavaCore.create(project).getPackageFragments());
-         }
-      } catch (Exception e) {
-      }
-   }
+	public void analyze() {
+		try {
+			projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+			for (IProject project : projects) {
+				if (!project.isOpen() || !project.isNatureEnabled(JAVANATURE)) {
+					continue;
+				}
+				analyzePackages(JavaCore.create(project).getPackageFragments());
+			}
+		} catch (Exception e) {
+		}
+	}
 
-   protected void analyzePackages(IPackageFragment[] packages) throws CoreException, JavaModelException {
-      List<IPackageFragment> listIPackageFragment = new ArrayList<IPackageFragment>();
+	protected void analyzePackages(IPackageFragment[] packages) throws CoreException, JavaModelException {
+		List<IPackageFragment> listIPackageFragment = new ArrayList<IPackageFragment>();
 
-      for (IPackageFragment iPackage : packages) {
-         if (iPackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
-            if (iPackage.getCompilationUnits().length < 1) {
-               continue;
-            }
-            listIPackageFragment.add(iPackage);
-         }
-      }
-      search(listIPackageFragment.toArray(new IPackageFragment[0]));
-   }
+		for (IPackageFragment iPackage : packages) {
+			if (iPackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
+				if (iPackage.getCompilationUnits().length < 1) {
+					continue;
+				}
+				listIPackageFragment.add(iPackage);
+			}
+		}
+		search(listIPackageFragment.toArray(new IPackageFragment[0]));
+	}
 
-   protected void search(IPackageFragment[] packages) throws CoreException, JavaModelException {
+	protected void search(IPackageFragment[] packages) throws CoreException, JavaModelException {
 
-      // =============================================================
-      // step 1: Create a search pattern
-      SearchPattern pattern = SearchPattern.createPattern(this.query, //
-            IJavaSearchConstants.METHOD, //
-            IJavaSearchConstants.DECLARATIONS, //
-            SearchPattern.R_PATTERN_MATCH);
+		// =============================================================
+		// step 1: Create a search pattern
+		SearchPattern pattern = SearchPattern.createPattern(this.query, //
+				IJavaSearchConstants.METHOD, //
+				IJavaSearchConstants.DECLARATIONS, //
+				SearchPattern.R_PATTERN_MATCH);
 
-      // =============================================================
-      // step 2: Create search scope
-      IJavaSearchScope scope = SearchEngine.createJavaSearchScope(packages);
+		// =============================================================
+		// step 2: Create search scope
+		IJavaSearchScope scope = SearchEngine.createJavaSearchScope(packages);
 
-      // =============================================================
-      // step 3: define a result collector
-      SearchRequestor requestor = new SearchRequestor() {
-         @Override
-         public void acceptSearchMatch(SearchMatch match) throws CoreException {
-            Object element = match.getElement();
+		// =============================================================
+		// step 3: define a result collector
+		SearchRequestor requestor = new SearchRequestor() {
+			@Override
+			public void acceptSearchMatch(SearchMatch match) throws CoreException {
+				Object element = match.getElement();
 
-            if (element != null && element instanceof IMethod) {
-               IMethod method = (IMethod) element;
-               IType declaringType = method.getDeclaringType();
-               //String filePath = method.getCompilationUnit().getPath().toFile().getAbsolutePath();
-               String filePath = method.getCompilationUnit().getPath().toString();
-               
-               try {
-                  String source = UtilFile.readEntireFile(RUNTIME_PRJ_PATH + filePath);
-                  IDocument doc = new Document(source);
-                  int offset = method.getSourceRange().getOffset();
-                  int lineNumber = doc.getLineOfOffset(offset) + 1;
-                  ModelProvider.INSTANCE.addProgramElements(RUNTIME_PRJ_PATH + filePath, //
-                        declaringType.getPackageFragment().getElementName(), //
-                        declaringType.getElementName(), method.getElementName(), offset, lineNumber);
-               } catch (Exception e) {
-                  e.printStackTrace();
-               }
-            }
-         }
-      };
+				if (element != null && element instanceof IMethod) {
+					IMethod method = (IMethod) element;
+					IType declaringType = method.getDeclaringType();
+					// String filePath =
+					// method.getCompilationUnit().getPath().toFile().getAbsolutePath();
+					String filePath = method.getCompilationUnit().getPath().toString();
 
-      // =============================================================
-      // step4: start searching
-      SearchEngine searchEngine = new SearchEngine();
-      searchEngine.search(pattern, //
-            new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, //
-            scope, requestor, null);
-   }
+					try {
+						String source = UtilFile.readEntireFile(RUNTIME_PRJ_PATH + filePath);
+						IDocument doc = new Document(source);
+						int offset = method.getSourceRange().getOffset();
+						int lineNumber = doc.getLineOfOffset(offset) + 1;
+						if (checkModifier(method)) {
+							System.out.println("Do not display private method " + method.getElementName() + 
+									" in package " + declaringType.getPackageFragment().getElementName() +
+									" in class " + declaringType.getElementName());
+						} else {
+							ModelProvider.INSTANCE.addProgramElements(RUNTIME_PRJ_PATH + filePath, //
+									declaringType.getPackageFragment().getElementName(), //
+									declaringType.getElementName(), method.getElementName(), offset, lineNumber);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		// =============================================================
+		// step4: start searching
+		SearchEngine searchEngine = new SearchEngine();
+		searchEngine.search(pattern, //
+				new SearchParticipant[] { SearchEngine.getDefaultSearchParticipant() }, //
+				scope, requestor, null);
+	}
+
+	private boolean checkModifier(IMethod method) {
+		CompilationUnit cUnit = UtilAST.parse(method.getCompilationUnit());
+		cUnit.accept(new ASTVisitor() {
+			public boolean visit(MethodDeclaration node) {
+				int methodModifers = node.getModifiers();
+				isPrivate = (methodModifers & Modifier.PRIVATE) != 0;
+				return true;
+			}
+		});
+		return isPrivate;
+	}
 }
