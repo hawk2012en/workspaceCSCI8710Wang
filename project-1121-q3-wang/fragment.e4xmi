@@ -11,7 +11,7 @@
     <elements xsi:type="commands:Handler" xmi:id="_lPvj0AtLEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.handler.1" contributionURI="bundleclass://project-1121-q3-wang/handler.CalleeCallerHandler" command="_WUxZUAtLEeqOHYpj41X8GQ"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EnVXsLAVEeW3vtWFl0TcLg" featurename="descriptors" parentElementId="org.eclipse.e4.legacy.ide.application">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_KBAyILAVEeW3vtWFl0TcLg" elementId="simplebindingproject.partdescriptor.simplecodepatternmatchview" label="Simple View Pattern Match Wang" iconURI="platform:/plugin/project-1121-q3-wang/icons/sample.png" contributionURI="bundleclass://project-1121-q3-wang/view.SimpleTableViewer"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KBAyILAVEeW3vtWFl0TcLg" elementId="simplebindingproject.partdescriptor.simplecodepatternmatchview" label="Simple View 1121 Pattern Match Wang" iconURI="platform:/plugin/project-1121-q3-wang/icons/sample.png" contributionURI="bundleclass://project-1121-q3-wang/view.SimpleTableViewer"/>
     <elements xsi:type="basic:PartDescriptor" xmi:id="_nmgT8AtYEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.partdescriptor.simpleviewdef-usecallee-caller" label="Simple View Def-Use/Callee-Caller" iconURI="platform:/plugin/project-1121-q3-wang/icons/sample.png" contributionURI="bundleclass://project-1121-q3-wang/view.SimpleViewer"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_cXqZULAVEeW3vtWFl0TcLg" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">

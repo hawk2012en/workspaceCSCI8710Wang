@@ -4,6 +4,7 @@ public class ProgElem {
    String file, pkg, clazz, method;
    int offset, lineNumber;
    private boolean isModifierPublic;
+   private boolean isModifierPrivate;
 
    public ProgElem(String fileName, String pkg, String clazz, String method, int offset, int lineNum) {
       this.file = fileName;
@@ -68,6 +69,14 @@ public class ProgElem {
 
 	public void setModifierPublic(boolean isModifierPublic) {
 		this.isModifierPublic = isModifierPublic;
+	}
+	
+	public boolean isModifierPrivate() {
+		return isModifierPrivate;
+	}
+
+	public void setModifierPrivate(boolean isModifierPrivate) {
+		this.isModifierPrivate = isModifierPrivate;
 	}
 
 }

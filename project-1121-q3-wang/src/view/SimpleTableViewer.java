@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Text;
 import analysis.ProjectAnalyzerSearch;
 import analysis.ProjectAnalyzerSearchAllMethodNames;
 import analysis.ProjectAnalyzerSearchMethodCallers;
+import analysis.RenameClassAnalyzer;
 import analysis.RenameMethodAnalyzer;
 import model.LabelProviderProgElem;
 import model.ModelProvider;
@@ -57,7 +58,7 @@ public class SimpleTableViewer {
 	private Text searchText;
 	private Text searchTextQualifier;
 	private Text searchTextMethodName;
-	
+
 	@Inject
 	private EPartService service;
 
@@ -76,7 +77,7 @@ public class SimpleTableViewer {
 		// * Use this popup menu interface to start.
 		Menu popupMenu = new Menu(viewer.getTable());
 		viewer.getTable().setMenu(popupMenu);
-		
+
 		final MenuItem menuItem = new MenuItem(popupMenu, SWT.PUSH);
 		menuItem.setText("Rename Selected Method");
 		menuItem.addSelectionListener(new SelectionAdapter() {
@@ -100,43 +101,68 @@ public class SimpleTableViewer {
 					} catch (CoreException e2) {
 						e2.printStackTrace();
 					}
-					if (progElem.isModifierPublic()) {
+//					if (progElem.isModifierPublic()) {
 //						System.out.println("Public method: " + progElem.getMethod());
-					} else {
-						progElem.setMethod(dialog.getNewMethodName());
-						viewer.refresh();
-					}
+//					} else {
+					progElem.setMethod(dialog.getNewMethodName());
+					viewer.refresh();
+//					}
 				}
 			}
 		});
 		//
 
-		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
-		menuItem2.setText("Search callers of Selected Method");
-		menuItem2.addSelectionListener(new SelectionAdapter() {
+		final MenuItem menuItem3 = new MenuItem(popupMenu, SWT.PUSH);
+		menuItem3.setText("Rename Selected Class");
+		menuItem3.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem item = viewer.getTable().getSelection()[0];
 				Object data = item.getData();
 				if (data instanceof ProgElem) {
-					ProgElem progElem = (ProgElem) data;				
-					
-					MPart part = service.findPart(simpleviewId);
-					if (part != null && part.getObject() instanceof SimpleViewer) {
-						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
-								progElem.getMethod(), progElem.getClazz());
-						try {
-							analyzer.analyze();
-						} catch (CoreException e3) {
-							e3.printStackTrace();
-						}
-						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
-						SimpleViewer viewer = (SimpleViewer) part.getObject();
-						display(viewer, calleeCallers);
+					ProgElem progElem = (ProgElem) data;
+					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
+					dialog.create();
+					if (dialog.open() == Window.OK) {
 					}
+					try {
+						RenameClassAnalyzer renameAnalyzer = new RenameClassAnalyzer(progElem,
+								dialog.getNewMethodName());
+						renameAnalyzer.analyze();
+					} catch (CoreException e2) {
+						e2.printStackTrace();
+					}
+					progElem.setClazz(dialog.getNewMethodName());
+					viewer.refresh();
 				}
 			}
 		});
-		
+
+//		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
+//		menuItem2.setText("Search callers of Selected Method");
+//		menuItem2.addSelectionListener(new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				TableItem item = viewer.getTable().getSelection()[0];
+//				Object data = item.getData();
+//				if (data instanceof ProgElem) {
+//					ProgElem progElem = (ProgElem) data;				
+//					
+//					MPart part = service.findPart(simpleviewId);
+//					if (part != null && part.getObject() instanceof SimpleViewer) {
+//						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
+//								progElem.getMethod(), progElem.getClazz());
+//						try {
+//							analyzer.analyze();
+//						} catch (CoreException e3) {
+//							e3.printStackTrace();
+//						}
+//						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
+//						SimpleViewer viewer = (SimpleViewer) part.getObject();
+//						display(viewer, calleeCallers);
+//					}
+//				}
+//			}
+//		});
+
 		viewer.getTable().addListener(SWT.MouseDoubleClick, new Listener() {
 			public void handleEvent(Event event) {
 				TableItem[] selection = viewer.getTable().getSelection();
@@ -154,28 +180,28 @@ public class SimpleTableViewer {
 		});
 	}
 
-	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
-		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
-			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
-				IMethod callee = entry.getKey();
-				IMethod[] callers = entry.getValue();
-				display(viewer, callee, callers);
-			}
-		}
-	}
+//	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
+//		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
+//			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
+//				IMethod callee = entry.getKey();
+//				IMethod[] callers = entry.getValue();
+//				display(viewer, callee, callers);
+//			}
+//		}
+//	}
+//
+//	private void display(SimpleViewer viewer, IMethod callee, IMethod[] callers) {
+//		viewer.reset();
+//		for (IMethod iCaller : callers) {
+//			String type = callee.getDeclaringType().getFullyQualifiedName();
+//			String calleeName = type + "." + callee.getElementName();
+//			viewer.appendText("'" + calleeName + //
+//					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+//			System.out.print("'" + calleeName + //
+//					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
+//		}
+//	}
 
-	private void display(SimpleViewer viewer, IMethod callee, IMethod[] callers) {
-		viewer.reset();
-		for (IMethod iCaller : callers) {
-			String type = callee.getDeclaringType().getFullyQualifiedName();
-			String calleeName = type + "." + callee.getElementName();
-			viewer.appendText("'" + calleeName + //
-					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
-			System.out.print("'" + calleeName + //
-					"' CALLED FROM '" + iCaller.getElementName() + "'\n");
-		}
-	}
-	
 	private void createSearchTextV1(Composite parent) {
 		Label searchLabel = new Label(parent, SWT.NONE);
 		searchLabel.setText("Search by Method Decl. Signature: ");
@@ -218,7 +244,7 @@ public class SimpleTableViewer {
 		container.setLayoutData(gridData);
 
 		searchTextQualifier = new Text(container, SWT.BORDER | SWT.SEARCH);
-		searchTextQualifier.setText("pkg*");
+		searchTextQualifier.setText("sec*");
 		searchTextQualifier.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 
 		searchTextMethodName = new Text(container, SWT.BORDER | SWT.SEARCH);

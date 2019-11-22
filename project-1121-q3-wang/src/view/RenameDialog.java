@@ -24,7 +24,7 @@ public class RenameDialog extends TitleAreaDialog {
    public void create() {
       super.create();
       setTitle("Dialog");
-      setMessage("Method Rename Dialog", IMessageProvider.INFORMATION);
+      setMessage("Rename Dialog", IMessageProvider.INFORMATION);
    }
 
    @Override
@@ -40,7 +40,7 @@ public class RenameDialog extends TitleAreaDialog {
 
    private void createNewMethodName(Composite container) {
       Label lbName = new Label(container, SWT.NONE);
-      lbName.setText("New Method Name");
+      lbName.setText("New Name");
 
       GridData data = new GridData();
       data.grabExcessHorizontalSpace = true;

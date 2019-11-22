@@ -9,12 +9,17 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.search.IJavaSearchConstants;
 import org.eclipse.jdt.core.search.IJavaSearchScope;
 import org.eclipse.jdt.core.search.SearchEngine;
@@ -26,6 +31,7 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 
 import model.ModelProvider;
+import util.UtilAST;
 import util.UtilFile;
 import view.SimpleTableViewer;
 
@@ -105,7 +111,7 @@ public class ProjectAnalyzerSearch {
                IType declaringType = method.getDeclaringType();
                //String filePath = method.getCompilationUnit().getPath().toFile().getAbsolutePath();
                String filePath = method.getCompilationUnit().getPath().toString();
-
+               
                try {
                   String source = UtilFile.readEntireFile(RUNTIME_PRJ_PATH + filePath);
                   IDocument doc = new Document(source);
