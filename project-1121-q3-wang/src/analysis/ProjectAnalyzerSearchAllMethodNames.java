@@ -116,7 +116,7 @@ public class ProjectAnalyzerSearchAllMethodNames {
 						IDocument doc = new Document(source);
 						int offset = method.getSourceRange().getOffset();
 						int lineNumber = doc.getLineOfOffset(offset) + 1;						
-						if (checkModifier(method)) {
+						if (isModifierPrivate(method)) {
 							System.out.println("Do not display private method " + method.getElementName() + 
 									" in package " + declaringType.getPackageFragment().getElementName() +
 									" in class " + declaringType.getElementName());
@@ -144,16 +144,19 @@ public class ProjectAnalyzerSearchAllMethodNames {
 				IJavaSearchConstants.WAIT_UNTIL_READY_TO_SEARCH, null);
 	}
 
-	private boolean checkModifier(IMethod method) {
+	private boolean isModifierPrivate(IMethod method) {
 		isPrivate = false;
 		CompilationUnit cUnit = UtilAST.parse(method.getCompilationUnit());
 		cUnit.accept(new ASTVisitor() {
 			public boolean visit(MethodDeclaration node) {
-				int methodModifers = node.getModifiers();
-				isPrivate = (methodModifers & Modifier.PRIVATE) != 0;
+				if (node.getName().getFullyQualifiedName().equals(method.getElementName())) {
+					int methodModifers = node.getModifiers();
+					isPrivate = (methodModifers & Modifier.PRIVATE) != 0;
+				}
 				return true;
 			}
 		});
 		return isPrivate;
 	}
+	
 }
