@@ -13,6 +13,7 @@
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EnVXsLAVEeW3vtWFl0TcLg" featurename="descriptors" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="basic:PartDescriptor" xmi:id="_KBAyILAVEeW3vtWFl0TcLg" elementId="simplebindingproject.partdescriptor.simplecodepatternmatchview" label="Simple View 1121 Pattern Match Wang" iconURI="platform:/plugin/project-1219-final-wang/icons/sample.png" contributionURI="bundleclass://project-1219-final-wang/view.SimpleTableViewer"/>
     <elements xsi:type="basic:PartDescriptor" xmi:id="_nmgT8AtYEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.partdescriptor.simpleviewdef-usecallee-caller" label="Simple View Def-Use/Callee-Caller" iconURI="platform:/plugin/project-1219-final-wang/icons/sample.png" contributionURI="bundleclass://project-1219-final-wang/view.SimpleViewer"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_FCJ7gBtxEeq-7bo3No0C2g" elementId="project-1219-final-wang.partdescriptor.simpleasttreewang" label="Simple AST Tree Wang" iconURI="platform:/plugin/project-1219-final-wang/icons/sample.png" contributionURI="bundleclass://project-1219-final-wang/view.Viewer"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_cXqZULAVEeW3vtWFl0TcLg" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="menu:MenuContribution" xmi:id="_fUAOoLAVEeW3vtWFl0TcLg" elementId="simplebindingproject.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
