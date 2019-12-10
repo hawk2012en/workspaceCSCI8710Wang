@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_vWID4LAUEeW3vtWFl0TcLg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_wI8n8LAUEeW3vtWFl0TcLg" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_6ditcMJNEeWfOqeQnlo3_A" elementId="simplebindingproject.command.simplesearchengine" commandName="Simple Search Engine"/>
+    <elements xsi:type="commands:Command" xmi:id="_7-YygArpEeqCaI78PBfjqg" elementId="project-1121-q3-wang.command.simplebinding" commandName="Def Use Search"/>
+    <elements xsi:type="commands:Command" xmi:id="_WUxZUAtLEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.command.calleecallersearch" commandName="Callee Caller Search"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_47Z8ELAUEeW3vtWFl0TcLg" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_9GcCUMJNEeWfOqeQnlo3_A" elementId="simplebindingproject.handler.2" contributionURI="bundleclass://project-1219-final-wang/handler.HandlerCodePatternMatch" command="_6ditcMJNEeWfOqeQnlo3_A"/>
+    <elements xsi:type="commands:Handler" xmi:id="_HQjqUArqEeqCaI78PBfjqg" elementId="project-1121-q3-wang.handler.0" contributionURI="bundleclass://project-1219-final-wang/handler.DefUseHandler" command="_7-YygArpEeqCaI78PBfjqg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_lPvj0AtLEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.handler.1" contributionURI="bundleclass://project-1219-final-wang/handler.CalleeCallerHandler" command="_WUxZUAtLEeqOHYpj41X8GQ"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EnVXsLAVEeW3vtWFl0TcLg" featurename="descriptors" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KBAyILAVEeW3vtWFl0TcLg" elementId="simplebindingproject.partdescriptor.simplecodepatternmatchview" label="Simple View 1121 Pattern Match Wang" iconURI="platform:/plugin/project-1219-final-wang/icons/sample.png" contributionURI="bundleclass://project-1219-final-wang/view.SimpleTableViewer"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_nmgT8AtYEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.partdescriptor.simpleviewdef-usecallee-caller" label="Simple View Def-Use/Callee-Caller" iconURI="platform:/plugin/project-1219-final-wang/icons/sample.png" contributionURI="bundleclass://project-1219-final-wang/view.SimpleViewer"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_cXqZULAVEeW3vtWFl0TcLg" featurename="menuContributions" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="menu:MenuContribution" xmi:id="_fUAOoLAVEeW3vtWFl0TcLg" elementId="simplebindingproject.menucontribution.0" positionInParent="after=window" parentId="org.eclipse.ui.main.menu">
+      <children xsi:type="menu:Menu" xmi:id="_kfMhILAVEeW3vtWFl0TcLg" elementId="id.mymenu" label="My Menu">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_rsznkMJOEeWfOqeQnlo3_A" elementId="simplebindingproject.handledmenuitem.searchengine" label="Search Engine" command="_6ditcMJNEeWfOqeQnlo3_A"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_01y_MArpEeqCaI78PBfjqg" elementId="project-1121-q3-wang.handledmenuitem.defuseanalysiswang" label="Def Use Analysis" command="_7-YygArpEeqCaI78PBfjqg"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_gg1ksAtLEeqOHYpj41X8GQ" elementId="project-1121-q3-wang.handledmenuitem.findmethodcallers" label="Find Method Callers" command="_WUxZUAtLEeqOHYpj41X8GQ"/>
+      </children>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>
