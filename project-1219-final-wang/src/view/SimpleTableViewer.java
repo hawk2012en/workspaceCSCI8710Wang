@@ -17,6 +17,13 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jdt.core.IMethod;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Assignment;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.eclipse.jdt.core.dom.SimpleName;
+import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -37,11 +44,13 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import analysis.ProjectAnalyzerDefUse;
 import analysis.ProjectAnalyzerSearch;
 import analysis.ProjectAnalyzerSearchAllMethodNames;
 import analysis.ProjectAnalyzerSearchMethodCallers;
 import analysis.RenameClassAnalyzer;
 import analysis.RenameMethodAnalyzer;
+import model.DefUseModel;
 import model.LabelProviderProgElem;
 import model.ModelProvider;
 import model.ProgElem;
@@ -78,86 +87,114 @@ public class SimpleTableViewer {
 		Menu popupMenu = new Menu(viewer.getTable());
 		viewer.getTable().setMenu(popupMenu);
 
-		final MenuItem menuItem = new MenuItem(popupMenu, SWT.PUSH);
-		menuItem.setText("Rename Selected Method");
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				TableItem item = viewer.getTable().getSelection()[0];
-				Object data = item.getData();
-				if (data instanceof ProgElem) {
-					ProgElem progElem = (ProgElem) data;
-					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
-					dialog.create();
-					if (dialog.open() == Window.OK) {
-//						System.out.println("[DBG] PACKAGE NAME: " + progElem.getPkg());
-//						System.out.println("[DBG] CLASS NAME: " + progElem.getClazz());
-//						System.out.println("[DBG] METHOD NAME: " + progElem.getMethod());
-//						System.out.println("[DBG] NEW METHOD NAME: " + dialog.getNewMethodName());
-					}
-					try {
-						RenameMethodAnalyzer renameAnalyzer = new RenameMethodAnalyzer(progElem,
-								dialog.getNewMethodName());
-						renameAnalyzer.analyze();
-					} catch (CoreException e2) {
-						e2.printStackTrace();
-					}
-					if (progElem.isModifierPublic()) {
-						System.out.println("Public method: " + progElem.getMethod());
-					} else {
-					progElem.setMethod(dialog.getNewMethodName());
-					viewer.refresh();
-					}
-				}
-			}
-		});
-		//
-
-		final MenuItem menuItem3 = new MenuItem(popupMenu, SWT.PUSH);
-		menuItem3.setText("Rename Selected Class");
-		menuItem3.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				TableItem item = viewer.getTable().getSelection()[0];
-				Object data = item.getData();
-				if (data instanceof ProgElem) {
-					ProgElem progElem = (ProgElem) data;
-					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
-					dialog.create();
-					if (dialog.open() == Window.OK) {
-					}
-					try {
-						RenameClassAnalyzer renameAnalyzer = new RenameClassAnalyzer(progElem,
-								dialog.getNewMethodName());
-						renameAnalyzer.analyze();
-					} catch (CoreException e2) {
-						e2.printStackTrace();
-					}
-					progElem.setClazz(dialog.getNewMethodName());
-					viewer.refresh();
-				}
-			}
-		});
-
-		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
-		menuItem2.setText("Search callers of Selected Method");
-		menuItem2.addSelectionListener(new SelectionAdapter() {
+//		final MenuItem menuItem = new MenuItem(popupMenu, SWT.PUSH);
+//		menuItem.setText("Rename Selected Method");
+//		menuItem.addSelectionListener(new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				TableItem item = viewer.getTable().getSelection()[0];
+//				Object data = item.getData();
+//				if (data instanceof ProgElem) {
+//					ProgElem progElem = (ProgElem) data;
+//					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
+//					dialog.create();
+//					if (dialog.open() == Window.OK) {
+////						System.out.println("[DBG] PACKAGE NAME: " + progElem.getPkg());
+////						System.out.println("[DBG] CLASS NAME: " + progElem.getClazz());
+////						System.out.println("[DBG] METHOD NAME: " + progElem.getMethod());
+////						System.out.println("[DBG] NEW METHOD NAME: " + dialog.getNewMethodName());
+//					}
+//					try {
+//						RenameMethodAnalyzer renameAnalyzer = new RenameMethodAnalyzer(progElem,
+//								dialog.getNewMethodName());
+//						renameAnalyzer.analyze();
+//					} catch (CoreException e2) {
+//						e2.printStackTrace();
+//					}
+//					if (progElem.isModifierPublic()) {
+//						System.out.println("Public method: " + progElem.getMethod());
+//					} else {
+//					progElem.setMethod(dialog.getNewMethodName());
+//					viewer.refresh();
+//					}
+//				}
+//			}
+//		});
+//		//
+//
+//		final MenuItem menuItem3 = new MenuItem(popupMenu, SWT.PUSH);
+//		menuItem3.setText("Rename Selected Class");
+//		menuItem3.addSelectionListener(new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				TableItem item = viewer.getTable().getSelection()[0];
+//				Object data = item.getData();
+//				if (data instanceof ProgElem) {
+//					ProgElem progElem = (ProgElem) data;
+//					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
+//					dialog.create();
+//					if (dialog.open() == Window.OK) {
+//					}
+//					try {
+//						RenameClassAnalyzer renameAnalyzer = new RenameClassAnalyzer(progElem,
+//								dialog.getNewMethodName());
+//						renameAnalyzer.analyze();
+//					} catch (CoreException e2) {
+//						e2.printStackTrace();
+//					}
+//					progElem.setClazz(dialog.getNewMethodName());
+//					viewer.refresh();
+//				}
+//			}
+//		});
+//
+//		final MenuItem menuItem2 = new MenuItem(popupMenu, SWT.PUSH);
+//		menuItem2.setText("Search callers of Selected Method");
+//		menuItem2.addSelectionListener(new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				TableItem item = viewer.getTable().getSelection()[0];
+//				Object data = item.getData();
+//				if (data instanceof ProgElem) {
+//					ProgElem progElem = (ProgElem) data;				
+//					
+//					MPart part = service.findPart(simpleviewId);
+//					if (part != null && part.getObject() instanceof SimpleViewer) {
+//						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
+//								progElem.getMethod(), progElem.getClazz());
+//						try {
+//							analyzer.analyze();
+//						} catch (CoreException e3) {
+//							e3.printStackTrace();
+//						}
+//						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
+//						SimpleViewer viewer = (SimpleViewer) part.getObject();
+//						display(viewer, calleeCallers);
+//					}
+//				}
+//			}
+//		});
+		
+		final MenuItem menuItem4 = new MenuItem(popupMenu, SWT.PUSH);
+		menuItem4.setText("Def-Use Analysis");
+		menuItem4.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				TableItem item = viewer.getTable().getSelection()[0];
 				Object data = item.getData();
 				if (data instanceof ProgElem) {
 					ProgElem progElem = (ProgElem) data;				
-					
+					RenameDialog dialog = new RenameDialog(viewer.getTable().getShell());
+					dialog.create();
+					if (dialog.open() == Window.OK) {
+					}
 					MPart part = service.findPart(simpleviewId);
 					if (part != null && part.getObject() instanceof SimpleViewer) {
-						ProjectAnalyzerSearchMethodCallers analyzer = new ProjectAnalyzerSearchMethodCallers(
-								progElem.getMethod(), progElem.getClazz());
-						try {
-							analyzer.analyze();
-						} catch (CoreException e3) {
-							e3.printStackTrace();
-						}
-						List<Map<IMethod, IMethod[]>> calleeCallers = analyzer.getListCallers();
-						SimpleViewer viewer = (SimpleViewer) part.getObject();
-						display(viewer, calleeCallers);
+				         ProjectAnalyzerDefUse analyzer = new ProjectAnalyzerDefUse(dialog.getNewMethodName(), progElem.getMethod(), progElem.getClazz());
+				         try {
+				            analyzer.analyze();
+				         } catch (CoreException e4) {
+				            e4.printStackTrace();
+				         }
+				         List<Map<IVariableBinding, DefUseModel>> analysisDataList = analyzer.getAnalysisDataList();
+				         SimpleViewer viewer = (SimpleViewer) part.getObject();
+				         displayDefUsedView(viewer, analysisDataList);
 					}
 				}
 			}
@@ -180,6 +217,55 @@ public class SimpleTableViewer {
 		});
 	}
 
+	private void displayDefUsedView(SimpleViewer viewer, List<Map<IVariableBinding, DefUseModel>> analysisDataList) {      
+		  viewer.reset();
+		  int counter = 1;
+	      for (Map<IVariableBinding, DefUseModel> iMap : analysisDataList) {
+	         for (Entry<IVariableBinding, DefUseModel> entry : iMap.entrySet()) {
+	            IVariableBinding iBinding = entry.getKey();
+	            DefUseModel iVariableAnal = entry.getValue();
+	            CompilationUnit cUnit = iVariableAnal.getCompilationUnit();
+	            VariableDeclarationStatement varDeclStmt = iVariableAnal.getVarDeclStmt();
+	            VariableDeclarationFragment varDecl = iVariableAnal.getVarDeclFrgt();
+
+	            System.out.print("[" + (counter) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");
+	            viewer.appendText("[" + (counter++) + "] ABOUT VARIABLES '" + varDecl.getName() + "'\n");            
+	            String method = "[METHOD] " + iBinding.getDeclaringMethod() + "\n";
+	            viewer.appendText(method);
+	            System.out.print(method);            
+	            String stmt = "\t[DECLARE STMT] " + strTrim(varDeclStmt) + "\t [" + getLineNum(cUnit, varDeclStmt) + "]\n";
+	            viewer.appendText(stmt);
+	            System.out.print(stmt);
+	            String var = "\t[DECLARE VAR] " + varDecl.getName() + "\t [" + getLineNum(cUnit, varDecl) + "]\n";
+	            viewer.appendText(var);
+	            System.out.print(var);
+
+	            List<SimpleName> usedVars = iVariableAnal.getUsedVars();
+	            for (SimpleName iSimpleName : usedVars) {
+
+	               ASTNode parentNode = iSimpleName.getParent();
+	               if (parentNode != null && parentNode instanceof Assignment) {
+	                  String assign = "\t\t[ASSIGN VAR] " + strTrim(parentNode) + "\t [" + getLineNum(cUnit, iSimpleName) + "]\n";
+	                  viewer.appendText(assign);
+	                  System.out.print(assign);
+	               } else {
+	                  String use = "\t\t[USE VAR] " + strTrim(parentNode) + "\t [" + getLineNum(cUnit, iSimpleName) + "]\n";
+	                  viewer.appendText(use);
+	                  System.out.print(use);
+	               }
+	            }
+	         }
+	      }
+	   }
+
+	   String strTrim(Object o) {
+	      return o.toString().trim();
+	   }
+
+	   int getLineNum(CompilationUnit compilationUnit, ASTNode node) {
+	      return compilationUnit.getLineNumber(node.getStartPosition());
+	   }
+	   
 	public void display(SimpleViewer viewer, List<Map<IMethod, IMethod[]>> calleeCallers) {
 		for (Map<IMethod, IMethod[]> iCalleeCaller : calleeCallers) {
 			for (Entry<IMethod, IMethod[]> entry : iCalleeCaller.entrySet()) {
@@ -214,7 +300,7 @@ public class SimpleTableViewer {
 		container.setLayoutData(gridData);
 
 		searchText = new Text(container, SWT.BORDER | SWT.SEARCH);
-		searchText.setText("foo(*,*) void");
+		searchText.setText("m*(*) int");
 		searchText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL));
 
 		searchText.addListener(SWT.KeyDown, new Listener() {

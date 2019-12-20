@@ -44,7 +44,7 @@ public class ProjectAnalyzerSearchAllMethodNames {
 	SimpleTableViewer viewer;
 	String queryQualifiedName, queryMethodName;
 	IDocument doc;
-	private boolean isPrivate;
+	private boolean isStatic;
 
 	public ProjectAnalyzerSearchAllMethodNames(SimpleTableViewer v) {
 		this.viewer = v;
@@ -116,8 +116,8 @@ public class ProjectAnalyzerSearchAllMethodNames {
 						IDocument doc = new Document(source);
 						int offset = method.getSourceRange().getOffset();
 						int lineNumber = doc.getLineOfOffset(offset) + 1;						
-						if (isModifierPrivate(method)) {
-							System.out.println("Do not display private method " + method.getElementName() + 
+						if (isModifierStatic(method)) {
+							System.out.println("Do not display static method " + method.getElementName() + 
 									" in package " + declaringType.getPackageFragment().getElementName() +
 									" in class " + declaringType.getElementName());
 						} else {
@@ -144,19 +144,19 @@ public class ProjectAnalyzerSearchAllMethodNames {
 				IJavaSearchConstants.WAIT_UNTIL_READY_TO_SEARCH, null);
 	}
 
-	private boolean isModifierPrivate(IMethod method) {
-		isPrivate = false;
+	private boolean isModifierStatic(IMethod method) {
+		isStatic = false;
 		CompilationUnit cUnit = UtilAST.parse(method.getCompilationUnit());
 		cUnit.accept(new ASTVisitor() {
 			public boolean visit(MethodDeclaration node) {
 				if (node.getName().getFullyQualifiedName().equals(method.getElementName())) {
 					int methodModifers = node.getModifiers();
-					isPrivate = (methodModifers & Modifier.PRIVATE) != 0;
+					isStatic = (methodModifers & Modifier.STATIC) != 0;
 				}
 				return true;
 			}
 		});
-		return isPrivate;
+		return isStatic;
 	}
 	
 }
