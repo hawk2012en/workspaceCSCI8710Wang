@@ -20,18 +20,21 @@ import org.eclipse.text.edits.TextEdit;
 
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceMethodVisitor;
+import visitor.rewrite.InsertMethodParameterVisitor;
+
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceMethodNameAnalyzer {
+public class InsertMethodParameterAnalyzer {
 	private ProgramElement curProgElem;
-	private String newMethodName;
+	private String newType;
+	private String newID;
 
-	public ReplaceMethodNameAnalyzer(ProgramElement curProgName, String newMethodName) {
+	public InsertMethodParameterAnalyzer(ProgramElement curProgName, String newType, String newID) {
 		this.curProgElem = curProgName;
-		this.newMethodName = newMethodName;
+		this.newType = newType;
+		this.newID = newID;
 
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for (IProject project : projects) {
@@ -54,12 +57,12 @@ public class ReplaceMethodNameAnalyzer {
 			if (iPackage.getKind() == IPackageFragmentRoot.K_SOURCE && //
 					iPackage.getCompilationUnits().length >= 1 && //
 					iPackage.getElementName().equals(curProgElem.getPkgName())) {
-				replaceMethodName(iPackage);
+				insertMethodParameter(iPackage);
 			}
 		}
 	}
 
-	void replaceMethodName(IPackageFragment iPackage)
+	void insertMethodParameter(IPackageFragment iPackage)
 			throws JavaModelException, MalformedTreeException, BadLocationException {
 		for (ICompilationUnit iCUnit : iPackage.getCompilationUnits()) {
 			String nameICUnit = ParseUtil.getClassNameFromJavaFile(iCUnit.getElementName());
@@ -69,7 +72,7 @@ public class ReplaceMethodNameAnalyzer {
 			ICompilationUnit workingCopy = iCUnit.getWorkingCopy(null);
 			CompilationUnit cUnit = ParseUtil.parse(workingCopy);
 			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceMethodVisitor v = new ReplaceMethodVisitor(curProgElem, newMethodName);
+			InsertMethodParameterVisitor v = new InsertMethodParameterVisitor(curProgElem, newType, newID);
 			v.setAST(cUnit.getAST());
 			v.ASTRewrite(rewrite);
 			cUnit.accept(v);

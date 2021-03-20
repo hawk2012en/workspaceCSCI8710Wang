@@ -22,7 +22,7 @@ public class ProgramAnalysisHandler {
 
    @Execute
    public void execute() {
-      System.out.println("TableRefreshHandler!!");
+      System.out.println("ProgramAnalysisHandler!!");
       MPart findPart = epartService.findPart(MyTableViewer.ID);
       Object findPartObj = findPart.getObject();
 

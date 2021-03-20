@@ -104,7 +104,7 @@ public class AddProgElemDialog extends TitleAreaDialog {
             if (valPkg.trim().isEmpty() || valClass.trim().isEmpty() || valMethod.trim().isEmpty()) {
                return;
             }
-            progElem = new ProgramElement(valPkg, valClass, valMethod, true, 0);
+            progElem = new ProgramElement(valPkg, valClass, valMethod, true, 0, true);
             close();
          }
       });

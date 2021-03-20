@@ -22,18 +22,18 @@ import org.eclipse.text.edits.TextEdit;
 
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceClassVisitor;
+import visitor.rewrite.ReplacePackageVisitor;
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceClassNameAnalyzer {
+public class ReplacePackageNameAnalyzer {
 	private ProgramElement curProgElem;
-	private String newClassName;
+	private String newPackageName;
 
-	public ReplaceClassNameAnalyzer(ProgramElement curProgElem, String newClassName) {
+	public ReplacePackageNameAnalyzer(ProgramElement curProgElem, String newPackageName) {
 		this.curProgElem = curProgElem;
-		this.newClassName = newClassName;
+		this.newPackageName = newPackageName;
 		// Get all projects in the workspace.
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for (IProject project : projects) {
@@ -58,12 +58,12 @@ public class ReplaceClassNameAnalyzer {
 				if (iPackage.getCompilationUnits().length < 1) {
 					continue;
 				}
-				replaceClassName(iPackage);
+				replacePackageName(iPackage);
 			}
 		}
 	}
 
-	void replaceClassName(IPackageFragment iPackage)
+	void replacePackageName(IPackageFragment iPackage)
 			throws JavaModelException, MalformedTreeException, BadLocationException {
 		if (iPackage.getElementName().equals(curProgElem.getPkgName()) == false) {
 			return;
@@ -73,11 +73,10 @@ public class ReplaceClassNameAnalyzer {
 			if (nameICUnit.equals(this.curProgElem.getClassName()) == false) {
 				continue;
 			}
-			//iCunit.rename(newClassName, true, null);			
 			ICompilationUnit workingCopy = iCunit.getWorkingCopy(null);
 			CompilationUnit cUnit = parse(workingCopy);
 			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceClassVisitor visitor = new ReplaceClassVisitor(curProgElem, newClassName);
+			ReplacePackageVisitor visitor = new ReplacePackageVisitor(curProgElem, newPackageName);
 			visitor.setICompilationUnit(iCunit);
 			visitor.setRewrite(rewrite);
 			visitor.setCompilationUnit(cUnit);

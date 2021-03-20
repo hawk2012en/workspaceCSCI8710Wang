@@ -100,7 +100,7 @@ public class SimpleViewer {
 				if (e.keyCode == SWT.CR) {
 					reset();
 					String callee = searchText.getText();
-
+					System.out.println(callee);
 					// TODO: Update below by referring to HandlerSearchMethodCaller.java
 //					styledText.append((new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")).format(new Date()) + "\n"
 //							+ searchText.getText() + "\n");

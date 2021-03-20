@@ -26,7 +26,7 @@ public class DelPackageHandler {
 
    @Execute
    public void execute() {
-      System.out.println("DelProgElemHandler!!");
+      System.out.println("DelPackageHandler!!");
 
       MPart findPart = epartService.findPart(MyTableViewer.ID);
       Object findPartObj = findPart.getObject();

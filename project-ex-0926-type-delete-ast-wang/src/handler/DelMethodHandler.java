@@ -30,7 +30,7 @@ public class DelMethodHandler {
 
 	@Execute
 	public void execute() {
-		System.out.println("DelProgElemHandler!!");
+		System.out.println("DelMethodHandler!!");
 
 		MPart findPart = epartService.findPart(MyTableViewer.ID);
 		Object findPartObj = findPart.getObject();
@@ -38,7 +38,7 @@ public class DelMethodHandler {
 
 			if (selectionService.getSelection() instanceof ProgramElement) {
 				ProgramElement p = (ProgramElement) selectionService.getSelection();
-				if (p.isModifierPublic()) {
+				if (!p.isModifierPrivate()) {
 					MessageDialog.openInformation(shell, "Warning", "Can not delte selected method " + p.getMethodName()
 							+ " because it is not a private method!");
 				} else {

@@ -10,22 +10,23 @@ import java.util.List;
  * @since J2SE-1.8
  */
 public enum ModelProvider {
-   INSTANCE;
-   private List<ProgramElement> progElements = new ArrayList<ProgramElement>();;
+	INSTANCE;
+	private List<ProgramElement> progElements = new ArrayList<ProgramElement>();;
 
-   public void addProgramElements(String pkgName, String className, String methodName, boolean isRetVoid, int parmSize) {
-      progElements.add(new ProgramElement(pkgName, className, methodName, isRetVoid, parmSize));
-   }
-   
-   public void addProgramElements(ProgramElement programElement) {
-	      progElements.add(programElement);
-	   }
+	public void addProgramElements(String pkgName, String className, String methodName, boolean isRetVoid,
+			int parmSize, boolean isModifierPrivate) {
+		progElements.add(new ProgramElement(pkgName, className, methodName, isRetVoid, parmSize, isModifierPrivate));
+	}
 
-   public List<ProgramElement> getProgramElements() {
-      return progElements;
-   }
+	public void addProgramElements(ProgramElement programElement) {
+		progElements.add(programElement);
+	}
 
-   public void clearProgramElements() {
-      progElements.clear();
-   }
+	public List<ProgramElement> getProgramElements() {
+		return progElements;
+	}
+
+	public void clearProgramElements() {
+		progElements.clear();
+	}
 }

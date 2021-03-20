@@ -28,6 +28,7 @@ public class ParameterEditingSupport extends ProgElemEditingSupport {
       ProgramElement p = (ProgramElement) element;
       p.setParameterSize(Integer.valueOf(value.toString()));
       this.viewer.update(element, null);
+      this.viewer.refresh();
    }
 
    @Override

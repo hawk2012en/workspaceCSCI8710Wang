@@ -77,14 +77,14 @@ public class Viewer {
 		col = createTableViewerColumn(titles[2], bounds[2], 2);
 		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartPosLabelProvider()));
 		// the fourth
-//		col = createTableViewerColumn(titles[3], bounds[3], 3);
-//		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartLineLabelProvider()));
-//		// the fifth
-//		col = createTableViewerColumn(titles[4], bounds[4], 4);
-//		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
-//		// the sixth
-//		col = createTableViewerColumn(titles[5], bounds[5], 5);
-//		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
+		col = createTableViewerColumn(titles[3], bounds[3], 3);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new StartLineLabelProvider()));
+		// the fifth
+		col = createTableViewerColumn(titles[4], bounds[4], 4);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new NumFieldsLabelProvider()));
+		// the sixth
+		col = createTableViewerColumn(titles[5], bounds[5], 5);
+		col.setLabelProvider(new DelegatingStyledCellLabelProvider(new FieldDeclarationsLabelProvider()));
 	}
 
 	private TreeViewerColumn createTableViewerColumn(String title, int bound, final int colNumber) {

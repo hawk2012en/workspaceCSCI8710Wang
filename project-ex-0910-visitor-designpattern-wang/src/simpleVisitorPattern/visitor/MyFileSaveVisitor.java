@@ -21,31 +21,35 @@ public class MyFileSaveVisitor extends CartPartVisitor {
 	}
 
 	@Override
-	public void visit(Wheel part) {
+	public boolean visit(Wheel part) {
 		String line = part.getName() + "," + part.getModelNumberWheel() + "," + part.getModelYearWheel();
 		// System.out.println(line);
 		saveFile(line);
+		return super.visit(part);
 	}
 
 	@Override
-	public void visit(Engine part) {
+	public boolean visit(Engine part) {
 		String line = part.getName() + "," + part.getModelNumberEngine() + "," + part.getModelYearEngine();
 		/// System.out.println(line);
 		saveFile(line);
+		return super.visit(part);
 	}
 
 	@Override
-	public void visit(Body part) {
+	public boolean visit(Body part) {
 		String line = part.getName() + "," + part.getModelNumberBody() + "," + part.getModelYearBody();
 		// System.out.println(line);
 		saveFile(line);
+		return super.visit(part);
 	}
 
 	@Override
-	public void visit(Break part) {
+	public boolean visit(Break part) {
 		String line = part.getName() + "," + part.getModelNumberBreak() + "," + part.getModelYearBreak();
 		// System.out.println(line);
 		saveFile(line);
+		return super.visit(part);
 	}
 
 	public void saveFile(String line) {

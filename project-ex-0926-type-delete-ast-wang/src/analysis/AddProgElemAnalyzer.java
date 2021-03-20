@@ -72,7 +72,7 @@ public class AddProgElemAnalyzer {
       // method
       MethodDeclaration methodDecl = ast.newMethodDeclaration();
       methodDecl.setConstructor(false);
-      methodDecl.modifiers().add(ast.newModifier(Modifier.ModifierKeyword.PUBLIC_KEYWORD));
+      methodDecl.modifiers().add(ast.newModifier(Modifier.ModifierKeyword.PRIVATE_KEYWORD));
       methodDecl.setName(ast.newSimpleName(this.newProgElem.getMethodName()));
       methodDecl.setReturnType2(ast.newPrimitiveType(PrimitiveType.VOID));
       Block newBlock = ast.newBlock();

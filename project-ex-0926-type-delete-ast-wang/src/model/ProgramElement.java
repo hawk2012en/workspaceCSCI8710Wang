@@ -12,14 +12,15 @@ public class ProgramElement {
 	private String methodName;
 	private boolean isReturnVoid;
 	private Integer parameterSize;
-	private boolean isModifierPublic;
+	private boolean isModifierPrivate;
 
-	public ProgramElement(String pkgName, String className, String methodName, boolean isRetVoid, int parmSize) {
+	public ProgramElement(String pkgName, String className, String methodName, boolean isRetVoid, int parmSize, boolean isModifierPrivate) {
 		this.pkgName = pkgName;
 		this.className = className;
 		this.methodName = methodName;
 		this.isReturnVoid = isRetVoid;
 		this.parameterSize = parmSize;
+		this.isModifierPrivate = isModifierPrivate;
 	}
 
 	public String getPkgName() {
@@ -54,12 +55,12 @@ public class ProgramElement {
 		this.isReturnVoid = isReturnVoid;
 	}
 
-	public boolean isModifierPublic() {
-		return isModifierPublic;
+	public boolean isModifierPrivate() {
+		return isModifierPrivate;
 	}
 
-	public void setModifierPublic(boolean isModifierPublic) {
-		this.isModifierPublic = isModifierPublic;
+	public void setModifierPrivate(boolean isModifierPrivate) {
+		this.isModifierPrivate = isModifierPrivate;
 	}
 
 	public Integer getParameterSize() {
@@ -72,7 +73,7 @@ public class ProgramElement {
 
 	@Override
 	public String toString() {
-		String isVoid = isReturnVoid ? "Yes" : "No";		
+		String isVoid = isReturnVoid ? "Yes" : "No";
 		return pkgName + ", " + className + ", " + methodName + ", " + isVoid + ", " + parameterSize;
 	}
 }

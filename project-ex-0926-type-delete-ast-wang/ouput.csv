@@ -1,11 +1,4 @@
 Package Name, Class Name, Method Name, isReturnVoid, Parameter size
-pkg1, ClassA, m1, Yes, 0
-pkg1, ClassA, m2, Yes, 0
-pkg1, ClassA, m3, Yes, 0
-pkg1, ClassA, m4, Yes, 0
-pkg1, ClassA, m5, Yes, 0
-pkg1, ClassA, m6, Yes, 0
 pkg2, ClassB, foo, Yes, 0
 pkg2, ClassB, bar, Yes, 0
 pkg2, ClassB, baz, Yes, 0
-pkg3, ClassC, m1, Yes, 0

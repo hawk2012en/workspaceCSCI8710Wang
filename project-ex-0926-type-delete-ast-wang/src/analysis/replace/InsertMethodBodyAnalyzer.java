@@ -20,18 +20,19 @@ import org.eclipse.text.edits.TextEdit;
 
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceMethodVisitor;
+import visitor.rewrite.InsertMethodBodyVisitor;
+
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceMethodNameAnalyzer {
+public class InsertMethodBodyAnalyzer {
 	private ProgramElement curProgElem;
-	private String newMethodName;
+	private String newStatements;	
 
-	public ReplaceMethodNameAnalyzer(ProgramElement curProgName, String newMethodName) {
+	public InsertMethodBodyAnalyzer(ProgramElement curProgName, String newStatements) {
 		this.curProgElem = curProgName;
-		this.newMethodName = newMethodName;
+		this.newStatements = newStatements;		
 
 		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 		for (IProject project : projects) {
@@ -49,17 +50,18 @@ public class ReplaceMethodNameAnalyzer {
 			return;
 		}
 		IJavaProject javaProject = JavaCore.create(project);
+		System.out.println("Project Name: " + javaProject.getElementName());
 		IPackageFragment[] packages = javaProject.getPackageFragments();
 		for (IPackageFragment iPackage : packages) {
 			if (iPackage.getKind() == IPackageFragmentRoot.K_SOURCE && //
 					iPackage.getCompilationUnits().length >= 1 && //
 					iPackage.getElementName().equals(curProgElem.getPkgName())) {
-				replaceMethodName(iPackage);
+				insertMethodBody(iPackage);
 			}
 		}
 	}
 
-	void replaceMethodName(IPackageFragment iPackage)
+	void insertMethodBody(IPackageFragment iPackage)
 			throws JavaModelException, MalformedTreeException, BadLocationException {
 		for (ICompilationUnit iCUnit : iPackage.getCompilationUnits()) {
 			String nameICUnit = ParseUtil.getClassNameFromJavaFile(iCUnit.getElementName());
@@ -69,7 +71,7 @@ public class ReplaceMethodNameAnalyzer {
 			ICompilationUnit workingCopy = iCUnit.getWorkingCopy(null);
 			CompilationUnit cUnit = ParseUtil.parse(workingCopy);
 			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceMethodVisitor v = new ReplaceMethodVisitor(curProgElem, newMethodName);
+			InsertMethodBodyVisitor v = new InsertMethodBodyVisitor(curProgElem, newStatements);
 			v.setAST(cUnit.getAST());
 			v.ASTRewrite(rewrite);
 			cUnit.accept(v);

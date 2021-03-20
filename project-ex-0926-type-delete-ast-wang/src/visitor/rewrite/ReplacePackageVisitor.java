@@ -4,12 +4,12 @@
 package visitor.rewrite;
 
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.SimpleName;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
+import org.eclipse.jdt.core.dom.Name;
+import org.eclipse.jdt.core.dom.PackageDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
 import model.ProgramElement;
@@ -17,31 +17,32 @@ import model.ProgramElement;
 /**
  * @since J2SE-1.8
  */
-public class ReplaceClassVisitor extends ASTVisitor {
+public class ReplacePackageVisitor extends ASTVisitor {
 	private ProgramElement curProgElem;
-	private String newClassName;
+	private String newPackageName;
 	private ICompilationUnit iUnit;
 	private ASTRewrite rewrite;
 	private CompilationUnit cUnit;
 
-	public ReplaceClassVisitor(ProgramElement curProgElem, String newClassName) {
+	public ReplacePackageVisitor(ProgramElement curProgElem, String newPackageName) {
 		this.curProgElem = curProgElem;
-		this.newClassName = newClassName;
+		this.newPackageName = newPackageName;
 	}
 
 	@Override
-	public boolean visit(TypeDeclaration node) {
-		if (node.getName().getIdentifier().equals(curProgElem.getClassName()) == false) {
+	public boolean visit(PackageDeclaration node) {
+		if (node.getName().getFullyQualifiedName().equals(curProgElem.getPkgName()) == false) {
 			return true;
 		}
 		// Description of the change
-		SimpleName oldName = node.getName();
-		SimpleName newName = cUnit.getAST().newSimpleName(newClassName);
+		Name oldName = node.getName();
+		Name newName = cUnit.getAST().newName(newPackageName);
+		
 
 		try {
-			// Update type java element accordingly
-			IType oldType = iUnit.getType(oldName.getFullyQualifiedName());
-			oldType.rename(newClassName, true, null);
+			// Update package java element accordingly
+			IPackageFragment oldPackage = (IPackageFragment) iUnit.getParent();
+			oldPackage.rename(newPackageName, true, null);
 		} catch (JavaModelException e) {
 			e.printStackTrace();
 		}

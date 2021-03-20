@@ -12,26 +12,21 @@ import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.refactoring.IJavaRefactorings;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceClassVisitor;
+import util.UtilAST;
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceClassNameAnalyzer {
+public class RenameClassNameAnalyzer {
 	private ProgramElement curProgElem;
 	private String newClassName;
 
-	public ReplaceClassNameAnalyzer(ProgramElement curProgElem, String newClassName) {
+	public RenameClassNameAnalyzer(ProgramElement curProgElem, String newClassName) {
 		this.curProgElem = curProgElem;
 		this.newClassName = newClassName;
 		// Get all projects in the workspace.
@@ -73,35 +68,8 @@ public class ReplaceClassNameAnalyzer {
 			if (nameICUnit.equals(this.curProgElem.getClassName()) == false) {
 				continue;
 			}
-			//iCunit.rename(newClassName, true, null);			
-			ICompilationUnit workingCopy = iCunit.getWorkingCopy(null);
-			CompilationUnit cUnit = parse(workingCopy);
-			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceClassVisitor visitor = new ReplaceClassVisitor(curProgElem, newClassName);
-			visitor.setICompilationUnit(iCunit);
-			visitor.setRewrite(rewrite);
-			visitor.setCompilationUnit(cUnit);
-
-			cUnit.accept(visitor);
-			TextEdit edits = null;
-			try {
-				// Compute the edits
-				edits = rewrite.rewriteAST();
-				// Apply the edits.
-				workingCopy.applyTextEdit(edits, null);
-				// Save the changes.
-				workingCopy.commitWorkingCopy(false, null);
-			} catch (Exception e) {
-				// silence
-			}
+			UtilAST.rename(iCunit, this.newClassName, IJavaRefactorings.RENAME_COMPILATION_UNIT);
 		}
 	}
-
-	static CompilationUnit parse(ICompilationUnit unit) {
-		ASTParser parser = ASTParser.newParser(AST.JLS10);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setSource(unit);
-		parser.setResolveBindings(true);
-		return (CompilationUnit) parser.createAST(null); // parse
-	}
+	
 }

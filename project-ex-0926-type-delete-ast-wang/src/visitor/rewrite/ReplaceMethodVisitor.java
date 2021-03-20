@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.Modifier;
 import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
@@ -51,18 +52,21 @@ public class ReplaceMethodVisitor extends ASTVisitor {
 
    public boolean visit(MethodDeclaration node) {
       if (checkMethod(node)) {
-         this.methodToBeRemoved = node;
-         addNewMethod(node);
+         //this.methodToBeRemoved = node;
+         //addNewMethod(node);
+ 		SimpleName oldName = node.getName();
+ 		SimpleName newName = astCUnit.newSimpleName(newMethodName);
+ 		rewrite.replace(oldName, newName, null);
       }
       return true;
    }
 
-   @Override
-   public void endVisit(TypeDeclaration typeDecl) {
-      ListRewrite lrw = rewrite.getListRewrite(typeDecl, //
-            TypeDeclaration.BODY_DECLARATIONS_PROPERTY);
-      lrw.remove(methodToBeRemoved, null);
-   }
+//   @Override
+//   public void endVisit(TypeDeclaration typeDecl) {
+//      ListRewrite lrw = rewrite.getListRewrite(typeDecl, //
+//            TypeDeclaration.BODY_DECLARATIONS_PROPERTY);
+//      lrw.remove(methodToBeRemoved, null);
+//   }
 
    private boolean checkMethod(MethodDeclaration md) {
       boolean check1 = this.curProgElem.getMethodName().equals(md.getName().getFullyQualifiedName());
@@ -105,6 +109,9 @@ public class ReplaceMethodVisitor extends ASTVisitor {
                PrimitiveType pt = (PrimitiveType) type;
                newSVD.setType(astCUnit.newPrimitiveType(pt.getPrimitiveTypeCode()));
             }
+			else {
+				newSVD.setType(astCUnit.newSimpleType(astCUnit.newName(type.toString())));
+			}
             newSVD.setName(astCUnit.newSimpleName(svd.getName().getIdentifier()));
             newMethodDecl.parameters().add(newSVD);
          }
@@ -120,6 +127,7 @@ public class ReplaceMethodVisitor extends ASTVisitor {
       ListRewrite lrw = rewrite.getListRewrite(typeDecl, //
             TypeDeclaration.BODY_DECLARATIONS_PROPERTY);
       lrw.insertAfter(newMethodDecl, methodToBeRemoved, null);
+//      rewrite.replace(node, newMethodDecl, null);
    }
 
    public void setAST(AST ast) {

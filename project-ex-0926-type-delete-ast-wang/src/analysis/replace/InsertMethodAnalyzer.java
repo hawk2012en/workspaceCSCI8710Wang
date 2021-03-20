@@ -20,16 +20,17 @@ import org.eclipse.text.edits.TextEdit;
 
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceMethodVisitor;
+import visitor.rewrite.InsertMethodVisitor;
+
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceMethodNameAnalyzer {
+public class InsertMethodAnalyzer {
 	private ProgramElement curProgElem;
 	private String newMethodName;
 
-	public ReplaceMethodNameAnalyzer(ProgramElement curProgName, String newMethodName) {
+	public InsertMethodAnalyzer(ProgramElement curProgName, String newMethodName) {
 		this.curProgElem = curProgName;
 		this.newMethodName = newMethodName;
 
@@ -54,12 +55,12 @@ public class ReplaceMethodNameAnalyzer {
 			if (iPackage.getKind() == IPackageFragmentRoot.K_SOURCE && //
 					iPackage.getCompilationUnits().length >= 1 && //
 					iPackage.getElementName().equals(curProgElem.getPkgName())) {
-				replaceMethodName(iPackage);
+				insertMethod(iPackage);
 			}
 		}
 	}
 
-	void replaceMethodName(IPackageFragment iPackage)
+	void insertMethod(IPackageFragment iPackage)
 			throws JavaModelException, MalformedTreeException, BadLocationException {
 		for (ICompilationUnit iCUnit : iPackage.getCompilationUnits()) {
 			String nameICUnit = ParseUtil.getClassNameFromJavaFile(iCUnit.getElementName());
@@ -69,7 +70,7 @@ public class ReplaceMethodNameAnalyzer {
 			ICompilationUnit workingCopy = iCUnit.getWorkingCopy(null);
 			CompilationUnit cUnit = ParseUtil.parse(workingCopy);
 			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceMethodVisitor v = new ReplaceMethodVisitor(curProgElem, newMethodName);
+			InsertMethodVisitor v = new InsertMethodVisitor(curProgElem, newMethodName);
 			v.setAST(cUnit.getAST());
 			v.ASTRewrite(rewrite);
 			cUnit.accept(v);

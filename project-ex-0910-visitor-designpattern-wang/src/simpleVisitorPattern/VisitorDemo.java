@@ -30,10 +30,11 @@ public class VisitorDemo {
       System.out.println("\t6. Exit the program");
 
       Car car = new Car();
+      car.addChild();
 
       while (true) {
          System.out.println("=============================================");
-         System.out.print("Please select an option from 1-3\n");
+         System.out.print("Please select an option from 1-6\n");
          
          switch (demo.getOption()) {
          case 1:

@@ -15,6 +15,7 @@ import util.UtilFile;
 public class ExportProgElemHandler {
 	@Execute
 	public void execute() {
+		System.out.println("ExportProgElemHandler!!");
     	List<ProgramElement> progElements = ModelProvider.INSTANCE.getProgramElements();
         List<String> contents = new ArrayList<String>();
         String tableHead = "Package Name" + ", Class Name" + ", Method Name" + 

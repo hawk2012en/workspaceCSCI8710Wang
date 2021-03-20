@@ -1,5 +1,6 @@
 
 package handler;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,28 +12,44 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import util.UtilFile;
 
-public class ShowHighestNumberHandler {		
+public class ShowHighestNumberHandler {
 	@Execute
 	public void execute(Shell shell) {
 		String basePath = System.getProperty("user.dir");
-		System.out.println(basePath);
+		System.out.println("user.dir: " + basePath);
+		String storageDir = System.getProperty("org.osgi.framework.storage");
+		System.out.println("org.osgi.framework.storage: " + storageDir);
+		
+		String projectName = storageDir.substring(storageDir.lastIndexOf("\\") + 1);
+		System.out.println("projectName: " + projectName);
+		String workSpace = storageDir.substring(0, storageDir.indexOf("\\.meta"));
+		System.out.println("workSpace: " + workSpace);
+		String projectDir = workSpace + "\\" + projectName;
+		System.out.println("projectDir: " + projectDir);
+		
+		String logfile = System.getProperty("osgi.logfile");
+		System.out.println("osgi.logfile: " + logfile);	
+		String runtimeWorkSpace = logfile.substring(0, logfile.indexOf("\\.meta"));
+		System.out.println("runtimeWorkSpace: " + runtimeWorkSpace);
 
-		//String filePath = getInputPathString(shell);
-		String filePath = UtilFile.getInputPathString();
+		String filePath = projectDir + "\\" + "numbers.csv";
+		//String filePath = UtilFile.getInputPathString();
+		if (filePath == null)
+			return;
 		List<String> contents = UtilFile.readFile(filePath);
-		List<Integer> contents_integer = new ArrayList<Integer>();		
-/*		for (String str : contents) {
-			contents_integer.add(Integer.parseInt(str));
-		}*/
+		List<Integer> contents_integer = new ArrayList<Integer>();
+		/*
+		 * for (String str : contents) { contents_integer.add(Integer.parseInt(str)); }
+		 */
 		contents_integer = contents.stream().map(Integer::parseInt).collect(Collectors.toList());
 		Collections.sort(contents_integer, Collections.reverseOrder());
 		contents.clear();
-/*		for (Integer number : contents_integer) {
-			contents.add(number.toString());
-		}*/
+		/*
+		 * for (Integer number : contents_integer) { contents.add(number.toString()); }
+		 */
 		contents = contents_integer.stream().map(Object::toString).collect(Collectors.toList());
-		//filePath = getOutputPathString(shell);
-		filePath = UtilFile.getOutputPathString();
+		filePath = projectDir + "\\" + "numbers_sorted_descending.csv";
+		//filePath = UtilFile.getOutputPathString();
 		try {
 			UtilFile.saveFile(filePath, contents);
 		} catch (IOException e) {

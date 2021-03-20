@@ -7,29 +7,32 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.ASTVisitor;
 import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.refactoring.IJavaRefactorings;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.text.edits.MalformedTreeException;
-import org.eclipse.text.edits.TextEdit;
-
 import model.ProgramElement;
 import util.ParseUtil;
-import visitor.rewrite.ReplaceMethodVisitor;
+import util.UtilAST;
 
 /**
  * @since J2SE-1.8
  */
-public class ReplaceMethodNameAnalyzer {
+public class RenameMethodNameAnalyzer {
 	private ProgramElement curProgElem;
 	private String newMethodName;
+	private IMethod iMethod;
 
-	public ReplaceMethodNameAnalyzer(ProgramElement curProgName, String newMethodName) {
+	public RenameMethodNameAnalyzer(ProgramElement curProgName, String newMethodName) {
 		this.curProgElem = curProgName;
 		this.newMethodName = newMethodName;
 
@@ -66,17 +69,21 @@ public class ReplaceMethodNameAnalyzer {
 			if (nameICUnit.equals(this.curProgElem.getClassName()) == false) {
 				continue;
 			}
-			ICompilationUnit workingCopy = iCUnit.getWorkingCopy(null);
-			CompilationUnit cUnit = ParseUtil.parse(workingCopy);
-			ASTRewrite rewrite = ASTRewrite.create(cUnit.getAST());
-			ReplaceMethodVisitor v = new ReplaceMethodVisitor(curProgElem, newMethodName);
-			v.setAST(cUnit.getAST());
-			v.ASTRewrite(rewrite);
-			cUnit.accept(v);
-			TextEdit edits = null;
-			edits = rewrite.rewriteAST(); // Compute the edits
-			workingCopy.applyTextEdit(edits, null); // Apply the edits.
-			workingCopy.commitWorkingCopy(false, null); // Save the changes.
+	         CompilationUnit cUnit = UtilAST.parse(iCUnit);
+
+	         ASTVisitor iMethodFinder = new ASTVisitor() {
+	            public boolean visit(MethodDeclaration node) {
+	               if (node.getName().getFullyQualifiedName().equals(curProgElem.getMethodName())) {
+	                  IJavaElement javaElement = node.resolveBinding().getJavaElement();
+	                  if (javaElement instanceof IMethod) {
+	                     iMethod = (IMethod) javaElement;
+	                  }
+	               }
+	               return true;
+	            }
+	         };
+	         cUnit.accept(iMethodFinder);
+	         UtilAST.rename(iMethod, this.newMethodName, IJavaRefactorings.RENAME_METHOD);
 		}
 	}
 }

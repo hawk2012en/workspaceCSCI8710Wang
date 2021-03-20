@@ -43,6 +43,7 @@ public class ReturnTypeEditingSupport extends ProgElemEditingSupport {
          ((ProgramElement) element).setReturnVoid(false);
       }
       this.viewer.update(element, null);
+      this.viewer.refresh();
    }
 
    @Override

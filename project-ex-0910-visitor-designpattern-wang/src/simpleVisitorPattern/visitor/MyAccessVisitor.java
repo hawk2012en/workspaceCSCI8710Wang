@@ -6,19 +6,30 @@ import simpleVisitorPattern.part.Wheel;
 import simpleVisitorPattern.part.Break;
 
 public class MyAccessVisitor extends CartPartVisitor {
-	public void visit(Wheel part) {
-		System.out.println("[DBG] Accessing the name property: " + part.getName());
+	@Override
+	public boolean visit(Wheel part) {
+		System.out.println("[DBG] name: " + part.getName() + ", model: " + part.getModelNumberWheel() + ", year: " + part.getModelYearWheel());
+		return super.visit(part);
+		//return false;
 	}
 
-	public void visit(Engine part) {
-		System.out.println("[DBG] Accessing the name property: " + part.getName());
+	@Override
+	public boolean visit(Engine part) {
+		System.out.println("[DBG] name: " + part.getName() + ", model: " + part.getModelNumberEngine() + ", year: " + part.getModelNumberEngine());
+		return super.visit(part);
+
 	}
 
-	public void visit(Body part) {
-		System.out.println("[DBG] Accessing the name property: " + part.getName());
+	@Override
+	public boolean visit(Body part) {
+		System.out.println("[DBG] name: " + part.getName() + ", model: " + part.getModelNumberBody() + ", year: " + part.getModelYearBody());
+		return super.visit(part);
+		//return false;
 	}
 	
-	public void visit(Break part) {
-		System.out.println("[DBG] Accessing the name property: " + part.getName());
+	@Override
+	public boolean visit(Break part) {
+		System.out.println("[DBG] name: " + part.getName() + ", model: " + part.getModelNumberBreak() + ", year: " + part.getModelYearBreak());
+		return super.visit(part);
 	}
 }

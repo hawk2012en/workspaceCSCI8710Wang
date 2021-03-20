@@ -6,7 +6,8 @@ import simpleVisitorPattern.part.Wheel;
 import simpleVisitorPattern.part.Break;
 
 public class MyReverseVisitor extends CartPartVisitor {
-	public void visit(Wheel part) {
+	@Override
+	public boolean visit(Wheel part) {
 		String oldName = part.getName(); // Get old name.
 		StringBuilder newName = new StringBuilder();
 		newName = newName.append(oldName).reverse(); // reverse name
@@ -21,9 +22,11 @@ public class MyReverseVisitor extends CartPartVisitor {
 		StringBuilder newModelYear = new StringBuilder();
 		newModelYear = newModelYear.append(oldModelYear).reverse(); 
 		part.setModelYearWheel(newModelYear.toString());
+		return super.visit(part);
 	}
 
-	public void visit(Engine part) {
+	@Override
+	public boolean visit(Engine part) {
 		String oldName = part.getName(); // Get old name.
 		StringBuilder newName = new StringBuilder();
 		newName = newName.append(oldName).reverse(); // reverse name
@@ -38,9 +41,11 @@ public class MyReverseVisitor extends CartPartVisitor {
 		StringBuilder newModelYear = new StringBuilder();
 		newModelYear = newModelYear.append(oldModelYear).reverse(); 
 		part.setModelYearEngine(newModelYear.toString());
+		return super.visit(part);
 	}
 
-	public void visit(Body part) {
+	@Override
+	public boolean visit(Body part) {
 		String oldName = part.getName(); // Get old name.
 		StringBuilder newName = new StringBuilder();
 		newName = newName.append(oldName).reverse(); // reverse name
@@ -55,9 +60,11 @@ public class MyReverseVisitor extends CartPartVisitor {
 		StringBuilder newModelYear = new StringBuilder();
 		newModelYear = newModelYear.append(oldModelYear).reverse(); 
 		part.setModelYearBody(newModelYear.toString());
+		return super.visit(part);
 	}
 
-	public void visit(Break part) {
+	@Override
+	public boolean visit(Break part) {
 		String oldName = part.getName(); // Get old name.
 		StringBuilder newName = new StringBuilder();
 		newName = newName.append(oldName).reverse(); // reverse name
@@ -72,5 +79,6 @@ public class MyReverseVisitor extends CartPartVisitor {
 		StringBuilder newModelYear = new StringBuilder();
 		newModelYear = newModelYear.append(oldModelYear).reverse(); 
 		part.setModelYearBreak(newModelYear.toString());
+		return super.visit(part);
 	}
 }

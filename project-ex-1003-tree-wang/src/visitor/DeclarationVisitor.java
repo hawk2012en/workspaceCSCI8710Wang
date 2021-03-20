@@ -49,8 +49,8 @@ public class DeclarationVisitor extends ASTVisitor {
    @Override
    public boolean visit(MethodDeclaration methodDecl) {
       this.methodName = methodDecl.getName().getIdentifier();
-      String className = methodDecl.resolveBinding().getDeclaringClass().getName();
-      String pkgName = methodDecl.resolveBinding().getDeclaringClass().getPackage().getName();
+//      String className = methodDecl.resolveBinding().getDeclaringClass().getName();
+//      String pkgName = methodDecl.resolveBinding().getDeclaringClass().getPackage().getName();
 
       this.methodElem = new MethodElement(methodName, this.classElem);
       this.methodElem.setParameters(methodDecl.parameters());
